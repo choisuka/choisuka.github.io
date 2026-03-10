@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="우리아이행복">
 <meta name="description" content="아이와 부모를 위한 앱 모음 — 내사랑, 행복한 하루, 수학왕국">
 <title>우리 아이 행복 프로젝트</title>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
@@ -284,6 +287,61 @@ header p {
 .blog-card h4 { font-size: 0.95rem; font-weight: 700; line-height: 1.6; margin-bottom: 8px; }
 .blog-card p { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
 
+/* ── 앱 설치 버튼 ── */
+#install-fab {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 1.4rem;
+  padding: .7rem 1.6rem;
+  background: linear-gradient(135deg, #a855f7, #3b82f6);
+  color: #fff;
+  font-weight: 800;
+  font-size: .95rem;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(168,85,247,.4);
+  transition: transform .2s, box-shadow .2s;
+}
+#install-fab:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(168,85,247,.55); }
+#install-fab.hidden { display: none; }
+#ios-modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); z-index: 200;
+  align-items: flex-end; justify-content: center;
+}
+#ios-modal.show { display: flex; }
+.ios-sheet {
+  background: #1e1040; border-radius: 20px 20px 0 0;
+  padding: 2rem 1.5rem 3rem; max-width: 480px; width: 100%; text-align: center;
+}
+.ios-sheet h3 { font-size: 1.1rem; margin-bottom: 1rem; }
+.ios-sheet p  { color: rgba(255,255,255,.6); font-size: .9rem; line-height: 1.9; }
+.ios-close {
+  margin-top: 1.5rem; padding: .6rem 2rem;
+  background: rgba(255,255,255,.1); border: none; border-radius: 100px;
+  color: #fff; font-size: .9rem; cursor: pointer;
+}
+
+/* ── 육아 일기 ── */
+.diary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px; margin-top: 32px;
+}
+.diary-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 24px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.diary-card:hover { transform: translateY(-3px); }
+.diary-date { font-size: .72rem; color: rgba(255,255,255,.3); margin-bottom: 8px; }
+.diary-card h4 { font-size: .95rem; font-weight: 700; line-height: 1.6; margin-bottom: 10px; }
+.diary-card p  { font-size: .83rem; color: rgba(255,255,255,.5); line-height: 1.8; }
+.diary-emoji  { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+
 /* ── 푸터 ── */
 footer {
   position: relative; z-index: 1;
@@ -360,7 +418,17 @@ footer .notice { font-size: 0.72rem; color: rgba(255,255,255,0.2); max-width: 56
   </div>
   <h1>우리 아이 행복 프로젝트</h1>
   <p>부모와 아이가 함께 행복해지는 무료 앱 모음<br>매일 더 나은 하루를 만들어가는 작은 도구들</p>
+  <button id="install-fab">📲 앱으로 설치하기</button>
 </header>
+
+<!-- iOS 안내 모달 -->
+<div id="ios-modal">
+  <div class="ios-sheet">
+    <h3>📲 홈 화면에 추가하기</h3>
+    <p>Safari 하단의 <strong>공유 버튼 (□↑)</strong> 을 누른 후<br><strong>"홈 화면에 추가"</strong> 를 선택하세요.<br><br>앱처럼 설치되어 오프라인에서도 사용할 수 있어요!</p>
+    <button class="ios-close" onclick="document.getElementById('ios-modal').classList.remove('show')">닫기</button>
+  </div>
+</div>
 
 <!-- 통계 바 -->
 <div class="stats-bar">
@@ -540,6 +608,13 @@ footer .notice { font-size: 0.72rem; color: rgba(255,255,255,0.2); max-width: 56
   </div>
 </section>
 
+<!-- 육아 일기 -->
+<section class="section">
+  <h2 class="section-title">📝 육아 일기</h2>
+  <p style="text-align:center;color:rgba(255,255,255,0.45);font-size:0.88rem;margin-bottom:8px;" id="diary-date"></p>
+  <div class="diary-grid" id="diary-grid"></div>
+</section>
+
 <!-- 기부 섹션 -->
 <div style="background:rgba(255,255,255,0.03);border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:48px 0;">
   <div class="section" style="padding-top:0;padding-bottom:0;">
@@ -629,6 +704,56 @@ drawStars();
 
 // ── 방문자 카운터 (localStorage 기반) ──
 let visits = parseInt(localStorage.getItem('hub-visits') || '0') + 1;
+// ── 육아 일기 (날짜 기반 랜덤 3개) ──
+(async () => {
+  try {
+    const res = await fetch('diary.json');
+    const all = await res.json();
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}년 ${today.getMonth()+1}월 ${today.getDate()}일`;
+    document.getElementById('diary-date').textContent = dateStr;
+    // 날짜 시드로 셔플 (매일 같은 3개, 하루 지나면 바뀜)
+    const seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
+    const shuffled = [...all].sort((a, b) => {
+      const ha = Math.sin(seed + all.indexOf(a)) * 10000;
+      const hb = Math.sin(seed + all.indexOf(b)) * 10000;
+      return (ha - Math.floor(ha)) - (hb - Math.floor(hb));
+    });
+    const colors = ['rgba(236,72,153,0.25)', 'rgba(168,85,247,0.25)', 'rgba(16,185,129,0.25)'];
+    const grid = document.getElementById('diary-grid');
+    shuffled.slice(0, 3).forEach((d, i) => {
+      grid.innerHTML += `
+        <div class="diary-card" style="border-color:${colors[i]}">
+          <span class="diary-emoji">${d.emoji}</span>
+          <div class="diary-date">${d.tag}</div>
+          <h4>${d.title}</h4>
+          <p>${d.body}</p>
+        </div>`;
+    });
+  } catch(e) { document.getElementById('diary-grid').innerHTML = '<p style="color:rgba(255,255,255,0.4)">일기를 불러오는 중...</p>'; }
+})();
+
+// ── PWA 설치 버튼 ──
+const fab = document.getElementById('install-fab');
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+let deferredPrompt = null;
+if (isStandalone) fab.classList.add('hidden');
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
+fab.addEventListener('click', async () => {
+  if (isIOS) { document.getElementById('ios-modal').classList.add('show'); return; }
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') fab.classList.add('hidden');
+    deferredPrompt = null;
+  } else {
+    alert('이미 설치되어 있거나, 브라우저 주소창 오른쪽의 설치 아이콘을 눌러주세요.');
+  }
+});
+window.addEventListener('appinstalled', () => fab.classList.add('hidden'));
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+
 localStorage.setItem('hub-visits', visits);
 const el = document.getElementById('cnt-users');
 let cur = 0;
