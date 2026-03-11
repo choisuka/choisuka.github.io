@@ -424,8 +424,22 @@ footer .notice { font-size: 0.72rem; color: rgba(255,255,255,0.2); max-width: 56
 <!-- iOS 안내 모달 -->
 <div id="ios-modal">
   <div class="ios-sheet">
-    <h3>📲 홈 화면에 추가하기</h3>
-    <p>Safari 하단의 <strong>공유 버튼 (□↑)</strong> 을 누른 후<br><strong>"홈 화면에 추가"</strong> 를 선택하세요.<br><br>앱처럼 설치되어 오프라인에서도 사용할 수 있어요!</p>
+    <h3>📲 앱 설치 방법</h3>
+    <div id="modal-android" style="display:none">
+      <div class="ios-step">1️⃣ 크롬 브라우저 오른쪽 상단 <strong>⋮ (점 세 개)</strong> 버튼 누르기</div>
+      <div class="ios-step">2️⃣ <strong>"앱 설치"</strong> 또는 <strong>"홈 화면에 추가"</strong> 선택</div>
+      <div class="ios-step">3️⃣ <strong>"설치"</strong> 버튼 누르면 완료!</div>
+    </div>
+    <div id="modal-desktop" style="display:none">
+      <div class="ios-step">1️⃣ 브라우저 주소창 오른쪽 <strong>⊕ 설치 아이콘</strong> 클릭</div>
+      <div class="ios-step">2️⃣ 아이콘이 없으면 <strong>⋮ 메뉴 → "우리아이행복 설치"</strong></div>
+      <div class="ios-step">3️⃣ <strong>"설치"</strong> 누르면 바탕화면에 앱으로 추가됨</div>
+    </div>
+    <div id="modal-ios" style="display:none">
+      <div class="ios-step">1️⃣ Safari 하단 <strong>공유 버튼 (□↑)</strong> 누르기</div>
+      <div class="ios-step">2️⃣ <strong>"홈 화면에 추가"</strong> 선택</div>
+      <div class="ios-step">3️⃣ <strong>"추가"</strong> 누르면 완료!</div>
+    </div>
     <button class="ios-close" onclick="document.getElementById('ios-modal').classList.remove('show')">닫기</button>
   </div>
 </div>
@@ -741,15 +755,25 @@ let deferredPrompt = null;
 if (isStandalone) fab.classList.add('hidden');
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
 fab.addEventListener('click', async () => {
-  if (isIOS) { document.getElementById('ios-modal').classList.add('show'); return; }
   if (deferredPrompt) {
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === 'accepted') fab.classList.add('hidden');
     deferredPrompt = null;
-  } else {
-    alert('이미 설치되어 있거나, 브라우저 주소창 오른쪽의 설치 아이콘을 눌러주세요.');
+    return;
   }
+  // 수동 안내 모달
+  document.getElementById('modal-android').style.display = 'none';
+  document.getElementById('modal-desktop').style.display = 'none';
+  document.getElementById('modal-ios').style.display = 'none';
+  if (isIOS) {
+    document.getElementById('modal-ios').style.display = 'block';
+  } else if (/android/i.test(navigator.userAgent)) {
+    document.getElementById('modal-android').style.display = 'block';
+  } else {
+    document.getElementById('modal-desktop').style.display = 'block';
+  }
+  document.getElementById('ios-modal').classList.add('show');
 });
 window.addEventListener('appinstalled', () => fab.classList.add('hidden'));
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
