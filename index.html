@@ -156,6 +156,12 @@ header p {
 }
 .card-blue:hover { box-shadow: 0 8px 50px rgba(59,130,246,0.6); }
 
+.card-toro {
+  background: linear-gradient(135deg, #052e16 0%, #14532d 100%);
+  box-shadow: 0 4px 30px rgba(74,222,128,0.3);
+}
+.card-toro:hover { box-shadow: 0 8px 50px rgba(74,222,128,0.6); }
+
 /* 카드 상단 장식 */
 .card-glow {
   position: absolute; top: -40px; right: -40px;
@@ -167,6 +173,7 @@ header p {
 .glow-green  { background: #10b981; }
 .glow-orange { background: #f59e0b; }
 .glow-blue   { background: #3b82f6; }
+.glow-toro   { background: #4ade80; }
 
 .card-badge {
   display: inline-block;
@@ -179,6 +186,7 @@ header p {
 .badge-green  { background: rgba(16,185,129,0.25); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.4); }
 .badge-orange { background: rgba(245,158,11,0.25); color: #fcd34d; border: 1px solid rgba(245,158,11,0.4); }
 .badge-blue   { background: rgba(59,130,246,0.25); color: #93c5fd; border: 1px solid rgba(59,130,246,0.4); }
+.badge-toro   { background: rgba(74,222,128,0.25); color: #86efac; border: 1px solid rgba(74,222,128,0.4); }
 
 .app-card .icon { font-size: 3.2rem; margin-bottom: 12px; display: block; }
 .app-card h3 {
@@ -209,6 +217,7 @@ header p {
 .btn-green  { background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 4px 20px rgba(16,185,129,0.4); }
 .btn-orange { background: linear-gradient(135deg, #d97706, #f59e0b); box-shadow: 0 4px 20px rgba(245,158,11,0.4); }
 .btn-blue   { background: linear-gradient(135deg, #1d4ed8, #3b82f6); box-shadow: 0 4px 20px rgba(59,130,246,0.4); }
+.btn-toro   { background: linear-gradient(135deg, #15803d, #4ade80); box-shadow: 0 4px 20px rgba(74,222,128,0.4); }
 
 /* ── 통계 바 ── */
 .stats-bar {
@@ -456,7 +465,7 @@ footer .notice { font-size: 0.72rem; color: rgba(255,255,255,0.2); max-width: 56
 <!-- 통계 바 -->
 <div class="stats-bar">
   <div class="stat-item">
-    <div class="stat-num" id="cnt-apps">4</div>
+    <div class="stat-num" id="cnt-apps">5</div>
     <div class="stat-label">무료 앱</div>
   </div>
   <div class="stat-item">
@@ -506,6 +515,21 @@ footer .notice { font-size: 0.72rem; color: rgba(255,255,255,0.2); max-width: 56
         <span class="tag">🖼️ 명화 감상</span>
       </div>
       <div class="play-btn btn-green">▶ 앱 시작하기</div>
+    </a>
+
+    <!-- 토로 -->
+    <a class="app-card card-toro" href="https://choisuka.github.io/toro/" target="_blank">
+      <div class="card-glow glow-toro"></div>
+      <span class="card-badge badge-toro">🦕 감정 교육</span>
+      <span class="icon">🌳</span>
+      <h3>토로의 감정숲 모험</h3>
+      <p>매일 5분, 공룡 토로와 함께 30일 감정 모험! 동화·활동·부모 가이드로 아이의 마음 근육을 키워요.</p>
+      <div class="tags">
+        <span class="tag">🦕 30일 동화</span>
+        <span class="tag">💚 감정 교육</span>
+        <span class="tag">👨‍👩‍👧 부모 가이드</span>
+      </div>
+      <div class="play-btn btn-toro">▶ 모험 시작하기</div>
     </a>
 
     <!-- 사이언스 -->
@@ -692,6 +716,7 @@ footer .notice { font-size: 0.72rem; color: rgba(255,255,255,0.2); max-width: 56
   <div class="footer-links">
     <a href="https://choisuka.github.io/naesarang/">❤️ 내사랑</a>
     <a href="https://choisuka.github.io/Happy-day/">🌤️ 행복한 하루</a>
+    <a href="https://choisuka.github.io/toro/">🌳 토로의 모험</a>
     <a href="https://choisuka.github.io/science_game/">🚀 과학 탐험대</a>
     <a href="https://choisuka.github.io/math-games-kingdom/">🏰 수학왕국</a>
   </div>
