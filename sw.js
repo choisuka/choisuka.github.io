@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hub-v1';
+const CACHE_NAME = 'hub-v2';
 const PRECACHE = ['./', './index.html', './manifest.json', './parenting.html'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(PRECACHE)).then(() => self.skipWaiting()));
