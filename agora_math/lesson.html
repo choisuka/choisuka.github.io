@@ -95,7 +95,7 @@ body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-heig
 <div class="day-nav">
   <button class="day-btn active" onclick="showDay(1)">Day 1</button>
   <button class="day-btn" onclick="showDay(2)">Day 2</button>
-  <button class="day-btn locked">Day 3</button>
+  <button class="day-btn" onclick="showDay(3)">Day 3</button>
   <button class="day-btn locked">Day 4</button>
   <button class="day-btn locked">Day 5</button>
   <button class="day-btn locked">Day 6</button>
@@ -539,6 +539,127 @@ body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-heig
   </div>
 
 </div><!-- /day1-content -->
+
+<!-- ══ DAY 3 ══ -->
+<div class="content" id="day3-content" style="display:none">
+
+  <div class="lesson-header">
+    <div class="lesson-week">📅 1주차 · 수의 체계와 논리적 사고</div>
+    <div class="lesson-day">Day 3: 지수 — "우주를 담는 수학의 압축 기술"</div>
+    <div class="lesson-topic">Topic: Exponents &amp; Scientific Notation</div>
+    <div class="lesson-time">45~60분</div>
+  </div>
+
+  <!-- 1. 도입 -->
+  <div class="section">
+    <div class="section-label">1 · The Opening Task</div>
+    <div class="section-title">도입: 생각 열기 (PBL 질문)</div>
+    <div class="hook-box">
+      "여러분, 종이 한 장을 딱 42번만 반으로 접을 수 있다면, 그 두께가 어디까지 닿을 것 같나요?"
+    </div>
+    <div class="concept-card" style="margin-top:14px">
+      <div class="concept-title">아이들의 예상 &amp; 해설</div>
+      <div class="concept-body">
+        <span style="color:rgba(255,255,255,.5);font-style:italic">"책상 높이요?", "아파트 10층 정도?"</span><br><br>
+        <strong>해설:</strong> "정답은 <strong>'달(Moon)'</strong>까지입니다. 2⁴²이라는 숫자는 상상할 수 없을 만큼 거대하죠. 지수는 이처럼 폭발적인 성장을 설명하는 유일한 도구예요."
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 핵심 개념 -->
+  <div class="section">
+    <div class="section-label">2 · Core Concepts</div>
+    <div class="section-title">핵심 개념: 지수 법칙의 논리적 도출</div>
+    <p style="font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:14px;line-height:1.7">공식을 외우게 하지 말고, 나열해서 스스로 깨닫게 합니다.</p>
+
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">곱셈 (xᵃ · xᵇ = xᵃ⁺ᵇ)</div>
+      <div class="concept-body">2² · 2³ = (2·2) · (2·2·2) = 2⁵ 임을 보여주고, 지수끼리 더해지는 이유를 설명합니다.</div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-title">0의 지수 (x⁰ = 1)</div>
+      <div class="concept-body">"왜 모든 수의 0제곱은 1일까?" 2³=8, 2²=4, 2¹=2 순으로 2씩 나누어지는 패턴을 보여주며, 그다음 단계인 2⁰이 당연히 1이 되어야 함을 논증합니다.</div>
+    </div>
+  </div>
+
+  <!-- 3. 하크네스 토론 -->
+  <div class="section" style="margin-top:36px">
+    <div class="section-label">🎙️ Day 3 하크네스 토론 현장</div>
+    <div class="section-title">"0의 0제곱은 무엇인가?"</div>
+    <p style="font-size:.75rem;color:rgba(255,255,255,.4);margin-bottom:16px;line-height:1.6">[상황] 지수 법칙을 배우던 중 한 학생이 아주 날카로운 질문을 던지며 토론이 시작됩니다.</p>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">레오(Leo)</div>
+      <div class="scenario-line">"선생님이 모든 수의 0제곱은 1이라고 하셨잖아요? 그럼 0⁰도 1인가요? 0은 아무리 곱해도 0이니까 0이어야 하는 거 아닌가요?"</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">에밀리(Emily)</div>
+      <div class="scenario-line">"지수 법칙의 패턴으로 보면 0¹=0이고, 여기서 0을 나누면 0⁰이 되는데... 수학에서 0으로 나누는 건 금지되어 있잖아. 그럼 이건 정의할 수 없는 거 아냐?"</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">조슈아(Joshua)</div>
+      <div class="scenario-line">"흥미롭네. 지수의 밑이 0이 아닌 어떤 수든 0으로 다가가면 결과값이 1에 가까워지는데(0.1⁰=1, 0.01⁰=1), 밑이 0인 상태에서 지수가 0으로 다가가면 0이 되잖아. 두 힘이 부딪히는 지점이네."</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">소피아(Sophia)</div>
+      <div class="scenario-line">"결국 수학자들도 이걸 '부정(Indeterminate)'이라고 부른대. 상황에 따라 다를 수 있다는 거지. 우리가 배우는 법칙들이 항상 모든 곳에서 완벽하게 작동하는 건 아니라는 게 신기해."</div>
+    </div>
+  </div>
+
+  <!-- 4. 실생활 연결 -->
+  <div class="section">
+    <div class="section-label">4 · Real-world Connection</div>
+    <div class="section-title">🌌 실생활 연결: 과학적 표기법 (Scientific Notation)</div>
+
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">거시 세계</div>
+      <div class="concept-body">태양과 지구 사이의 거리 약 1억 5천만 km → 1.5 × 10⁸ km</div>
+    </div>
+
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">미시 세계</div>
+      <div class="concept-body">수소 원자의 반지름 약 0.00000000005m → 5.0 × 10⁻¹¹ m</div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-title">토론 포인트</div>
+      <div class="concept-body">"왜 과학자들은 귀찮게 10ⁿ 같은 표기법을 쓸까? 그냥 0을 많이 쓰면 안 될까?" (가독성, 계산의 편의성, 유효숫자의 중요성 논의)</div>
+    </div>
+  </div>
+
+  <!-- 5. 수업 운영 팁 -->
+  <div class="tip-section">
+    <div class="section-label" style="margin-bottom:16px">💡 원장님을 위한 Day 3 수업 운영 팁</div>
+
+    <div class="tip-item">
+      <div class="tip-num">① 계산기 활용</div>
+      <div class="tip-body">2¹⁰이 1,024임을 직접 계산기로 확인하게 하고, 2²⁰, 2³⁰으로 넘어갈 때 숫자가 얼마나 기하급수적으로 커지는지 체감시켜 주세요.</div>
+    </div>
+
+    <div class="tip-item">
+      <div class="tip-num">② 거듭제곱의 역설</div>
+      <div class="tip-body">"매일 실력이 1%씩 성장한다면(1.01³⁶⁵), 1년 뒤에는 처음보다 약 37.8배 성장한다"는 이야기를 통해 지수의 힘을 동기부여로 연결해 보세요.</div>
+    </div>
+  </div>
+
+  <!-- 6. Exit Ticket -->
+  <div class="section" style="margin-top:28px">
+    <div class="section-label">📝 Day 3 마무리 과제 (Exit Ticket)</div>
+    <div class="quiz-box">
+      <div class="quiz-q">"어떤 세균이 1분마다 2배로 증식한다. 병이 가득 차는 데 60분이 걸렸다면, 병이 딱 절반(1/2)만큼 찼던 시간은 몇 분이었을까?"</div>
+      <div class="quiz-a"><strong>정답: 59분.</strong> 지수의 원리를 이해했다면 30분이 아니라 59분임을 바로 알 수 있습니다.</div>
+    </div>
+    <div class="concept-card" style="margin-top:12px">
+      <div class="concept-body">원장님, 이 과제(59분 문제)는 아이들이 정말 많이 틀리면서도 깨달음을 얻는 아주 좋은 문제입니다.<br><br>
+      내일은 <strong>Day 4: 실수 체계와 무리수의 발견</strong>으로 이어가겠습니다. 이제 유리수의 빈틈을 채우러 갈 시간입니다! 준비되시면 말씀해 주세요.</div>
+    </div>
+  </div>
+
+</div><!-- /day3-content -->
 
 <!-- ══ DAY 2 ══ -->
 <div class="content" id="day2-content" style="display:none">
