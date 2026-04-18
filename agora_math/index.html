@@ -177,8 +177,10 @@ const TOPICS = [
   {
     id: 'day01',
     day: 1,
+    week: 1,
     title: '정수와 유리수의 엄밀한 정의',
-    desc: 'Integers & Rational Numbers — 수의 체계와 논리적 사고',
+    titleEn: 'Integers & Rational Numbers',
+    desc: '수직선은 유리수로 완전히 채워지는가 — 수의 체계를 논리적으로 세우다',
     cards: {
       h: {
         tag: '🏛️ 하크니스 원탁',
@@ -568,7 +570,30 @@ const TOPICS = [
       }
     }
   }
-  // Day 2~20은 순차 추가
+  ,
+  // ── 1주차: 수의 체계와 논리적 사고 ──
+  { id:'day02', day:2, week:1, title:'비율과 백분율의 실전 응용', titleEn:'Ratios, Rates & Percents', desc:'두 양의 관계를 수로 표현하는 법 — 금융·건축·과학의 공통 언어', locked:true, cards:null },
+  { id:'day03', day:3, week:1, title:'지수 법칙과 과학적 표기법', titleEn:'Exponents & Scientific Notation', desc:'10억을 10⁹으로 쓰는 이유 — 수의 크기를 다루는 새로운 언어', locked:true, cards:null },
+  { id:'day04', day:4, week:1, title:'실수 체계와 무리수의 발견', titleEn:'The Real Number System & Irrationals', desc:'유리수로 채울 수 없는 수직선의 구멍 — √2는 어디에 있는가', locked:true, cards:null },
+  { id:'day05', day:5, week:1, title:'엑서터식 문제 해결 전략', titleEn:'Problem Solving Strategies: Exeter Style', desc:'정답이 아닌 과정 — 막혔을 때 수학자는 무엇을 하는가', locked:true, cards:null },
+  // ── 2주차: 대수학의 기초 ──
+  { id:'day06', day:6, week:2, title:'변수와 식의 단순화', titleEn:'Variables & Expressions', desc:'미지수를 문자로 쓰는 순간 — 수학이 언어가 된다', locked:true, cards:null },
+  { id:'day07', day:7, week:2, title:'일차방정식의 해법과 활용', titleEn:'Solving Linear Equations', desc:'등호의 균형 — 방정식은 저울이다', locked:true, cards:null },
+  { id:'day08', day:8, week:2, title:'부등식의 성질과 영역', titleEn:'Linear Inequalities', desc:'같지 않은 것들의 관계 — 해가 점이 아니라 영역인 이유', locked:true, cards:null },
+  { id:'day09', day:9, week:2, title:'함수 개념과 좌표평면', titleEn:'Introduction to Functions', desc:'입력이 출력을 결정한다 — 함수는 세상을 예측하는 도구', locked:true, cards:null },
+  { id:'day10', day:10, week:2, title:'직선의 방정식과 기울기', titleEn:'Linear Functions & Slope', desc:'기울기는 변화의 속도다 — 그래프가 말하는 것을 읽는 법', locked:true, cards:null },
+  // ── 3주차: 기하학적 탐구 ──
+  { id:'day11', day:11, week:3, title:'각의 관계와 평행선', titleEn:'Angles & Parallel Lines', desc:'평행선이 만나면 어떤 일이 생기는가 — 기하의 첫 번째 규칙', locked:true, cards:null },
+  { id:'day12', day:12, week:3, title:'삼각형의 성질과 합동 조건', titleEn:'Triangles & Congruence', desc:'같은 모양이란 무엇인가 — 합동의 논리적 증명', locked:true, cards:null },
+  { id:'day13', day:13, week:3, title:'피타고라스 정리와 거리 공식', titleEn:'Pythagorean Theorem & Distance', desc:'직각삼각형의 비밀 — 좌표 위의 두 점 사이 거리를 구하는 법', locked:true, cards:null },
+  { id:'day14', day:14, week:3, title:'다각형과 원의 측정', titleEn:'Polygons & Circles', desc:'π는 왜 3.14…인가 — 원의 둘레와 넓이의 본질', locked:true, cards:null },
+  { id:'day15', day:15, week:3, title:'입체도형의 겉넓이와 부피', titleEn:'Surface Area & Volume', desc:'3차원을 2차원으로 펼치는 법 — 건축과 포장의 수학', locked:true, cards:null },
+  // ── 4주차: 심화 대수 및 데이터 분석 ──
+  { id:'day16', day:16, week:4, title:'연립방정식', titleEn:'Systems of Equations', desc:'두 조건을 동시에 만족하는 점 — 그래프와 대수의 만남', locked:true, cards:null },
+  { id:'day17', day:17, week:4, title:'다항식의 연산과 인수분해 기초', titleEn:'Polynomials & Factoring', desc:'식을 곱의 형태로 분해하는 이유 — 고등수학의 첫 번째 문', locked:true, cards:null },
+  { id:'day18', day:18, week:4, title:'이차함수와 그래프의 특징', titleEn:'Quadratic Functions', desc:'포물선은 왜 좌우 대칭인가 — 꼭짓점이 말하는 것', locked:true, cards:null },
+  { id:'day19', day:19, week:4, title:'통계적 추론과 데이터 시각화', titleEn:'Statistics & Data Analysis', desc:'숫자의 뒤에 있는 이야기 — 평균이 숨기는 것과 드러내는 것', locked:true, cards:null },
+  { id:'day20', day:20, week:4, title:'확률 모델과 기대값', titleEn:'Probability Models', desc:'불확실한 세계를 수로 다루는 법 — 기대값은 예언인가 평균인가', locked:true, cards:null }
 ];
 
 // ══════════════════════════════════════════
@@ -578,29 +603,58 @@ let currentTopic = null;
 let currentFormat = 'h';
 let isFlipped = false;
 
+// ── 주차 정보 ──
+const WEEKS = {
+  1: { label:'1주차', theme:'수의 체계와 논리적 사고', color:'#a78bfa' },
+  2: { label:'2주차', theme:'대수학의 기초',           color:'#60a5fa' },
+  3: { label:'3주차', theme:'기하학적 탐구',           color:'#34d399' },
+  4: { label:'4주차', theme:'심화 대수 및 데이터 분석', color:'#fbbf24' }
+};
+
 // ── 홈 렌더링 ──
 function renderHome() {
   const list = document.getElementById('day-list');
-  list.innerHTML = TOPICS.map(t => `
-    <div class="day-card unlocked" onclick="openTopic('${t.id}')">
-      <div class="day-num">DAY ${t.day}</div>
-      <div class="day-title">${t.title}</div>
-      <div class="day-desc">${t.desc}</div>
-      <div class="day-formats">
-        <span class="fmt-badge fmt-h">🏛️ 하크니스</span>
-        <span class="fmt-badge fmt-a">🏛️ 아고라</span>
-        <span class="fmt-badge fmt-m">🔬 미네르바</span>
-        <span class="fmt-badge fmt-g">🍎 가이드</span>
-        <span class="fmt-badge" style="background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.25)">🚨 순간</span>
-      </div>
-    </div>
-  `).join('');
+  let html = '';
+  let lastWeek = 0;
+  TOPICS.forEach(t => {
+    const week = t.week || 1;
+    if (week !== lastWeek) {
+      const w = WEEKS[week];
+      html += `<div style="margin:${lastWeek?'18px':'0'} 0 8px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.04);border-left:3px solid ${w.color}">
+        <div style="font-size:.65rem;color:${w.color};font-weight:700;letter-spacing:.5px">${w.label}</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.6);margin-top:2px">${w.theme}</div>
+      </div>`;
+      lastWeek = week;
+    }
+    if (t.locked) {
+      html += `<div class="day-card locked">
+        <div class="day-num">DAY ${t.day} · ${t.titleEn}</div>
+        <div class="day-title">${t.title}</div>
+        <div class="day-desc">${t.desc}</div>
+        <div style="margin-top:6px;font-size:.62rem;color:rgba(255,255,255,.25)">🔒 준비 중</div>
+      </div>`;
+    } else {
+      html += `<div class="day-card unlocked" onclick="openTopic('${t.id}')">
+        <div class="day-num">DAY ${t.day} · ${t.titleEn||''}</div>
+        <div class="day-title">${t.title}</div>
+        <div class="day-desc">${t.desc}</div>
+        <div class="day-formats">
+          <span class="fmt-badge fmt-h">🏛️ 하크니스</span>
+          <span class="fmt-badge fmt-a">🏛️ 아고라</span>
+          <span class="fmt-badge fmt-m">🔬 미네르바</span>
+          <span class="fmt-badge fmt-g">🍎 가이드</span>
+          <span class="fmt-badge" style="background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.25)">🚨 순간</span>
+        </div>
+      </div>`;
+    }
+  });
+  list.innerHTML = html;
 }
 
 // ── 주제 열기 ──
 function openTopic(id) {
   currentTopic = TOPICS.find(t => t.id === id);
-  if (!currentTopic) return;
+  if (!currentTopic || currentTopic.locked) return;
   document.getElementById('topic-day-label').textContent = `DAY ${currentTopic.day}`;
   document.getElementById('topic-main-title').textContent = currentTopic.title;
   document.getElementById('home').style.display = 'none';
