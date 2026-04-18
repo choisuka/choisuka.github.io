@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>아고라매 — 생각하는 수학 광장</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-height:100vh}
+
+/* ── 홈 ── */
+#home{padding:20px 16px 40px}
+.home-header{text-align:center;padding:28px 0 24px}
+.home-title{font-size:1.7rem;font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px}
+.home-sub{font-size:.78rem;color:rgba(255,255,255,.4);margin-top:6px}
+
+/* 포맷 배지 범례 */
+.legend{display:flex;gap:10px;justify-content:center;margin-bottom:22px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:.72rem;color:rgba(255,255,255,.55)}
+.legend-dot{width:8px;height:8px;border-radius:50%}
+
+/* Day 카드 목록 */
+.day-list{display:flex;flex-direction:column;gap:10px;max-width:480px;margin:0 auto}
+.day-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.day-card:hover{background:rgba(255,255,255,.08);border-color:rgba(167,139,250,.4);transform:translateY(-1px)}
+.day-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
+.day-card.unlocked::before{background:linear-gradient(180deg,#a78bfa,#60a5fa)}
+.day-card.locked{opacity:.4;cursor:default}
+.day-card.locked::before{background:rgba(255,255,255,.2)}
+.day-num{font-size:.68rem;color:rgba(255,255,255,.35);margin-bottom:4px;letter-spacing:.5px}
+.day-title{font-size:.95rem;font-weight:700;color:#e8e8f0;margin-bottom:6px}
+.day-desc{font-size:.75rem;color:rgba(255,255,255,.45);line-height:1.5}
+.day-formats{display:flex;gap:5px;margin-top:8px}
+.fmt-badge{font-size:.62rem;padding:2px 7px;border-radius:10px;font-weight:600}
+.fmt-h{background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.25)}
+.fmt-a{background:rgba(52,211,153,.15);color:#34d399;border:1px solid rgba(52,211,153,.25)}
+.fmt-m{background:rgba(96,165,250,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.25)}
+
+/* ── 주제 화면 ── */
+#topic{display:none;padding:0 0 40px}
+.topic-header{padding:16px 16px 0;display:flex;align-items:center;gap:10px}
+.back-btn{background:rgba(255,255,255,.08);border:none;color:#e8e8f0;padding:6px 12px;border-radius:8px;cursor:pointer;font-size:.8rem}
+.topic-title-wrap{flex:1}
+.topic-day-label{font-size:.65rem;color:rgba(255,255,255,.35);letter-spacing:.5px}
+.topic-main-title{font-size:1.05rem;font-weight:800;color:#e8e8f0}
+
+/* 포맷 탭 */
+.format-tabs{display:flex;gap:0;margin:16px 16px 0;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+.fmt-tab{flex:1;padding:10px 4px;text-align:center;cursor:pointer;font-size:.72rem;font-weight:600;border:none;background:rgba(255,255,255,.03);color:rgba(255,255,255,.4);transition:all .2s}
+.fmt-tab.active-h{background:rgba(251,191,36,.15);color:#fbbf24}
+.fmt-tab.active-a{background:rgba(52,211,153,.15);color:#34d399}
+.fmt-tab.active-m{background:rgba(96,165,250,.15);color:#60a5fa}
+.fmt-tab-icon{font-size:1rem;display:block;margin-bottom:2px}
+
+/* 카드 영역 */
+.card-area{padding:16px}
+.card-wrap{perspective:1000px}
+.card-inner{position:relative;transition:transform .55s;transform-style:preserve-3d;min-height:420px}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;min-height:420px;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:22px 20px;overflow:auto}
+.card-front{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.card-back{background:rgba(20,10,40,.95);border:1px solid rgba(167,139,250,.3);transform:rotateY(180deg)}
+
+/* 카드 내부 스타일 */
+.card-tag{display:inline-block;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:10px;margin-bottom:12px;letter-spacing:.3px}
+.card-body{font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.88)}
+.card-body h3{font-size:.9rem;color:#e8e8f0;margin:14px 0 6px}
+.card-body ul{padding-left:18px;margin:4px 0}
+.card-body li{margin-bottom:4px}
+.card-body .highlight{background:rgba(167,139,250,.15);border-left:3px solid #a78bfa;padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.card-body .question{font-size:.95rem;font-weight:700;color:#fbbf24;text-align:center;padding:14px;background:rgba(251,191,36,.08);border-radius:10px;margin:12px 0;line-height:1.6}
+.card-body table{width:100%;border-collapse:collapse;font-size:.75rem;margin:10px 0}
+.card-body th{background:rgba(255,255,255,.08);padding:6px 8px;text-align:center}
+.card-body td{padding:5px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,.06)}
+
+/* 플립 버튼 */
+.flip-area{margin-top:14px;text-align:center}
+.flip-btn{background:linear-gradient(135deg,#7c3aed,#2563eb);border:none;color:#fff;padding:10px 28px;border-radius:22px;font-size:.82rem;font-weight:700;cursor:pointer;letter-spacing:.3px}
+.flip-btn:active{opacity:.8}
+
+/* 카드 앞면 컬러 테마 */
+.theme-h .card-front{border-color:rgba(251,191,36,.25);background:rgba(251,191,36,.04)}
+.theme-a .card-front{border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.04)}
+.theme-m .card-front{border-color:rgba(96,165,250,.25);background:rgba(96,165,250,.04)}
+
+/* 반응형 */
+@media(max-width:360px){
+  .home-title{font-size:1.4rem}
+  .format-tabs{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ 홈 ══════════════ -->
+<div id="home">
+  <div class="home-header">
+    <div class="home-title">🏛️ 아고라매</div>
+    <div class="home-sub">생각하는 수학 광장 · 3가지 수업 방식으로 탐구하다</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div>🏛️ 하크니스 원탁</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div>🏛️ 아고라 광장</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div>🔬 미네르바 세미나</div>
+  </div>
+
+  <div class="day-list" id="day-list"></div>
+</div>
+
+<!-- ══════════════ 주제 화면 ══════════════ -->
+<div id="topic">
+  <div class="topic-header">
+    <button class="back-btn" onclick="goHome()">← 목록</button>
+    <div class="topic-title-wrap">
+      <div class="topic-day-label" id="topic-day-label">DAY 1</div>
+      <div class="topic-main-title" id="topic-main-title"></div>
+    </div>
+  </div>
+
+  <div class="format-tabs">
+    <button class="fmt-tab" id="tab-h" onclick="selectFormat('h')">
+      <span class="fmt-tab-icon">🏛️</span>하크니스
+    </button>
+    <button class="fmt-tab" id="tab-a" onclick="selectFormat('a')">
+      <span class="fmt-tab-icon">🏛️</span>아고라
+    </button>
+    <button class="fmt-tab" id="tab-m" onclick="selectFormat('m')">
+      <span class="fmt-tab-icon">🔬</span>미네르바
+    </button>
+  </div>
+
+  <div class="card-area">
+    <div class="card-wrap" id="card-wrap">
+      <div class="card-inner" id="card-inner">
+        <div class="card-face card-front" id="card-front"></div>
+        <div class="card-face card-back" id="card-back"></div>
+      </div>
+    </div>
+    <div class="flip-area">
+      <button class="flip-btn" onclick="flipCard()" id="flip-btn">💡 생각 펼치기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// TOPIC DATA
+// 구조: { id, day, title, desc, cards: { h, a, m } }
+//   각 카드: { tag, body, ans }
+// ══════════════════════════════════════════
+
+const TOPICS = [
+  {
+    id: 'day01',
+    day: 1,
+    title: '정수와 유리수의 엄밀한 정의',
+    desc: 'Integers & Rational Numbers — 수의 체계와 논리적 사고',
+    cards: {
+      h: {
+        tag: '🏛️ 하크니스 원탁',
+        body: `<div class="question">우리는 왜 0보다 작은 수가 필요했을까? 그리고 0.333…과 1/3은 정확히 같은 것일까?</div>
+
+<h3>📜 오늘의 규칙</h3>
+<ul>
+<li>발언 전 앞 사람의 말을 한 문장으로 요약한다</li>
+<li>수식보다 이유를 먼저 말한다</li>
+<li>반론은 "나는 다르게 생각해"로 시작한다</li>
+</ul>
+
+<h3>🌱 오늘의 탐구 문제 (The Opening Task)</h3>
+<div class="highlight">학생들에게 바로 정의를 알려주기보다, 다음 질문으로 시작합니다:<br><br>
+"우리는 왜 0보다 작은 수가 필요했을까? 그리고 0.333…과 1/3은 정확히 같은 것일까?"</div>
+
+<h3>🔑 핵심 개념 (Core Concepts)</h3>
+<ul>
+<li><strong>정수 (Integers, ℤ)</strong>: 단순히 '자연수와 그 음수'가 아니라, <strong>방향성(Direction)</strong>과 상대적 크기를 가진 수. 수직선 위에서의 '이동' 개념으로 접근한다.</li>
+<li><strong>유리수 (Rational Numbers, ℚ)</strong>: 핵심은 <strong>비(Ratio)</strong>. 두 정수 a, b (단, b≠0)에 대해 a/b 형태로 나타낼 수 있는 모든 수.</li>
+<li><strong>밀집성 (Density Property)</strong>: 어떤 서로 다른 두 유리수 사이에는 반드시 또 다른 유리수가 존재한다. (예: 0.1과 0.2 사이의 수는 무수히 많다.)</li>
+</ul>
+
+<h3>🗺️ 심화 활동: 수의 지도 그리기</h3>
+단순한 분류표를 넘어, 각 수의 집합이 서로 어떻게 포함되는지 벤다이어그램으로 시각화하고, '정수는 유리수인가?'라는 명제에 대해 논리적으로 답변하는 훈련.
+
+<h3>💬 하크니스 토론 질문 (Harkness Discussion)</h3>
+<div class="question">만약 세상에 유리수만 있고 무리수(Irrational Numbers)가 없다면, 우리가 측정할 수 없는 길이는 무엇이 있을까?</div>
+<div class="highlight">목표: 학생들 스스로 유리수의 한계를 느끼게 하고, 다음에 배울 실수의 개념을 궁금해하도록 유도한다.</div>`,
+        ans: `<h3>🏛️ 하크니스 원탁 — 토론 정리</h3>
+
+<h3>🔢 수의 집합 포함 관계</h3>
+<div class="highlight">자연수 ⊂ 정수 ⊂ 유리수 ⊂ 실수<br>
+"정수는 유리수인가?" → <strong>참</strong>. 정수 n = n/1 이므로 유리수의 형태로 표현 가능.</div>
+
+<h3>밀집성 증명 (간단 버전)</h3>
+<ul>
+<li>두 유리수 a/b 와 c/d 사이에는 (a/b + c/d) ÷ 2 = (ad+bc) / 2bd 가 항상 존재</li>
+<li>이 과정을 무한히 반복 가능 → 유리수는 수직선 위에 빽빽하게 채워져 있다</li>
+</ul>
+
+<h3>💡 실생활 연결 (Real-world Connection)</h3>
+<ul>
+<li><strong>회계와 수의 체계</strong>: 기업 재무제표에서 '부채(Debt)'를 음의 정수로 표현하는 방식</li>
+<li><strong>주식 시장</strong>: 소수점 넷째 자리까지 사용하는 유리수의 정밀함</li>
+<li>수학이 관념이 아닌 <strong>'약속'</strong>임을 깨닫게 한다</li>
+</ul>
+
+<h3>🎯 수업 마무리 퀴즈 (The Exit Ticket)</h3>
+<div class="question">"모든 정수는 유리수이지만, 모든 유리수는 정수가 아니다."<br>이 문장이 참인지 거짓인지 이유와 함께 설명하시오.</div>
+<div class="highlight">정답: <strong>참</strong><br>
+정수 n = n/1 이므로 모든 정수는 유리수다. (전자 성립)<br>
+유리수 1/2 = 0.5는 정수가 아니다. (후자 성립)<br>
+따라서 두 집합은 포함 관계 (정수 ⊂ 유리수) 이다.</div>
+
+<div class="highlight">🔙 출발점 요약: "비(Ratio)"라는 개념 하나가 정수를 유리수로 확장시킨다. 이 확장의 논리가 수학 전체의 뼈대다.</div>`
+      },
+      a: {
+        tag: '🏛️ 아고라 광장',
+        body: `<div class="question">0.333…과 1/3은 완전히 같은 수인가, 아니면 무한히 가까운 다른 수인가?</div>
+
+<h3>🏛️ 아고라 광장이란?</h3>
+<div class="highlight">그리스 아테네의 공개 광장. 시민 누구나 발언하고, 두 진영이 대립하며, 진실을 함께 찾아간다. 원탁이 아니라 <strong>광장</strong>이다.</div>
+
+<h3>⚔️ 오늘의 대립</h3>
+<ul>
+<li><strong>A 진영 — "완전히 같다"</strong>: 수학적 정의상 동일한 값</li>
+<li><strong>B 진영 — "다르다"</strong>: 소수점은 끝나지 않으므로 완전한 동일이란 없다</li>
+</ul>
+
+<h3>📣 광장의 규칙</h3>
+<ul>
+<li>발언 시간: 최대 1분</li>
+<li>상대 진영 발언 후 즉각 반론 가능</li>
+<li>수, 사례, 비유로 근거를 댄다</li>
+<li>마지막엔 전체 표결 — 과반이면 이긴다</li>
+</ul>
+
+<h3>🌿 대화 씨앗</h3>
+<ul>
+<li>1/3을 계산기로 누르면 끝없이 이어진다 — 이것이 수인가?</li>
+<li>0.999… = 1 인가? 왜 그런가 또는 왜 아닌가?</li>
+<li>무한히 이어지는 소수는 "도달할 수 없는 수"인가?</li>
+</ul>
+
+<h3>🔑 핵심 개념 연결</h3>
+<ul>
+<li><strong>유리수</strong>: a/b 형태 → 소수로 표현하면 반드시 유한소수 또는 <strong>순환소수</strong></li>
+<li><strong>밀집성</strong>: 두 유리수 사이엔 항상 또 다른 유리수가 있다</li>
+<li><strong>무리수</strong>: 순환하지 않는 무한소수 → 유리수가 아니다</li>
+</ul>`,
+        ans: `<h3>🏛️ 아고라 광장 — 논점 정리</h3>
+
+<h3>A 진영 — "같다"의 근거</h3>
+<ul>
+<li>수학적 증명: 1/3 × 3 = 1, 0.333… × 3 = 0.999… = 1 → 같음</li>
+<li>대수적 증명: x = 0.333…, 10x = 3.333…, 9x = 3, x = 1/3</li>
+<li>유리수 정의상 1/3과 0.333…은 동일한 실수를 가리킨다</li>
+</ul>
+
+<h3>B 진영 — "다르다"의 한계</h3>
+<ul>
+<li>직관적으로 "끝나지 않는 수"는 불완전해 보임 — 그러나 이것은 수학적 직관의 함정</li>
+<li>무한급수 합 1/3 = Σ(3/10ⁿ) 은 극한값으로 정확히 수렴</li>
+<li>B 진영의 직관은 수학적으로는 틀렸지만, 무한에 대한 철학적 질문은 유효하다</li>
+</ul>
+
+<h3>🔑 아고라의 결론</h3>
+<div class="highlight">수학적으로: <strong>0.333… = 1/3 (완전히 같다)</strong><br>
+철학적으로: 무한을 어떻게 다루느냐가 수학의 핵심 논쟁 중 하나였다 (칸토어 집합론)<br>
+→ B 진영의 직관이 틀렸다는 것을 안 순간, 수학이 더 깊어진다.</div>
+
+<div class="highlight">🔙 핵심: 유리수는 a/b 라는 비의 언어로 정의된다. 소수 표현은 하나의 '번역'일 뿐이다.</div>`
+      },
+      m: {
+        tag: '🔬 미네르바 세미나',
+        body: `<div class="question">🔬 사전 과제 (세미나 전 반드시 완료)</div>
+
+<h3>① 다음을 분류하시오</h3>
+<div class="highlight">-7, 0, 3/4, √2, 0.25, 0.333…, π, -2/3<br>
+→ 정수 / 유리수 / 해당 없음 으로 분류하고 이유를 한 줄씩 쓰기</div>
+
+<h3>② 벤다이어그램 완성</h3>
+자연수 ⊂ ? ⊂ ? ⊂ 실수 — 빈칸에 수의 집합 이름 채우기
+
+<h3>🔬 미네르바 세미나 방식</h3>
+<div class="highlight">강의 없음. 사전 학습 완료 후 세미나. 교사는 질문만 한다. 모든 학생이 반드시 발언한다.</div>
+
+<h3>📊 실시간 Poll</h3>
+<ul>
+<li>① 0.999…는 1보다 작다</li>
+<li>② 0.999…는 정확히 1이다</li>
+<li>③ 모르겠다</li>
+</ul>
+투표 후 — 왜 그렇게 생각하는지 발언하기
+
+<h3>🧠 HC (사고 습관) 체크</h3>
+<ul>
+<li><strong>정밀성(Precision)</strong>: "정수" vs "유리수" — 왜 구분이 필요한가?</li>
+<li><strong>일반화(Generalizing)</strong>: 유리수의 소수 표현에는 어떤 패턴이 있는가?</li>
+<li><strong>전이(Transfer)</strong>: 밀집성이 현실 세계에서 의미하는 것은?</li>
+</ul>
+
+<h3>🗺️ 심화 활동: 수의 지도 그리기</h3>
+각 수의 집합이 서로 어떻게 포함되는지 벤다이어그램으로 시각화하고, '정수는 유리수인가?'라는 명제에 대해 논리적으로 답변하는 훈련.`,
+        ans: `<h3>🔬 미네르바 세미나 — 정리</h3>
+
+<h3>① 분류 정답</h3>
+<table>
+<tr><th>수</th><th>정수?</th><th>유리수?</th><th>이유</th></tr>
+<tr><td>-7</td><td>✓</td><td>✓</td><td>-7/1 형태 가능</td></tr>
+<tr><td>0</td><td>✓</td><td>✓</td><td>0/1 형태 가능</td></tr>
+<tr><td>3/4</td><td>✗</td><td>✓</td><td>a/b 형태, 소수점 있음</td></tr>
+<tr><td>√2</td><td>✗</td><td>✗</td><td>순환하지 않는 무한소수</td></tr>
+<tr><td>0.25</td><td>✗</td><td>✓</td><td>1/4 = 0.25 유한소수</td></tr>
+<tr><td>0.333…</td><td>✗</td><td>✓</td><td>1/3 순환소수</td></tr>
+<tr><td>π</td><td>✗</td><td>✗</td><td>3.14159… 비순환 무한소수</td></tr>
+<tr><td>-2/3</td><td>✗</td><td>✓</td><td>a/b 형태 성립</td></tr>
+</table>
+
+<h3>② 벤다이어그램 정답</h3>
+<div class="highlight">자연수 ⊂ <strong>정수</strong> ⊂ <strong>유리수</strong> ⊂ 실수</div>
+
+<h3>🧠 HC 정리</h3>
+<ul>
+<li><strong>유리수 소수 패턴</strong>: 유리수 = 유한소수 or 순환소수. 반드시 둘 중 하나.</li>
+<li><strong>밀집성의 현실 의미</strong>: 두 값 사이엔 항상 중간값이 있다 → 연속성의 기초</li>
+</ul>
+
+<h3>🎯 수업 마무리 퀴즈 (The Exit Ticket)</h3>
+<div class="question">"모든 정수는 유리수이지만, 모든 유리수는 정수가 아니다."<br>이 문장이 참인지 거짓인지 이유와 함께 설명하시오.</div>
+<div class="highlight">정답: <strong>참</strong><br>
+정수 n = n/1 이므로 모든 정수는 유리수 (a/b 형태). ✓<br>
+유리수 1/2 = 0.5 는 정수가 아니다. ✓<br>
+→ 정수 ⊂ 유리수 이지만, 유리수 ⊄ 정수.</div>
+
+<div class="highlight">🔙 FC (핵심 개념): 수의 체계는 단순 분류가 아니라 <strong>포함(⊂) 관계</strong>다. 이 구조를 이해하면 이후 실수·복소수 확장도 같은 논리로 따라온다.</div>`
+      }
+    }
+  }
+  // Day 2~20은 순차 추가
+];
+
+// ══════════════════════════════════════════
+// 앱 상태
+// ══════════════════════════════════════════
+let currentTopic = null;
+let currentFormat = 'h';
+let isFlipped = false;
+
+// ── 홈 렌더링 ──
+function renderHome() {
+  const list = document.getElementById('day-list');
+  list.innerHTML = TOPICS.map(t => `
+    <div class="day-card unlocked" onclick="openTopic('${t.id}')">
+      <div class="day-num">DAY ${t.day}</div>
+      <div class="day-title">${t.title}</div>
+      <div class="day-desc">${t.desc}</div>
+      <div class="day-formats">
+        <span class="fmt-badge fmt-h">🏛️ 하크니스</span>
+        <span class="fmt-badge fmt-a">🏛️ 아고라</span>
+        <span class="fmt-badge fmt-m">🔬 미네르바</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── 주제 열기 ──
+function openTopic(id) {
+  currentTopic = TOPICS.find(t => t.id === id);
+  if (!currentTopic) return;
+  document.getElementById('topic-day-label').textContent = `DAY ${currentTopic.day}`;
+  document.getElementById('topic-main-title').textContent = currentTopic.title;
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('topic').style.display = 'block';
+  selectFormat('h');
+}
+
+// ── 홈으로 ──
+function goHome() {
+  document.getElementById('topic').style.display = 'none';
+  document.getElementById('home').style.display = 'block';
+}
+
+// ── 포맷 선택 ──
+function selectFormat(fmt) {
+  currentFormat = fmt;
+  isFlipped = false;
+
+  // 탭 활성화
+  ['h','a','m'].forEach(f => {
+    const tab = document.getElementById(`tab-${f}`);
+    tab.className = 'fmt-tab';
+    if (f === fmt) tab.classList.add(`active-${f}`);
+  });
+
+  // 카드 테마
+  const wrap = document.getElementById('card-wrap');
+  wrap.className = `card-wrap theme-${fmt}`;
+
+  // 카드 내용
+  const card = currentTopic.cards[fmt];
+  document.getElementById('card-front').innerHTML = `
+    <span class="card-tag" style="${tagStyle(fmt)}">${card.tag}</span>
+    <div class="card-body">${card.body}</div>
+  `;
+  document.getElementById('card-back').innerHTML = `
+    <div class="card-body">${card.ans}</div>
+  `;
+
+  // 플립 리셋
+  const inner = document.getElementById('card-inner');
+  inner.classList.remove('flipped');
+  document.getElementById('flip-btn').textContent = '💡 생각 펼치기';
+}
+
+function tagStyle(fmt) {
+  const styles = {
+    h: 'background:rgba(251,191,36,.2);color:#fbbf24;border:1px solid rgba(251,191,36,.4)',
+    a: 'background:rgba(52,211,153,.2);color:#34d399;border:1px solid rgba(52,211,153,.4)',
+    m: 'background:rgba(96,165,250,.2);color:#60a5fa;border:1px solid rgba(96,165,250,.4)'
+  };
+  return styles[fmt];
+}
+
+// ── 카드 플립 ──
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('card-inner').classList.toggle('flipped', isFlipped);
+  document.getElementById('flip-btn').textContent = isFlipped ? '← 문제로 돌아가기' : '💡 생각 펼치기';
+}
+
+// ── 초기화 ──
+renderHome();
+</script>
+</body>
+</html>
