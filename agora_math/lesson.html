@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>아고라매 수업 자료</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-height:100vh;padding-bottom:60px}
@@ -131,7 +138,7 @@ body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-heig
     <div class="section-title">오늘의 탐구 문제</div>
     <div class="hook-box">
       "우리는 왜 0보다 작은 수가 필요했을까?<br>
-      그리고 0.333...과 1/3은 정확히 같은 것일까?"
+      그리고 $0.333...$과 $\frac{1}{3}$은 정확히 같은 것일까?"
     </div>
     <p style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:10px;line-height:1.6">
       학생들에게 바로 정의를 알려주기보다, 이 질문으로 시작합니다.<br>
@@ -145,20 +152,20 @@ body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-heig
     <div class="section-title">핵심 개념</div>
 
     <div class="concept-card">
-      <div class="concept-title">정수 (Integers, ℤ)</div>
+      <div class="concept-title">정수 (Integers, $\mathbb{Z}$)</div>
       <div class="concept-body">단순히 '자연수와 그 음수'가 아니라, <strong>방향성(Direction)</strong>과 상대적 크기를 가진 수로 정의합니다. 수직선 위에서의 <strong>'이동' 개념</strong>으로 접근합니다.</div>
     </div>
 
     <div class="concept-card">
-      <div class="concept-title">유리수 (Rational Numbers, ℚ)</div>
-      <div class="concept-body">핵심은 <strong>비(Ratio)</strong>입니다. 두 정수 a, b (단, b≠0)에 대해 <strong>a/b의 형태</strong>로 나타낼 수 있는 모든 수입니다.<br>
+      <div class="concept-title">유리수 (Rational Numbers, $\mathbb{Q}$)</div>
+      <div class="concept-body">핵심은 <strong>비(Ratio)</strong>입니다. 두 정수 a, b (단, $b \neq 0$)에 대해 <strong>$\frac{a}{b}$의 형태</strong>로 나타낼 수 있는 모든 수입니다.<br>
       'Rational'은 '이성적'이라는 뜻도 있지만, 수학에서는 <strong>'Ratio(비)'</strong>에서 왔습니다.</div>
     </div>
 
     <div class="concept-card">
       <div class="concept-title">밀집성 (Density Property)</div>
       <div class="concept-body">어떤 서로 다른 두 유리수 사이에는 <strong>반드시 또 다른 유리수가 존재</strong>합니다.<br>
-      예: 0.1과 0.2 사이의 수는 무수히 많다 → 0.11, 0.111, 0.1111...</div>
+      예: $0.1$과 $0.2$ 사이의 수는 무수히 많다 → 0.11, 0.111, 0.1111...</div>
     </div>
   </div>
 
@@ -167,8 +174,7 @@ body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-heig
     <div class="section-label">3 · Activity</div>
     <div class="section-title">심화 활동: 수의 지도 그리기</div>
     <div class="activity-box">
-      단순한 분류표를 넘어, 각 수의 집합이 서로 어떻게 포함되는지 <strong>벤다이어그램으로 시각화</strong>하고, <strong>'정수는 유리수인가?'</strong>라는 명제에 대해 논리적으로 답변하는 훈련을 합니다.<br><br>
-      자연수 ⊂ 정수 ⊂ 유리수 ⊂ 실수
+      단순한 분류표를 넘어, 각 수의 집합이 서로 어떻게 포함되는지 <strong>벤다이어그램으로 시각화</strong>하고, <strong>'정수는 유리수인가?'</strong>라는 명제에 대해 논리적으로 답변하는 훈련을 합니다.
     </div>
   </div>
 
@@ -177,7 +183,7 @@ body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-heig
     <div class="section-label" style="margin-bottom:16px">💡 Instructional Insight · 필립스 스타일 활용 팁</div>
 
     <div class="tip-item">
-      <div class="tip-num">① HARKNESS DISCUSSION</div>
+      <div class="tip-num">① Harkness 토론 질문 (Harkness Discussion)</div>
       <div class="tip-head">Harkness 토론 질문</div>
       <div class="tip-q">"만약 세상에 유리수만 있고 무리수(Irrational Numbers)가 없다면, 우리가 측정할 수 없는 길이는 무엇이 있을까?"</div>
       <div class="tip-goal">목표: 학생들 스스로 유리수의 한계를 느끼게 하고, 다음에 배울 실수의 개념을 궁금해하도록 유도합니다.</div>
