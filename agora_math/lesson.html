@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>아고라매 수업 자료</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-height:100vh;padding-bottom:60px}
+
+/* 헤더 */
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:#0f0f1a;z-index:10}
+.top-title{font-size:.85rem;font-weight:700;color:#a78bfa}
+.top-link{font-size:.72rem;color:rgba(255,255,255,.4);text-decoration:none;padding:5px 10px;border:1px solid rgba(255,255,255,.1);border-radius:8px}
+.top-link:hover{color:#e8e8f0;border-color:rgba(255,255,255,.3)}
+
+/* 일 선택 */
+.day-nav{display:flex;gap:6px;padding:14px 18px;overflow-x:auto;border-bottom:1px solid rgba(255,255,255,.06)}
+.day-btn{flex-shrink:0;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:none;color:rgba(255,255,255,.35);font-size:.72rem;cursor:pointer;transition:all .2s}
+.day-btn.active{background:rgba(167,139,250,.2);color:#a78bfa;border-color:rgba(167,139,250,.4)}
+.day-btn.locked{opacity:.3;cursor:default}
+
+/* 콘텐츠 */
+.content{max-width:640px;margin:0 auto;padding:24px 18px}
+
+/* 날짜 헤더 */
+.lesson-header{margin-bottom:28px}
+.lesson-week{font-size:.65rem;color:#a78bfa;letter-spacing:.8px;font-weight:700;margin-bottom:6px}
+.lesson-day{font-size:1.5rem;font-weight:800;color:#e8e8f0;line-height:1.3;margin-bottom:4px}
+.lesson-topic{font-size:.78rem;color:rgba(255,255,255,.4);letter-spacing:.3px}
+.lesson-time{display:inline-block;margin-top:10px;font-size:.68rem;color:rgba(255,255,255,.35);background:rgba(255,255,255,.05);padding:3px 10px;border-radius:10px}
+
+/* 섹션 */
+.section{margin-bottom:32px}
+.section-label{font-size:.65rem;font-weight:700;letter-spacing:.8px;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:10px}
+.section-title{font-size:.95rem;font-weight:800;color:#e8e8f0;margin-bottom:12px}
+
+/* 탐구 문제 박스 */
+.hook-box{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:14px;padding:20px;font-size:.9rem;font-weight:600;color:#fbbf24;line-height:1.7;text-align:center}
+
+/* 개념 카드 */
+.concept-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;margin-bottom:10px}
+.concept-title{font-size:.78rem;font-weight:700;color:#a78bfa;margin-bottom:6px}
+.concept-body{font-size:.8rem;line-height:1.8;color:rgba(255,255,255,.8)}
+.concept-body strong{color:#e8e8f0}
+
+/* 활동 */
+.activity-box{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:12px;padding:16px;font-size:.8rem;line-height:1.8;color:rgba(255,255,255,.8)}
+
+/* 팁 섹션 */
+.tip-section{border-top:1px solid rgba(255,255,255,.06);padding-top:24px;margin-top:8px}
+.tip-item{margin-bottom:20px}
+.tip-num{font-size:.65rem;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.5px;margin-bottom:4px}
+.tip-head{font-size:.82rem;font-weight:700;color:#60a5fa;margin-bottom:8px}
+.tip-body{font-size:.78rem;line-height:1.8;color:rgba(255,255,255,.75)}
+.tip-q{background:rgba(96,165,250,.08);border-left:3px solid #60a5fa;padding:10px 14px;border-radius:0 8px 8px 0;margin:8px 0;font-size:.82rem;color:#93c5fd;font-weight:600;line-height:1.6}
+.tip-goal{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:6px;font-style:italic}
+
+/* 수업 지도안 */
+.guide-section{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:20px;margin-bottom:20px}
+.guide-step-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.guide-time-badge{font-size:.65rem;font-weight:700;background:rgba(251,113,133,.15);color:#fb7185;padding:3px 9px;border-radius:10px}
+.guide-step-title{font-size:.85rem;font-weight:700;color:#e8e8f0}
+.guide-body{font-size:.78rem;line-height:1.9;color:rgba(255,255,255,.78)}
+.guide-body .q{color:#fbbf24;font-weight:600}
+.guide-body .a{color:rgba(255,255,255,.5);font-style:italic}
+.guide-body .conclusion{margin-top:8px;background:rgba(167,139,250,.08);border-left:2px solid #a78bfa;padding:6px 10px;border-radius:0 6px 6px 0;font-size:.75rem}
+
+/* 토론 시나리오 */
+.scenario-box{background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.15);border-radius:14px;padding:20px;margin-bottom:12px}
+.scenario-speaker{font-size:.72rem;font-weight:700;color:#fbbf24;margin-bottom:6px}
+.scenario-line{font-size:.8rem;line-height:1.8;color:rgba(255,255,255,.82)}
+.scenario-teacher{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:14px;padding:20px;margin-bottom:12px}
+.scenario-teacher .scenario-speaker{color:#a78bfa}
+
+/* 퀴즈 */
+.quiz-box{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:18px}
+.quiz-q{font-size:.85rem;font-weight:600;color:#fca5a5;margin-bottom:14px;line-height:1.7}
+.quiz-a{font-size:.78rem;color:rgba(255,255,255,.7);line-height:1.8}
+.quiz-a strong{color:#34d399}
+
+/* 하단 링크 */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0f0f1a;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;padding:10px 18px}
+.nav-btn{font-size:.75rem;color:rgba(255,255,255,.4);text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,.1);border-radius:8px}
+.nav-btn.primary{background:rgba(167,139,250,.15);color:#a78bfa;border-color:rgba(167,139,250,.3)}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="top-title">🏛️ 아고라매 — 수업 자료</div>
+  <a href="index.html" class="top-link">📋 카드 포맷 →</a>
+</div>
+
+<div class="day-nav">
+  <button class="day-btn active" onclick="showDay(1)">Day 1</button>
+  <button class="day-btn locked">Day 2</button>
+  <button class="day-btn locked">Day 3</button>
+  <button class="day-btn locked">Day 4</button>
+  <button class="day-btn locked">Day 5</button>
+  <button class="day-btn locked">Day 6</button>
+  <button class="day-btn locked">Day 7</button>
+  <button class="day-btn locked">Day 8</button>
+  <button class="day-btn locked">Day 9</button>
+  <button class="day-btn locked">Day 10</button>
+  <button class="day-btn locked">Day 11</button>
+  <button class="day-btn locked">Day 12</button>
+  <button class="day-btn locked">Day 13</button>
+  <button class="day-btn locked">Day 14</button>
+  <button class="day-btn locked">Day 15</button>
+  <button class="day-btn locked">Day 16</button>
+  <button class="day-btn locked">Day 17</button>
+  <button class="day-btn locked">Day 18</button>
+  <button class="day-btn locked">Day 19</button>
+  <button class="day-btn locked">Day 20</button>
+</div>
+
+<div class="content" id="day1-content">
+
+  <!-- ── 헤더 ── -->
+  <div class="lesson-header">
+    <div class="lesson-week">📅 1주차 · 수의 체계와 논리적 사고</div>
+    <div class="lesson-day">Day 1: 정수와 유리수, 수의 체계를 세우다</div>
+    <div class="lesson-topic">Topic: The Rigor of Number Systems</div>
+    <div class="lesson-time">45~60분</div>
+  </div>
+
+  <!-- ── 1. 탐구 문제 ── -->
+  <div class="section">
+    <div class="section-label">1 · The Opening Task</div>
+    <div class="section-title">오늘의 탐구 문제</div>
+    <div class="hook-box">
+      "우리는 왜 0보다 작은 수가 필요했을까?<br>
+      그리고 0.333...과 1/3은 정확히 같은 것일까?"
+    </div>
+    <p style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:10px;line-height:1.6">
+      학생들에게 바로 정의를 알려주기보다, 이 질문으로 시작합니다.<br>
+      필립스 스타일의 핵심은 '당연한 것을 당연하지 않게 바라보는 것'입니다.
+    </p>
+  </div>
+
+  <!-- ── 2. 핵심 개념 ── -->
+  <div class="section">
+    <div class="section-label">2 · Core Concepts</div>
+    <div class="section-title">핵심 개념</div>
+
+    <div class="concept-card">
+      <div class="concept-title">정수 (Integers, ℤ)</div>
+      <div class="concept-body">단순히 '자연수와 그 음수'가 아니라, <strong>방향성(Direction)</strong>과 상대적 크기를 가진 수로 정의합니다. 수직선 위에서의 <strong>'이동' 개념</strong>으로 접근합니다.</div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-title">유리수 (Rational Numbers, ℚ)</div>
+      <div class="concept-body">핵심은 <strong>비(Ratio)</strong>입니다. 두 정수 a, b (단, b≠0)에 대해 <strong>a/b의 형태</strong>로 나타낼 수 있는 모든 수입니다.<br>
+      'Rational'은 '이성적'이라는 뜻도 있지만, 수학에서는 <strong>'Ratio(비)'</strong>에서 왔습니다.</div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-title">밀집성 (Density Property)</div>
+      <div class="concept-body">어떤 서로 다른 두 유리수 사이에는 <strong>반드시 또 다른 유리수가 존재</strong>합니다.<br>
+      예: 0.1과 0.2 사이의 수는 무수히 많다 → 0.11, 0.111, 0.1111...</div>
+    </div>
+  </div>
+
+  <!-- ── 3. 심화 활동 ── -->
+  <div class="section">
+    <div class="section-label">3 · Activity</div>
+    <div class="section-title">심화 활동: 수의 지도 그리기</div>
+    <div class="activity-box">
+      단순한 분류표를 넘어, 각 수의 집합이 서로 어떻게 포함되는지 <strong>벤다이어그램으로 시각화</strong>하고, <strong>'정수는 유리수인가?'</strong>라는 명제에 대해 논리적으로 답변하는 훈련을 합니다.<br><br>
+      자연수 ⊂ 정수 ⊂ 유리수 ⊂ 실수
+    </div>
+  </div>
+
+  <!-- ── 4. 필립스 스타일 팁 ── -->
+  <div class="tip-section">
+    <div class="section-label" style="margin-bottom:16px">💡 Instructional Insight · 필립스 스타일 활용 팁</div>
+
+    <div class="tip-item">
+      <div class="tip-num">① HARKNESS DISCUSSION</div>
+      <div class="tip-head">Harkness 토론 질문</div>
+      <div class="tip-q">"만약 세상에 유리수만 있고 무리수(Irrational Numbers)가 없다면, 우리가 측정할 수 없는 길이는 무엇이 있을까?"</div>
+      <div class="tip-goal">목표: 학생들 스스로 유리수의 한계를 느끼게 하고, 다음에 배울 실수의 개념을 궁금해하도록 유도합니다.</div>
+    </div>
+
+    <div class="tip-item">
+      <div class="tip-num">② REAL-WORLD CONNECTION</div>
+      <div class="tip-head">실생활 연결</div>
+      <div class="tip-body">
+        <strong>회계와 수의 체계:</strong> 기업의 재무제표에서 '부채(Debt)'를 음의 정수로 표현하는 방식, 혹은 주식 시장에서 소수점 넷째 자리까지 사용하는 유리수의 정밀함에 대해 이야기해 보세요.<br><br>
+        수학이 관념이 아닌 <strong>'약속'</strong>임을 깨닫게 합니다.
+      </div>
+    </div>
+
+    <div class="tip-item">
+      <div class="tip-num">③ EXIT TICKET</div>
+      <div class="tip-head">수업 마무리 퀴즈</div>
+      <div class="quiz-box">
+        <div class="quiz-q">"모든 정수는 유리수이지만, 모든 유리수는 정수가 아니다.<br>이 문장이 참인지 거짓인지 이유와 함께 설명하시오."</div>
+        <div class="quiz-a"><strong>정답: 참</strong><br>
+        정수 n = n/1 이므로 모든 정수는 유리수 (a/b 형태) ✓<br>
+        유리수 1/2 = 0.5는 정수가 아니다 ✓<br>
+        → 정수 ⊂ 유리수, 그러나 유리수 ⊄ 정수</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 수업 지도안 ── -->
+  <div class="section" style="margin-top:36px">
+    <div class="section-label">🍎 수업 지도안 · Lesson Plan</div>
+    <div class="section-title">원장님 수업 스크립트</div>
+
+    <div class="guide-section">
+      <div class="guide-step-head">
+        <span class="guide-time-badge">5분</span>
+        <span class="guide-step-title">도입: 생각 열기</span>
+      </div>
+      <div class="guide-body">
+        <span class="q">(교사 질문)</span> "여러분, 우리는 초등학교 때 '자연수'를 배웠어요. 그런데 왜 중학교에 오니 '음수(−)'와 '0'이 포함된 정수를 배워야 할까요? 만약 세상에 음수가 없다면 어떤 일이 벌어질까요?"<br><br>
+        <span class="a">학생들의 예상 답변: "빚을 표현 못 해요", "영하의 기온을 말 못 해요."</span>
+        <div class="conclusion">교사의 정리: "맞아요. 음수는 단순히 '작은 수'가 아니라, 기준(0)으로부터 <strong>'반대 방향'</strong>이라는 개념을 수학에 도입한 혁명적인 사건이에요."</div>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-step-head">
+        <span class="guide-time-badge">20분</span>
+        <span class="guide-step-title">전개: 유리수의 정의와 논리</span>
+      </div>
+      <div class="guide-body">
+        <strong>(1) 유리수의 진짜 의미</strong><br>
+        많은 학생이 유리수를 단순히 '분수'라고만 압니다. 하지만 그 어원을 짚어주면 수준이 달라집니다.<br><br>
+        설명: 'Rational'은 '이성적'이라는 뜻도 있지만, 수학에서는 <strong>'Ratio(비)'</strong>에서 왔습니다.<br>
+        정의: 유리수는 <strong>"두 정수의 비(a/b 형태, b≠0)로 나타낼 수 있는 수"</strong>를 말합니다.<br><br>
+        <strong>(2) '밀집성(Density)' 실험</strong><br>
+        <span class="q">질문:</span> "0.1과 0.2 사이에 유리수가 몇 개나 있을까?"<br>
+        유도: 0.11, 0.111, 0.1111... 끝없이 만들 수 있죠?
+        <div class="conclusion">"유리수는 수직선 위에서 아주 빽빽하게(Dense) 존재해. 아무리 좁은 틈이라도 그 사이엔 또 다른 유리수가 있지."</div>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-step-head">
+        <span class="guide-time-badge">15분</span>
+        <span class="guide-step-title">하크니스 토론 (Harkness Discussion)</span>
+      </div>
+      <div class="guide-body">
+        <strong>주제: 0.999…은 정말로 1인가?</strong><br>
+        이 질문은 미국 사립학교 수학 수업의 단골 소재입니다. 아이들이 서로 논쟁하게 두세요.<br><br>
+        <strong>논리 A (유리수적 접근):</strong> 1/3 = 0.333… → 양변에 3을 곱하면 3/3 = 0.999… → 3/3 = 1 → 따라서 0.999… = 1<br><br>
+        <strong>논리 B (직관적 접근):</strong> "아무리 9가 많아도 1보다는 아주 조금이라도 작지 않을까요?"
+        <div class="conclusion">교사의 개입: "유리수의 정의에 따르면, 두 수 사이에 다른 유리수가 존재하지 않는다면 그 두 수는 같은 수야. 0.999…와 1 사이에 다른 숫자를 넣을 수 있니?"</div>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-step-head">
+        <span class="guide-time-badge">5분</span>
+        <span class="guide-step-title">마무리: 실전 문제</span>
+      </div>
+      <div class="guide-body">
+        <strong>다음 중 유리수가 아닌 것을 고르고 이유를 설명하세요.</strong><br><br>
+        ① −5 &nbsp; ② 0 &nbsp; ③ 0.333… &nbsp; ④ π (3.141592…)
+        <div class="conclusion"><strong>정답 가이드:</strong> ①②③은 모두 유리수 (−5=−5/1, 0=0/1, 0.333…=1/3)<br>
+        <strong>π</strong>는 아무리 노력해도 정수/정수 꼴로 만들 수 없으므로 유리수가 아닙니다.<br>
+        → 이것이 내일(Day 4) 배울 내용의 복선입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 하크니스 시나리오 ── -->
+  <div class="section" style="margin-top:36px">
+    <div class="section-label">🗣️ 하크니스 토론 실전 시나리오</div>
+    <div class="section-title">"유리수는 완벽한가?"</div>
+    <p style="font-size:.75rem;color:rgba(255,255,255,.4);margin-bottom:16px;line-height:1.6">칠판에는 딱 한 문장만 적혀 있습니다:<br>
+    <strong style="color:rgba(255,255,255,.7)">"수직선 위의 모든 점은 유리수로 나타낼 수 있는가?"</strong></p>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">학생 A (발제자)</div>
+      <div class="scenario-line">"난 그렇다고 봐. 아까 우리가 배운 '밀집성(Density)' 때문이야. 어떤 두 유리수 사이를 아무리 현미경으로 확대해도 그 안엔 또 다른 유리수가 있잖아? 0.1과 0.11 사이에도 무수히 많은 분수가 있으니까, 결국 수직선은 유리수로 꽉 차 있는 거 아닐까?"</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">학생 B (반론)</div>
+      <div class="scenario-line">"A의 말도 일리가 있지만, '무수히 많다'는 게 '빈틈이 없다'는 뜻은 아니라고 생각해. 예를 들어, 피타고라스 정리를 써서 한 변이 1인 직사각형의 대각선 길이를 구하면 √2가 나오잖아. 이 길이는 분명히 수직선 위에 존재하는데, 이걸 정수/정수 꼴로 나타낼 수 있어? 난 없다고 들었어."</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">학생 C (보완)</div>
+      <div class="scenario-line">"B의 말이 맞아. 만약 √2가 유리수가 아니라면, 수직선에는 유리수가 '채우지 못한 구멍'이 있다는 뜻이 돼. 유리수는 아주 촘촘하긴 하지만, 연속적(Continuous)이지는 않은 거지. 마치 체에 걸러진 가루처럼 말이야."</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">학생 D (심화 질문)</div>
+      <div class="scenario-line">"잠깐, 그럼 우리가 아까 논쟁한 0.999… = 1 문제는 어떻게 돼? 0.999…는 유리수야? 만약 유리수라면, 1과의 사이에 '빈틈'이 없으니까 두 수는 같은 점이어야 해. 하지만 유리수가 아닌 무언가가 그 사이에 끼어들 여지가 있다면?"</div>
+    </div>
+
+    <div class="scenario-teacher">
+      <div class="scenario-speaker">교사 (중재 — 여기서 처음 개입)</div>
+      <div class="scenario-line">"흥미로운 지점이야. D의 질문을 이어가 보자. 만약 수직선에 유리수만 살고 있다면, 우리는 '원(Circle)의 둘레'를 정확히 수직선 위에 표시할 수 있을까? 원주율 π는 어떻게 설명할래?"</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">학생 E (결론 도출)</div>
+      <div class="scenario-line">"결국 유리수는 세상의 모든 길이를 설명하기엔 '부족한' 수 체계인 것 같아. 수직선을 완전히 메우기 위해서는 유리수 사이사이에 있는 '무리수'라는 접착제가 필요한 거지. 그래서 우리가 이걸 합쳐서 '실수(Real Number)'라고 부르는 게 아닐까?"</div>
+    </div>
+  </div>
+
+  <!-- ── 원장님 가이드 ── -->
+  <div class="section" style="margin-top:36px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06)">
+    <div class="section-label">📝 원장님이 이 토론을 수업에 적용하는 법</div>
+
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">① "Devil's Advocate" (악마의 대변인) 역할</div>
+      <div class="concept-body">아이들이 너무 쉽게 "맞아요"라고 하면, 반대 사례를 던지세요.<br>
+      <strong>"하지만 유리수는 무한히 많잖아? 무한히 많은데 어떻게 빈틈이 있을 수 있지? 이상하지 않아?"</strong></div>
+    </div>
+
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">② 하크니스 테이블(Harkness Table) 기록</div>
+      <div class="concept-body">토론하는 동안 누가 누구에게 질문했는지 선으로 연결하며 기록하세요. 수업 후 이 '대화 지도'를 보여주면 아이들은 자신의 참여도를 객관적으로 보게 됩니다.</div>
+    </div>
+
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">③ "So What?" (그래서 뭐?) 던지기</div>
+      <div class="concept-body"><strong>"결국 오늘 토론의 핵심은 이거야. 수학은 눈에 보이는 현상을 더 정밀하게 설명하기 위해 끊임없이 '수 체계'를 확장해온 역사라는 것. 유리수의 한계를 깨달은 여러분은 이제 고등 수학으로 갈 준비가 된 거야."</strong></div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-title">💡 실제 수업에서 아이들에게 줄 토론 수칙</div>
+      <div class="concept-body">
+        · 발언하기 전에 반드시 앞사람의 의견을 요약하거나 언급할 것<br>
+        &nbsp;&nbsp;<em style="color:rgba(255,255,255,.4)">(예: "B가 말한 √2 사례를 듣고 생각난 건데…")</em><br><br>
+        · 답을 맞히는 것이 목표가 아니라, <strong>'우리 모두의 이해도를 높이는 것'</strong>이 목표<br><br>
+        · 교사를 보지 말고 친구의 눈을 보고 말할 것
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<div class="bottom-nav">
+  <a href="index.html" class="nav-btn">📋 카드 포맷</a>
+  <span style="font-size:.72rem;color:rgba(255,255,255,.3);align-self:center">Day 1 / 20</span>
+  <a href="#" class="nav-btn primary">Day 2 →</a>
+</div>
+
+<script>
+function showDay(n) {
+  // 추후 Day 2~20 추가 시 전환
+}
+</script>
+</body>
+</html>
