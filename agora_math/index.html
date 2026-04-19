@@ -573,8 +573,553 @@ const TOPICS = [
   }
   ,
   // ── 1주차: 수의 체계와 논리적 사고 ──
-  { id:'day02', day:2, week:1, title:'비율과 백분율의 실전 응용', titleEn:'Ratios, Rates & Percents', desc:'두 양의 관계를 수로 표현하는 법 — 금융·건축·과학의 공통 언어', locked:true, cards:null },
-  { id:'day03', day:3, week:1, title:'지수 법칙과 과학적 표기법', titleEn:'Exponents & Scientific Notation', desc:'10억을 10⁹으로 쓰는 이유 — 수의 크기를 다루는 새로운 언어', locked:true, cards:null },
+  { id:'day02', day:2, week:1, title:'비율과 백분율의 실전 응용', titleEn:'Ratios, Rates & Percents', desc:'두 양의 관계를 수로 표현하는 법 — 금융·건축·과학의 공통 언어', locked:false,
+    cards: {
+      h: {
+        tag: '🏛️ 하크니스 원탁',
+        body: `<div class="question">할인율 20%에 추가 할인 10%를 하면 총 30% 할인일까?</div>
+
+<h3>📜 오늘의 규칙</h3>
+<ul>
+<li>발언 전 앞 사람의 말을 한 문장으로 요약한다</li>
+<li>수식보다 이유를 먼저 말한다</li>
+<li>반론은 "나는 다르게 생각해"로 시작한다</li>
+</ul>
+
+<h3>🌱 오늘의 탐구 문제</h3>
+<div class="highlight">"A 백화점은 모든 품목 30% 할인, B 백화점은 20% 할인 후 계산대에서 추가 10% 할인. 두 백화점의 혜택은 같을까요?"</div>
+
+<h3>🔑 핵심 개념</h3>
+<ul>
+<li><strong>Ratio(비)</strong>: 두 양의 크기를 비교하는 것 (a:b)</li>
+<li><strong>Rate(율)</strong>: 서로 다른 단위의 비 (예: 속력 km/h)</li>
+<li><strong>Percent(백분율)</strong>: 기준(분모)을 100으로 고정한 비</li>
+<li><strong>기준값(Base Value)</strong>: 퍼센트가 적용되는 기준 — 이것이 바뀌면 결과도 바뀐다</li>
+</ul>
+
+<h3>💬 하크니스 토론 질문</h3>
+<div class="question">비율(Ratio)과 분수(Fraction)는 같은 개념일까, 다른 개념일까?</div>
+<div class="highlight">힌트: 남녀 비율 3:2를 분수로 쓰면 3/2인데, 이것이 "전체의 3/2"를 의미하는가?</div>`,
+        ans: `<h3>🏛️ 하크니스 원탁 — 토론 정리</h3>
+
+<h3>🎙️ 필립스 토론 현장: 마야·리암·소피아·노아</h3>
+<div class="guide-step">
+<h4>마야(Maya) — 직관</h4>
+"20을 뺏다가 다시 20을 더했는데? 산술적으로 +20−20=0이잖아."
+</div>
+<div class="guide-step">
+<h4>리암(Liam) — 반론</h4>
+"퍼센트는 '절대적인 양'이 아니라 '상대적인 비율'이야. 100에서 20%를 깎으면 80이 되지만, 그 다음 날 20%를 올릴 때는 기준이 80으로 바뀌어. 80의 20%는 16이니까 결국 96이 되는 거지."
+</div>
+<div class="guide-step">
+<h4>소피아(Sophia) — 확장</h4>
+"기준이 낮아지면 똑같은 비율로 올라도 원래대로 돌아오지 못해. 원래 가격으로 돌아가려면 20%보다 더 많이 올려야겠네?"
+</div>
+<div class="guide-step">
+<h4>노아(Noah) — 계산</h4>
+"80에서 100으로 가려면 20이 더 필요하니까, 80에 대한 20의 비 = 20/80 = 1/4 → 25%를 올려야 하네!"
+</div>
+
+<h3>🔑 핵심 결론</h3>
+<div class="highlight">비율(Ratio) ≠ 분수(Fraction)<br>
+비: 부분 대 부분 (Part-to-Part) — 예: 남녀 3:2<br>
+분수: 부분 대 전체 (Part-to-Whole) — 예: 전체의 3/5<br>
+→ 문맥에 따라 다른 개념이지만 수학적으로 같은 형태로 쓸 수 있다</div>
+
+<h3>🎯 Exit Ticket</h3>
+<div class="highlight">주식이 첫날 50% 폭락, 둘째 날 50% 폭등 → 본전인가 손해인가?<br>
+<strong>정답: 손해.</strong> 100 × 0.5 = 50 → 50 × 1.5 = 75. 기준값이 달라졌기 때문.</div>
+
+<div class="highlight">🔙 출발점: 퍼센트의 '기준값(Base)'이 무엇인지 항상 확인하라. 같은 숫자라도 기준이 다르면 결과가 다르다.</div>`
+      },
+      a: {
+        tag: '🏛️ 아고라 광장',
+        body: `<div class="question">20% 할인 후 10% 추가 할인 = 총 30% 할인인가, 28% 할인인가?</div>
+
+<h3>🏛️ 아고라 광장이란?</h3>
+<div class="highlight">그리스 아테네의 공개 광장. 두 진영이 대립하며, 투표로 승자를 결정한다.</div>
+
+<h3>⚔️ 오늘의 대립</h3>
+<ul>
+<li><strong>A 진영 — "30%와 같다"</strong>: 20+10=30이니까 결과는 같다</li>
+<li><strong>B 진영 — "28%로 다르다"</strong>: 기준값이 바뀌므로 30%가 아니다</li>
+</ul>
+
+<h3>📣 광장의 규칙</h3>
+<ul>
+<li>발언 시간: 최대 1분</li>
+<li>수, 계산, 실생활 사례로 근거를 댄다</li>
+<li>마지막엔 전체 표결</li>
+</ul>
+
+<h3>🌿 대화 씨앗</h3>
+<ul>
+<li>100원짜리 물건을 20% 깎으면 80원. 80원의 10%는 8원. 그럼 최종 가격은?</li>
+<li>쇼핑몰이 "처음부터 28% 할인"이 아닌 "20% + 추가 10%"라고 광고하는 이유는?</li>
+<li>복리와 단리의 차이도 같은 원리인가?</li>
+</ul>
+
+<h3>🔑 핵심 개념 연결</h3>
+<ul>
+<li><strong>기준값 이동</strong>: 100 → 80(−20%) → 72(−10% of 80) = 총 28% 할인</li>
+<li><strong>퍼센트포인트(%p) vs 퍼센트(%)</strong>: 20%+10%=30%p 이지만, 결과는 28%</li>
+</ul>`,
+        ans: `<h3>🏛️ 아고라 광장 — 논점 정리</h3>
+
+<h3>B 진영 — "28%"의 증명</h3>
+<div class="highlight">100 × (1 − 0.20) × (1 − 0.10) = 100 × 0.80 × 0.90 = 72<br>
+→ 100 − 72 = 28 → <strong>총 28% 할인</strong></div>
+
+<h3>A 진영 — 직관의 함정</h3>
+<ul>
+<li>20+10=30이라는 산술은 기준값이 고정되어 있다고 가정한다</li>
+<li>첫 번째 할인 후 기준값(Base)이 80으로 바뀐다는 것을 놓쳤다</li>
+<li>A 진영의 직관은 단순 덧셈의 함정 — 퍼센트는 상대적이다</li>
+</ul>
+
+<h3>🔑 아고라의 결론</h3>
+<div class="highlight">수학적으로: <strong>B 진영 승리 (28%)</strong><br>
+실생활 적용: 광고의 "추가 할인"은 항상 바뀐 기준에 적용된다 → 소비자 주의<br>
+→ "기준값이 무엇인가?"를 먼저 묻는 습관이 수학적 사고의 핵심이다.</div>
+
+<div class="highlight">🔙 핵심: 퍼센트(%)는 언제나 기준값(Base)에 상대적이다. 기준이 바뀌면 같은 숫자도 다른 결과를 낳는다.</div>`
+      },
+      m: {
+        tag: '🔬 미네르바 세미나',
+        body: `<div class="question">🔬 사전 과제 (세미나 전 반드시 완료)</div>
+
+<h3>① 다음을 계산하시오</h3>
+<div class="highlight">
+1. 10만 원짜리 상품을 30% 할인하면 얼마인가?<br>
+2. 70만 원에서 10% 할인 후 다시 10% 할인하면 최종 가격은?<br>
+3. 어떤 수의 25%가 50이라면, 그 수는?
+</div>
+
+<h3>② 비율 분류</h3>
+남녀 비율 3:2 / 합격률 75% / 속력 60km/h / 농도 10%<br>
+→ Ratio(비) / Rate(율) / Percent(백분율) 로 분류하고 이유 쓰기
+
+<h3>🔬 미네르바 세미나 방식</h3>
+<div class="highlight">강의 없음. 사전 학습 완료 후 세미나. 교사는 질문만 한다.</div>
+
+<h3>📊 실시간 Poll</h3>
+<ul>
+<li>① 20% 할인 + 10% 할인 = 30% 할인이다</li>
+<li>② 20% 할인 + 10% 할인 = 28% 할인이다</li>
+<li>③ 상황에 따라 다르다</li>
+</ul>
+
+<h3>🧠 HC (사고 습관) 체크</h3>
+<ul>
+<li><strong>정밀성(Precision)</strong>: "퍼센트"와 "퍼센트포인트"는 다른가?</li>
+<li><strong>일반화(Generalizing)</strong>: a% 할인 후 b% 할인의 최종 할인율 공식은?</li>
+<li><strong>전이(Transfer)</strong>: 이 원리가 복리 계산에서 어떻게 나타나는가?</li>
+</ul>`,
+        ans: `<h3>🔬 미네르바 세미나 — 정리</h3>
+
+<h3>① 계산 정답</h3>
+<table>
+<tr><th>문제</th><th>정답</th><th>풀이</th></tr>
+<tr><td>10만 원 30% 할인</td><td>7만 원</td><td>100,000 × 0.7 = 70,000</td></tr>
+<tr><td>70만 원 10%↓ 후 10%↓</td><td>567,000원</td><td>700,000 × 0.9 × 0.9 = 567,000</td></tr>
+<tr><td>25%가 50인 수</td><td>200</td><td>x × 0.25 = 50 → x = 200</td></tr>
+</table>
+
+<h3>② 비율 분류 정답</h3>
+<div class="highlight">남녀 3:2 → Ratio(비, Part-to-Part)<br>
+합격률 75% → Percent(백분율)<br>
+속력 60km/h → Rate(율, 다른 단위 비교)<br>
+농도 10% → Percent(백분율)</div>
+
+<h3>🧠 HC 정리</h3>
+<ul>
+<li><strong>일반화 공식</strong>: a% 후 b% 할인 = (1−a/100)(1−b/100) 적용 → a+b보다 항상 작다</li>
+<li><strong>복리와의 연결</strong>: 매년 r%씩 성장 = (1+r/100)ⁿ — 기준값이 매번 바뀐다</li>
+</ul>
+
+<div class="highlight">🔙 FC (핵심 개념): 퍼센트는 반드시 기준값(Base)이 있다. 기준값을 먼저 확인하는 것이 비율 문제의 출발점이다.</div>`
+      },
+      e: `<div class="emergency-card">
+
+  <div class="em-row" style="border-color:#6366f1">
+    <div style="flex:1">
+      <div class="em-trigger" style="color:#818cf8;font-size:.8rem;margin-bottom:6px">🔇 순간 1. "그냥 더하면 되잖아요" — 직관에 갇힌 학생</div>
+      <div style="font-size:.72rem;color:rgba(239,68,68,.9);margin-bottom:6px">✗ 하지 말 것: "틀렸어. 20+10은 28이야"<br>
+      <span style="color:rgba(255,255,255,.4);font-size:.68rem">→ 정정해줘도 왜 틀렸는지 모릅니다.</span></div>
+      <div style="font-size:.72rem;color:rgba(52,211,153,.9);margin-bottom:4px">✓ 할 것: 직접 계산하게 한다.</div>
+      <div class="em-action">"100원짜리 물건을 실제로 계산기로 해봐. 20% 깎고, 그 가격에서 10% 깎아봐."</div>
+      <div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">72가 나오면 "그럼 100에서 28% 깎은 거네?"라고 물어봅니다. 스스로 발견하게 합니다.</div>
+    </div>
+  </div>
+
+  <div class="em-row" style="border-color:#f59e0b">
+    <div style="flex:1">
+      <div class="em-trigger" style="color:#fbbf24;font-size:.8rem;margin-bottom:6px">❌ 순간 2. 퍼센트와 퍼센트포인트를 혼동한다</div>
+      <div style="font-size:.72rem;color:rgba(255,255,255,.5);margin-bottom:4px;font-style:italic">"금리가 2%에서 3%로 올랐어요. 50% 오른 건가요, 1% 오른 건가요?"</div>
+      <div style="font-size:.72rem;color:rgba(52,211,153,.9);margin-bottom:4px">✓ 할 것:</div>
+      <div class="em-action">"둘 다 맞아. 단위가 다를 뿐이야. 뉴스에서는 뭐라고 할 것 같아?"</div>
+      <div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">퍼센트포인트(%p) = 절대적 차이 / 퍼센트(%) = 상대적 변화율. 둘 다 옳지만 의미가 다릅니다.</div>
+    </div>
+  </div>
+
+  <div class="em-row" style="border-color:#10b981">
+    <div style="flex:1">
+      <div class="em-trigger" style="color:#34d399;font-size:.8rem;margin-bottom:6px">📢 순간 3. "이걸 실제로 어디서 써요?" — 동기 저하</div>
+      <div style="font-size:.72rem;color:rgba(52,211,153,.9);margin-bottom:4px">✓ 할 것:</div>
+      <div class="em-action">"지금 당장 쇼핑몰 앱 켜봐. '최대 50% + 추가 10%' 광고 있지? 실제 할인율이 몇 %인지 계산해봐."</div>
+      <div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">실시간 실생활 연결이 가장 강력한 동기부여입니다.</div>
+    </div>
+  </div>
+
+  <div class="em-row" style="border-color:#3b82f6">
+    <div style="flex:1">
+      <div class="em-trigger" style="color:#60a5fa;font-size:.8rem;margin-bottom:6px">🔀 순간 4. 계산에만 집중하고 개념을 놓친다</div>
+      <div style="font-size:.72rem;color:rgba(52,211,153,.9);margin-bottom:4px">✓ 할 것:</div>
+      <div class="em-action">"계산기 치우고 — 왜 28%가 되는지 말로 설명해봐. '기준값'이라는 단어를 써서."</div>
+      <div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">수식 없이 언어로 설명할 수 있어야 개념을 이해한 것입니다.</div>
+    </div>
+  </div>
+
+  <div class="em-row" style="border-color:#8b5cf6">
+    <div style="flex:1">
+      <div class="em-trigger" style="color:#a78bfa;font-size:.8rem;margin-bottom:6px">🏁 순간 5. 수업을 끝내야 한다</div>
+      <div style="font-size:.72rem;color:rgba(52,211,153,.9);margin-bottom:4px">✓ 할 것:</div>
+      <div class="em-action">"오늘 배운 것 중 내일 부모님한테 자랑할 수 있는 것 하나만 말해봐."</div>
+      <div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">설명할 수 있으면 배운 것이고, 설명 못 하면 더 배워야 합니다.</div>
+    </div>
+  </div>
+
+</div>`,
+      g: {
+        tag: '🍎 수업 가이드',
+        body: `<div class="question">Day 2 수업 지도안 · 비율과 백분율 — 원장님 스크립트</div>
+
+<div class="guide-step">
+<h4>🕐 1. 도입: 생각 열기 (5분)</h4>
+<p><strong>(교사 질문)</strong> "여러분, A 백화점은 모든 품목 30% 할인이고, B 백화점은 20% 할인한 뒤에 계산대에서 추가로 10%를 더 깎아준대요. 두 백화점의 할인 혜택은 같을까요?"</p>
+<p>아이들의 반응: "똑같이 30% 아니에요?", "아니요, 뭔가 다를 것 같아요!"</p>
+<p><strong>해설:</strong> 실제 계산(100×0.8×0.9=72)을 통해 추가 할인이 28% 할인임을 보여주며, '기준값의 변화'가 왜 중요한지 일깨워줍니다.</p>
+</div>
+
+<div class="guide-step">
+<h4>🕐 2. 핵심 개념 (15분)</h4>
+<p><strong>Ratio(비)</strong>: 두 양의 크기를 비교하는 것 (a:b)</p>
+<p><strong>Rate(율)</strong>: 서로 다른 단위의 비 (예: 속력 — km/h)</p>
+<p><strong>Percent(백분율)</strong>: 기준(분모)을 100으로 고정한 비</p>
+</div>
+
+<div class="guide-step">
+<h4>🕐 3. 하크니스 토론 (20분)</h4>
+<p><strong>토론 시나리오 — 마야·리암·소피아·노아</strong></p>
+<p>학생 A: "비율은 단순한 분수랑 달라요. 분수는 전체 중의 일부(Part-to-Whole)를 말하지만, 비는 부분과 부분(Part-to-Part)을 비교할 수도 있잖아요?"</p>
+<p>학생 B: "맞아. 남녀 비율이 3:2인 건 분수로 3/2라고 쓸 수 있지만, 그게 '전체의 3/5'를 의미하진 않지."</p>
+<p>학생 C: "그럼 백분율은 왜 쓰는 걸까? 그냥 분수로 쓰면 안 돼?"</p>
+<p>학생 D: "기준이 다르면 비교가 안 되니까! 만점이 각각 80점, 100점이라면 백분율로 바꿔야 누가 더 잘했는지 보이지."</p>
+</div>
+
+<div class="guide-step">
+<h4>🕐 4. 마무리 (5분)</h4>
+<p><strong>Exit Ticket:</strong> "어떤 주식이 첫날 50% 폭락하고, 둘째 날 50% 폭등했다. 이 주식을 산 사람은 본전일까, 아니면 손해일까? 계산 과정 없이 '기준값'의 원리로 설명하시오."</p>
+</div>`,
+        ans: `<h3>🍎 수업 가이드 — 정답 및 교사 팁</h3>
+
+<div class="answer-box">
+<strong>[Exit Ticket 정답]</strong><br>
+손해. 100 × 0.5 = 50 → 50 × 1.5 = 75<br>
+50% 폭락의 기준은 100, 50% 폭등의 기준은 50. 기준값이 달라졌으므로 손해다.
+</div>
+
+<h3>💡 수업 운영 팁</h3>
+<div class="tip-box">
+<strong>① 계산기 활용</strong><br>
+복잡한 퍼센트 계산은 계산기를 쓰게 해도 좋습니다. 중요한 건 "어떤 식을 세워야 하는가"입니다.
+</div>
+<div class="tip-box">
+<strong>② 뉴스 기사 활용</strong><br>
+인플레이션 5% 상승, 시청률 10%p 하락 — '퍼센트'와 '퍼센트포인트'의 차이를 토론하게 해보세요.
+</div>
+<div class="tip-box">
+<strong>③ 마무리 질문</strong><br>
+"설탕물 10%와 20%를 섞으면 왜 15%가 되지 않을까? (양이 다를 때)" — 기준값 개념 심화.
+</div>`
+      }
+    }
+  },
+  { id:'day03', day:3, week:1, title:'지수 법칙과 과학적 표기법', titleEn:'Exponents & Scientific Notation', desc:'10억을 10⁹으로 쓰는 이유 — 수의 크기를 다루는 새로운 언어', locked:false,
+    cards: {
+      h: {
+        tag: '🏛️ 하크니스 원탁',
+        body: `<div class="question">종이 한 장을 42번 반으로 접으면 어디까지 닿을까?</div>
+
+<h3>📜 오늘의 규칙</h3>
+<ul>
+<li>발언 전 앞 사람의 말을 한 문장으로 요약한다</li>
+<li>수식보다 이유를 먼저 말한다</li>
+<li>반론은 "나는 다르게 생각해"로 시작한다</li>
+</ul>
+
+<h3>🌱 오늘의 탐구 문제</h3>
+<div class="highlight">종이 한 장을 딱 42번만 반으로 접을 수 있다면, 그 두께가 어디까지 닿을 것 같나요?<br><br>
+정답은 <strong>'달(Moon)'</strong>까지입니다. 2⁴²이라는 숫자는 상상할 수 없을 만큼 거대합니다.</div>
+
+<h3>🔑 핵심 개념</h3>
+<ul>
+<li><strong>곱셈 법칙</strong>: xᵃ · xᵇ = xᵃ⁺ᵇ — 예) 2² · 2³ = (2·2)·(2·2·2) = 2⁵</li>
+<li><strong>0제곱</strong>: x⁰ = 1 — 2³=8, 2²=4, 2¹=2 패턴에서 2⁰은 자연스럽게 1이 된다</li>
+<li><strong>과학적 표기법</strong>: 1.5 × 10⁸ km (태양-지구 거리), 5.0 × 10⁻¹¹ m (수소 원자 반지름)</li>
+</ul>
+
+<h3>💬 하크니스 토론 질문</h3>
+<div class="question">0의 0제곱(0⁰)은 무엇인가? 1인가, 0인가, 아니면 정의할 수 없는가?</div>
+<div class="highlight">레오: "0은 아무리 곱해도 0이니까 0⁰=0 아닌가?"<br>에밀리: "지수법칙으로 나누면 0으로 나누게 되는데, 그건 금지야. 정의 불가능?"</div>`,
+        ans: `<h3>🏛️ 하크니스 원탁 — 토론 정리</h3>
+
+<h3>🎙️ 필립스 토론 현장: 레오·에밀리·조슈아·소피아</h3>
+<div class="guide-step">
+<h4>레오(Leo)</h4>
+"모든 수의 0제곱은 1이라고 하셨잖아요? 그럼 0⁰도 1인가요? 0은 아무리 곱해도 0이니까 0이어야 하는 거 아닌가요?"
+</div>
+<div class="guide-step">
+<h4>에밀리(Emily)</h4>
+"지수 법칙의 패턴으로 보면 0¹=0이고, 여기서 0을 나누면 0⁰이 되는데... 수학에서 0으로 나누는 건 금지되어 있잖아. 그럼 이건 정의할 수 없는 거 아냐?"
+</div>
+<div class="guide-step">
+<h4>조슈아(Joshua)</h4>
+"지수의 밑이 0이 아닌 어떤 수든 0으로 다가가면 결과값이 1에 가까워지는데(0.1⁰=1, 0.01⁰=1), 밑이 0인 상태에서 지수가 0으로 다가가면 0이 되잖아. 두 힘이 부딪히는 지점이네."
+</div>
+<div class="guide-step">
+<h4>소피아(Sophia)</h4>
+"결국 수학자들도 이걸 '부정(Indeterminate)'이라고 부른대. 우리가 배우는 법칙들이 항상 모든 곳에서 완벽하게 작동하는 건 아니라는 게 신기해."
+</div>
+
+<h3>🔑 결론</h3>
+<div class="highlight">0⁰는 수학에서 <strong>'부정형(Indeterminate)'</strong>으로 취급한다.<br>
+문맥에 따라 1로 정의하기도 하지만(조합론, 이항정리), 일반적으로는 정의되지 않는다.<br>
+→ 수학의 규칙이 항상 모든 곳에서 통하지는 않는다는 것이 오늘의 진짜 수업이다.</div>
+
+<h3>🎯 Exit Ticket</h3>
+<div class="highlight">세균이 1분마다 2배로 증식, 병이 가득 차는 데 60분이 걸렸다면 절반(1/2)만큼 찬 시간은?<br>
+<strong>정답: 59분.</strong> 60분에 가득 찼으므로 59분에 절반이었다. (지수적 성장의 역방향 사고)</div>
+
+<div class="highlight">🔙 출발점: 지수는 '반복 곱셈'의 압축 표기다. 이 압축이 우주의 크기와 원자의 세계를 같은 언어로 다루게 해준다.</div>`
+      },
+      a: {
+        tag: '🏛️ 아고라 광장',
+        body: `<div class="question">지수적 성장(Exponential Growth)은 인류에게 축복인가, 위협인가?</div>
+
+<h3>🏛️ 아고라 광장</h3>
+<div class="highlight">오늘은 수식이 아니라 지수가 현실에서 만들어내는 결과를 놓고 토론합니다.</div>
+
+<h3>⚔️ 오늘의 대립</h3>
+<ul>
+<li><strong>A 진영 — "축복"</strong>: 기술 발전, 복리 수익, 의학 발전 — 지수적 성장이 인류를 豊요롭게 한다</li>
+<li><strong>B 진영 — "위협"</strong>: 감염병 확산, 부의 불평등, 환경 파괴 — 지수적 성장은 통제 불가능하다</li>
+</ul>
+
+<h3>🌿 대화 씨앗</h3>
+<ul>
+<li>코로나19 확산이 왜 초기에 과소평가됐는가? (지수적 성장의 초반 느린 증가)</li>
+<li>무어의 법칙(18개월마다 반도체 성능 2배) — 이것이 멈추면 어떤 일이 생기나?</li>
+<li>매일 실력이 1%씩 성장한다면(1.01³⁶⁵ ≈ 37.8) 1년 뒤 얼마나 성장하는가?</li>
+</ul>
+
+<h3>🔑 핵심 연결</h3>
+<ul>
+<li><strong>기하급수적 성장</strong>: 초반엔 느리다가 어느 순간 폭발적으로 커진다</li>
+<li><strong>과학적 표기법</strong>: 극단적인 큰 수와 작은 수를 같은 언어로 다룰 수 있다</li>
+</ul>`,
+        ans: `<h3>🏛️ 아고라 광장 — 논점 정리</h3>
+
+<h3>A 진영 — 축복의 근거</h3>
+<ul>
+<li>복리(Compound Interest): 1.05³⁰ ≈ 4.3 → 30년 후 원금의 4.3배</li>
+<li>무어의 법칙: 반도체 성능이 지수적으로 성장 → 스마트폰 혁명</li>
+<li>1.01³⁶⁵ ≈ 37.8 → 매일 1% 성장의 힘</li>
+</ul>
+
+<h3>B 진영 — 위협의 근거</h3>
+<ul>
+<li>감염병: 초기 R값이 2이면 10세대 후 2¹⁰=1,024명 → 눈에 보이지 않다가 폭발</li>
+<li>부의 불평등: 자산이 지수적으로 성장하면 격차도 지수적으로 커진다</li>
+<li>자원 고갈: 지수적 소비 증가는 선형적 자원 증가를 앞선다</li>
+</ul>
+
+<h3>🔑 아고라의 결론</h3>
+<div class="highlight">지수적 성장은 도구이다. 복리는 저축자에겐 축복, 대출자에겐 위협.<br>
+같은 수학이 맥락에 따라 완전히 다른 결과를 낳는다.<br>
+→ 수학을 아는 것이 왜 중요한지 — 오늘의 진짜 답이다.</div>
+
+<div class="highlight">🔙 핵심: 지수는 중립이다. 그것을 어떻게 쓰느냐가 축복과 위협을 가른다.</div>`
+      },
+      m: {
+        tag: '🔬 미네르바 세미나',
+        body: `<div class="question">🔬 사전 과제 (세미나 전 반드시 완료)</div>
+
+<h3>① 지수 법칙 패턴 찾기</h3>
+<div class="highlight">
+2¹=2, 2²=4, 2³=8, 2⁴=16, 2⁵=32<br>
+→ 다음 규칙을 발견하고 설명하시오:<br>
+(가) 지수가 1 늘어날 때마다 값이 어떻게 변하는가?<br>
+(나) 지수가 0이라면 값은 얼마인가? 그 이유는?<br>
+(다) 지수가 음수(−1)라면 값은 얼마인가?
+</div>
+
+<h3>② 과학적 표기법 변환</h3>
+다음을 과학적 표기법으로 쓰시오:<br>
+1. 300,000,000 (빛의 속도, m/s)<br>
+2. 0.000000001 (1나노미터, m)<br>
+3. 6,022,000,000,000,000,000,000,000 (아보가드로 수)
+
+<h3>🔬 미네르바 방식</h3>
+<div class="highlight">강의 없음. 사전 과제 기반 토론. 교사는 "왜?"만 묻는다.</div>
+
+<h3>📊 실시간 Poll</h3>
+<ul>
+<li>① 2⁰ = 0이다</li>
+<li>② 2⁰ = 1이다</li>
+<li>③ 2⁰ = 2이다</li>
+</ul>
+
+<h3>🧠 HC (사고 습관) 체크</h3>
+<ul>
+<li><strong>패턴 찾기(Pattern Seeking)</strong>: 지수가 1씩 증가할 때의 규칙은?</li>
+<li><strong>정밀성(Precision)</strong>: 1.5 × 10⁸과 15 × 10⁷은 같은 수인가?</li>
+<li><strong>전이(Transfer)</strong>: 이 표기법이 왜 과학자들에게 필수인가?</li>
+</ul>`,
+        ans: `<h3>🔬 미네르바 세미나 — 정리</h3>
+
+<h3>① 지수 법칙 패턴 정답</h3>
+<div class="highlight">
+(가) 지수가 1 늘어나면 값은 2배 → 지수끼리 더하기(xᵃ · xᵇ = xᵃ⁺ᵇ)<br>
+(나) 2⁰ = 1 → 2¹÷2 = 1 (나누기 패턴에서 자연스럽게 도출)<br>
+(다) 2⁻¹ = 1/2 → 음의 지수 = 역수 (xⁿ = 1/x⁻ⁿ)
+</div>
+
+<h3>② 과학적 표기법 정답</h3>
+<table>
+<tr><th>원래 수</th><th>과학적 표기법</th></tr>
+<tr><td>300,000,000</td><td>3.0 × 10⁸</td></tr>
+<tr><td>0.000000001</td><td>1.0 × 10⁻⁹</td></tr>
+<tr><td>6.022 × 10²³</td><td>아보가드로 수</td></tr>
+</table>
+
+<h3>🧠 HC 정리</h3>
+<ul>
+<li>1.5 × 10⁸ = 15 × 10⁷: 같은 수지만 표준 과학적 표기법은 1≤계수<10</li>
+<li>지수는 '0의 개수'를 관리한다 — 극단적인 수를 인간이 다룰 수 있게 해준다</li>
+</ul>
+
+<div class="highlight">🔙 FC (핵심 개념): 지수 법칙은 외우는 것이 아니라 '반복 곱셈'에서 패턴을 발견하는 것이다. 패턴을 발견하면 음수 지수, 분수 지수까지 자연스럽게 확장된다.</div>`
+      },
+      e: `<div class="emergency-card">
+
+  <div class="em-row" style="border-color:#6366f1">
+    <div style="flex:1">
+      <div class="em-trigger" style="color:#818cf8;font-size:.8rem;margin-bottom:6px">🔇 순간 1. "2⁰=0이에요" — 직관의 함정</div>
+      <div style="font-size:.72rem;color:rgba(239,68,68,.9);margin-bottom:6px">✗ 하지 말 것: "아니야, x⁰=1이야"<br>
+      <span style="color:rgba(255,255,255,.4);font-size:.68rem">→ 법칙을 외우게 할 뿐 이해가 없습니다.</span></div>
+      <div style="font-size:.72rem;color:rgba(52,211,153,.9);margin-bottom:4px">✓ 할 것: 패턴을 보여준다.</div>
+      <div class="em-action">"2³=8, 2²=4, 2¹=2. 다음엔 뭐야? 어떤 규칙으로 변하고 있어?"</div>
+      <div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">÷2 패턴을 발견하면 2⁰=1이 당연해집니다. 알려주지 말고 발견하게 하세요.</div>
+    </div>
+  </div>
+
+  <div class="em-row" style="border-color:#f59e0b">
+    <div style="flex:1">
+      <div class="em-trigger" style="color:#fbbf24;font-size:.8rem;margin-bottom:6px">❌ 순간 2. 2³ × 2² = 4⁵ 라고 한다</div>
+      <div style="font-size:.72rem;color:rgba(52,211,153,.9);margin-bottom:4px">✓ 할 것:</div>
+      <div class="em-action">"2³이 뭐야? 직접 써봐. 2×2×2. 2²은? 2×2. 그럼 다 합치면?"</div>
+      <div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">밑이 같아야 지수를 더할 수 있습니다. 전개해서 직접 확인하게 하세요.</div>
+    </div>
+  </div>
+
+  <div class="em-row" style="border-color:#10b981">
+    <div style="flex:1">
+      <div class="em-trigger" style="color:#34d399;font-size:.8rem;margin-bottom:6px">📢 순간 3. 42번 접기 답을 인터넷으로 찾으려 한다</div>
+      <div style="font-size:.72rem;color:rgba(52,211,153,.9);margin-bottom:4px">✓ 할 것:</div>
+      <div class="em-action">"찾는 건 나중에 해. 지금은 2¹⁰이 얼마인지 계산기로 눌러봐. 그 숫자가 얼마나 큰지 느껴봐."</div>
+      <div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">2¹⁰=1,024, 2²⁰=약 100만, 2³⁰=약 10억. 단계적으로 체감시킵니다.</div>
+    </div>
+  </div>
+
+  <div class="em-row" style="border-color:#3b82f6">
+    <div style="flex:1">
+      <div class="em-trigger" style="color:#60a5fa;font-size:.8rem;margin-bottom:6px">🔀 순간 4. "세균 문제" 답을 30분이라고 한다</div>
+      <div style="font-size:.72rem;color:rgba(52,211,153,.9);margin-bottom:4px">✓ 할 것: 역방향으로 생각하게 한다.</div>
+      <div class="em-action">"60분에 가득 찼어. 1분 전인 59분에는 어떤 상태였을까? 2배씩 늘어났으니까..."</div>
+      <div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">59분에 절반 → 60분에 가득. 앞에서부터 계산하지 말고 끝에서 역산하게 합니다.</div>
+    </div>
+  </div>
+
+  <div class="em-row" style="border-color:#8b5cf6">
+    <div style="flex:1">
+      <div class="em-trigger" style="color:#a78bfa;font-size:.8rem;margin-bottom:6px">🏁 순간 5. 수업을 끝내야 한다</div>
+      <div style="font-size:.72rem;color:rgba(52,211,153,.9);margin-bottom:4px">✓ 할 것:</div>
+      <div class="em-action">"지수가 없으면 설명할 수 없는 것 하나만 말해봐."</div>
+      <div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">달까지 종이 접기, 바이러스 확산, 우주의 크기 — 아이들이 스스로 수업의 의미를 찾게 합니다.</div>
+    </div>
+  </div>
+
+</div>`,
+      g: {
+        tag: '🍎 수업 가이드',
+        body: `<div class="question">Day 3 수업 지도안 · 지수 — 원장님 스크립트</div>
+
+<div class="guide-step">
+<h4>🕐 1. 도입: 생각 열기 (5분)</h4>
+<p><strong>(교사 질문)</strong> "여러분, 종이 한 장을 딱 42번만 반으로 접을 수 있다면, 그 두께가 어디까지 닿을 것 같나요?"</p>
+<p>아이들의 예상: "책상 높이요?", "아파트 10층 정도?"</p>
+<p><strong>해설:</strong> "정답은 '달(Moon)'까지입니다. 2⁴²이라는 숫자는 상상할 수 없을 만큼 거대하죠. 지수는 이처럼 폭발적인 성장을 설명하는 유일한 도구예요."</p>
+</div>
+
+<div class="guide-step">
+<h4>🕐 2. 핵심 개념: 지수 법칙 (20분)</h4>
+<p><strong>공식을 외우게 하지 말고, 나열해서 스스로 깨닫게 합니다.</strong></p>
+<p>곱셈: 2² · 2³ = (2·2)·(2·2·2) = 2⁵ → "지수끼리 더해지는 이유를 설명해봐"</p>
+<p>0제곱: 2³=8, 2²=4, 2¹=2 패턴 → "다음은?" → 2⁰=1 (패턴에서 발견)</p>
+</div>
+
+<div class="guide-step">
+<h4>🕐 3. 하크니스 토론 (15분)</h4>
+<p><strong>주제: "0의 0제곱(0⁰)은 무엇인가?"</strong></p>
+<p>레오: "0은 아무리 곱해도 0이니까 0⁰=0 아닌가요?"</p>
+<p>에밀리: "지수법칙으로 나누면 0으로 나누게 되는데, 그건 금지야. 정의 불가능?"</p>
+<p>조슈아: "밑이 0으로 다가가면 결과가 1, 지수가 0으로 다가가면 결과가 0. 두 힘이 충돌하는 지점이네."</p>
+<p>소피아: "수학자들도 '부정형(Indeterminate)'이라고 부른대. 법칙이 항상 완벽하지 않다는 게 신기해."</p>
+</div>
+
+<div class="guide-step">
+<h4>🕐 4. 마무리 (5분)</h4>
+<p><strong>Exit Ticket:</strong> "어떤 세균이 1분마다 2배로 증식한다. 병이 가득 차는 데 60분이 걸렸다면, 병이 딱 절반만큼 찼던 시간은 몇 분이었을까?"</p>
+</div>`,
+        ans: `<h3>🍎 수업 가이드 — 정답 및 교사 팁</h3>
+
+<div class="answer-box">
+<strong>[Exit Ticket 정답]</strong><br>
+59분. 지수의 원리를 이해했다면 30분이 아니라 59분임을 바로 알 수 있습니다.<br>
+60분에 가득 찼으므로, 59분에 절반이었고 그 이전은 계속 절반씩 거슬러 올라갑니다.<br>
+이 과제는 아이들이 정말 많이 틀리면서도 깨달음을 얻는 아주 좋은 문제입니다.
+</div>
+
+<h3>💡 수업 운영 팁</h3>
+<div class="tip-box">
+<strong>① 계산기 활용</strong><br>
+2¹⁰이 1,024임을 직접 계산기로 확인하게 하고, 2²⁰, 2³⁰으로 넘어갈 때 숫자가 얼마나 기하급수적으로 커지는지 체감시켜 주세요.
+</div>
+<div class="tip-box">
+<strong>② 거듭제곱의 역설</strong><br>
+"매일 실력이 1%씩 성장한다면(1.01³⁶⁵), 1년 뒤에는 처음보다 약 37.8배 성장한다"는 이야기를 통해 지수의 힘을 동기부여로 연결해 보세요.
+</div>
+
+<h3>🌌 실생활 연결: 과학적 표기법</h3>
+<div class="tip-box">
+거시 세계: 태양과 지구 사이의 거리 약 1억 5천만 km → 1.5 × 10⁸ km<br>
+미시 세계: 수소 원자의 반지름 약 0.00000000005m → 5.0 × 10⁻¹¹ m<br><br>
+토론 포인트: "왜 과학자들은 귀찮게 10ⁿ 같은 표기법을 쓸까? 그냥 0을 많이 쓰면 안 될까?"
+</div>`
+      }
+    }
+  },
   { id:'day04', day:4, week:1, title:'실수 체계와 무리수의 발견', titleEn:'The Real Number System & Irrationals', desc:'유리수로 채울 수 없는 수직선의 구멍 — √2는 어디에 있는가', locked:true, cards:null },
   { id:'day05', day:5, week:1, title:'엑서터식 문제 해결 전략', titleEn:'Problem Solving Strategies: Exeter Style', desc:'정답이 아닌 과정 — 막혔을 때 수학자는 무엇을 하는가', locked:true, cards:null },
   // ── 2주차: 대수학의 기초 ──
