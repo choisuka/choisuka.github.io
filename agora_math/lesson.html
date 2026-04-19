@@ -96,7 +96,7 @@ body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-heig
   <button class="day-btn active" onclick="showDay(1)">Day 1</button>
   <button class="day-btn" onclick="showDay(2)">Day 2</button>
   <button class="day-btn" onclick="showDay(3)">Day 3</button>
-  <button class="day-btn locked">Day 4</button>
+  <button class="day-btn" onclick="showDay(4)">Day 4</button>
   <button class="day-btn locked">Day 5</button>
   <button class="day-btn locked">Day 6</button>
   <button class="day-btn locked">Day 7</button>
@@ -539,6 +539,107 @@ body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-heig
   </div>
 
 </div><!-- /day1-content -->
+
+<!-- ══ DAY 4 ══ -->
+<div class="content" id="day4-content" style="display:none">
+
+  <div class="lesson-header">
+    <div class="lesson-week">📅 1주차 · 수의 체계와 논리적 사고</div>
+    <div class="lesson-day">Day 4: 실수 체계와 무리수의 발견</div>
+    <div class="lesson-topic">Topic: The Real Number System &amp; Irrationals — "유리수의 빈틈을 찾아서"</div>
+    <div class="lesson-time">⏱ 70분</div>
+  </div>
+
+  <!-- ── 도입: PBL 질문 ── -->
+  <div class="section">
+    <div class="section-label">🎯 도입 · 생각 열기 (PBL 질문)</div>
+    <div class="hook-box">"여러분, 유리수가 수직선에 무수히 많다는 건 어제 배웠죠? 그럼 수직선 위에서 아무 곳이나 눈을 감고 점을 딱 찍었을 때, 그 점이 유리수일 확률이 높을까요, 아니면 우리가 모르는 다른 수일 확률이 높을까요?"</div>
+    <div class="concept-card" style="margin-top:12px">
+      <div class="concept-title">아이들의 예상 vs 반전</div>
+      <div class="concept-body">
+        아이들의 예상: "당연히 유리수죠!", "유리수가 꽉 차 있다면서요?"<br><br>
+        <strong>반전 메시지:</strong> "놀랍게도 유리수가 아닌 '무리수'일 확률이 압도적으로 높아요. 오늘 우리는 그 보이지 않는 주인공들을 만날 겁니다."
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 핵심 개념 ── -->
+  <div class="section">
+    <div class="section-label">📐 핵심 개념: 무리수(I)의 탄생</div>
+
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">피타고라스의 비극</div>
+      <div class="concept-body">한 변이 1인 정사각형의 대각선(√2)은 아무리 노력해도 분수(a/b)로 나타낼 수 없었습니다. 당시 수학자들에게 이것은 '세상의 질서가 무너지는 사건'이었죠.</div>
+    </div>
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">정의</div>
+      <div class="concept-body">소수점 아래로 끝없이 이어지지만, 순환하지 않는 무한소수.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-title">실수(R)</div>
+      <div class="concept-body">유리수와 무리수를 모두 합쳐 비로소 수직선을 <strong>'연속적(Continuous)'</strong>으로 꽉 채운 수 체계.</div>
+    </div>
+  </div>
+
+  <!-- ── 하크네스 토론 ── -->
+  <div class="section">
+    <div class="section-label">🎙️ 하크네스 토론 현장: "이름 없는 수들의 습격"</div>
+    <div class="concept-card" style="margin-bottom:14px">
+      <div class="concept-title">상황 설정</div>
+      <div class="concept-body">아이들은 종이와 컴파스를 들고 한 변이 1인 정사각형을 그려 대각선을 수직선에 내려보았습니다.</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">레오(Leo)</div>
+      <div class="scenario-line">"직접 그려보니까 소름 돋아. 수직선 위에 분명히 점이 찍히는데, 이 길이를 숫자로 쓰려고 하면 1.4142135... 끝이 안 나. 이건 우리가 어제 배운 '비율(Ratio)'의 세계를 벗어난 거잖아?"</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">클로이(Chloe)</div>
+      <div class="scenario-line">"맞아. 만약 우리가 유리수만 알고 살았다면, 이 대각선의 길이는 '존재하지만 잴 수 없는 것'이 됐을 거야. 수직선에 아주 미세한 구멍이 뚫려 있는 셈이지."</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">조슈아(Joshua)</div>
+      <div class="scenario-line">"그럼 우리가 아는 π도 마찬가지겠네? 원의 둘레를 지름으로 나누면 나오는 그 숫자도 끝이 없잖아. 세상에는 유리수보다 이런 '이름 없는 수'들이 더 많은 거 아닐까?"</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">소피아(Sophia)</div>
+      <div class="scenario-line">"선생님, 그럼 유리수는 '셀 수 있는' 느낌인데, 무리수는 '셀 수 없는' 안개 같은 느낌이에요. 수직선은 이 안개가 걷히면서 완성되는 건가요?"</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">교사</div>
+      <div class="scenario-line">"소피아, 아주 멋진 표현이야. 수학자 칸토어는 실제로 유리수보다 무리수가 훨씬 더 '거대한 무한'이라는 걸 증명했단다. 수직선은 유리수라는 점들과 무리수라는 안개가 합쳐져 빈틈없이 이어진 실선이 되는 거지."</div>
+    </div>
+  </div>
+
+  <!-- ── 수업 운영 팁 ── -->
+  <div class="tip-section">
+    <div class="section-label" style="margin-bottom:16px">💡 원장님을 위한 Day 4 수업 운영 팁</div>
+
+    <div class="tip-q"><strong>시각적 증명:</strong> 아이들에게 컴파스를 주고 직접 √2 지점을 찍게 하세요. "눈에 보이는데 숫자로 딱 떨어지지 않는다"는 사실이 아이들에게는 큰 지적 충격이 됩니다.</div>
+    <div class="tip-q"><strong>역사적 스토리텔링:</strong> 무리수의 존재를 누설했다는 이유로 수장당했다는 히파소스의 전설을 들려주세요. 수학이 목숨을 걸 만큼 중요한 '진리 탐구'였음을 느끼게 합니다.</div>
+    <div class="tip-q"><strong>분류 연습:</strong> √4, √9처럼 루트가 있다고 다 무리수가 아님을 짚어주세요. "유리수의 가면을 쓴 무리수 찾기" 게임을 하면 재미있어합니다.</div>
+  </div>
+
+  <!-- ── Exit Ticket ── -->
+  <div class="section" style="margin-top:28px">
+    <div class="section-label">📝 Day 4 마무리 과제 (Exit Ticket)</div>
+    <div class="quiz-box">
+      <div class="quiz-q">"유리수와 유리수를 더하면 항상 유리수가 된다. 그렇다면 무리수와 무리수를 더하면 항상 무리수가 될까? 반례를 찾아 설명하시오."</div>
+    </div>
+    <div class="concept-card" style="margin-top:12px">
+      <div class="concept-title">정답 예시</div>
+      <div class="concept-body">√2 + (−√2) = 0. 0은 유리수이므로 항상 무리수가 되는 것은 아닙니다. 이 질문은 아이들의 논리적 엄밀함을 키워줍니다.</div>
+    </div>
+    <div class="concept-card" style="margin-top:10px">
+      <div class="concept-body">원장님, 오늘 밤은 이 정도면 충분히 훌륭한 준비가 된 것 같습니다! 7시 41분, 이제 원장님도 조금 쉬시면서 에너지를 충전하시길 바랄게요.<br><br>내일은 <strong>Day 5: 에두아르도 문제 해결 전략(Exeter Style)</strong>을 통해 일주일간 배운 수의 개념들을 심화 문제에 적용하는 법을 다뤄보겠습니다.</div>
+    </div>
+  </div>
+
+</div><!-- /day4-content -->
 
 <!-- ══ DAY 3 ══ -->
 <div class="content" id="day3-content" style="display:none">
