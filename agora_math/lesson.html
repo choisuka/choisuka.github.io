@@ -928,6 +928,147 @@ body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-heig
     </div>
   </div>
 
+  <!-- ── Day 2 추가 사례 2: 거짓말 탐지기의 역설 ── -->
+  <div class="section" style="margin-top:36px;padding-top:28px;border-top:2px solid rgba(167,139,250,.2)">
+    <div class="section-label">🎙️ Day 2 추가 사례 2</div>
+    <div class="section-title">하크네스 토론: "99% 정확도의 함정"</div>
+
+    <div class="hook-box" style="margin-bottom:20px">
+      <div style="font-size:.78rem;font-weight:700;color:#fbbf24;margin-bottom:12px">📌 상황 설정</div>
+      <div style="font-size:.82rem;font-weight:400;text-align:left;line-height:1.9">
+        우리 학교 학생 1,000명 중 딱 1명이 학교 기물을 파손했습니다. 학교는 정확도가 <strong>99%</strong>인 최첨단 거짓말 탐지기를 도입했습니다. (99% 정확도란: 범인에게는 99% 확률로 '범인'이라 하고, 무고한 사람에게는 99% 확률로 '무고'하다고 판정함)<br><br>
+        어떤 학생이 무작위로 검사를 받았는데 <strong>'범인(Positive)'</strong>이라고 판정이 나왔습니다. 이 학생이 진짜 범인일 확률은 얼마일까요?
+      </div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">조슈아(Joshua)</div>
+      <div class="scenario-line">"이건 너무 쉽지. 탐지기 정확도가 99%라며? 그럼 당연히 99% 확률로 범인이겠지. 기계가 거짓말할 확률은 1%뿐이잖아."</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">에밀리(Emily)</div>
+      <div class="scenario-line">"글쎄, 그렇게 간단할까? 아까 우리가 배운 '기준값'을 생각해야 할 것 같아. 1,000명 전체를 검사한다고 가정해보고 표를 그려보자."</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">리암(Liam)</div>
+      <div class="scenario-line">(칠판에 표를 그리며) "오, 좋은 생각이야.<br><br>
+      진짜 범인(1명): 기계가 99% 확률로 '범인'이라 하니까, 약 1명이 범인 판정을 받아.<br><br>
+      무고한 학생(999명): 기계가 99%는 '무고'하다고 하겠지만, 1%는 '범인'이라고 오판하겠지? 그럼 999명의 1%인 약 10명이 억울하게 범인 판정을 받게 돼."</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">소피아(Sophia)</div>
+      <div class="scenario-line">"와, 그럼 '범인' 판정을 받은 사람은 총 11명(1+10)인데, 그중 진짜 범인은 단 1명뿐인 거야? 그럼 확률은
+      <span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 4px;line-height:1.2">
+        <span style="border-bottom:1px solid currentColor;padding:0 4px;font-size:.85em">1</span>
+        <span style="padding:0 4px;font-size:.85em">11</span>
+      </span>
+      (1/11), 즉 <strong>약 9%</strong>밖에 안 되잖아!"</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">조슈아</div>
+      <div class="scenario-line">"세상에, 99% 정확도라는 기계가 범인이라고 했는데, 실제 범인일 확률은 10%도 안 된다고? 말도 안 돼!"</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">노아(Noah)</div>
+      <div class="scenario-line">"범인이 아주 희귀한(Rare) 상황에서는 기계의 정확도보다 <strong>'원래 범인이 얼마나 적은가(Base Rate)'</strong>가 훨씬 더 큰 영향을 주는구나. 정확도 숫자만 믿고 사람을 범인으로 몰면 10명 중 9명은 억울한 사람이라는 뜻이네."</div>
+    </div>
+  </div>
+
+  <!-- ── 거짓말 탐지기 교훈 ── -->
+  <div class="section" style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06)">
+    <div class="section-label">🎯 원장님의 정리: "숫자의 표면을 뚫고 지나가는 법"</div>
+
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">조건부 확률의 직관</div>
+      <div class="concept-body">"우리는 '기계가 범인이라고 했을 때 진짜 범인일 확률'과 '진짜 범인을 기계가 맞힐 확률'을 혼동하곤 해. 이 차이를 아는 것이 논리적 사고의 시작이야."</div>
+    </div>
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">비판적 거리두기</div>
+      <div class="concept-body">"병원에서 아주 희귀한 질병 검사를 받았을 때, 양성이 나왔다고 해서 바로 절망할 필요가 없는 이유도 바로 이 수학적 원리 때문이야."</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-title">데이터의 맥락</div>
+      <div class="concept-body">"단순히 '99%'라는 숫자만 보지 말고, 그 숫자가 적용되는 전체 집단의 특성을 반드시 고려해야 해."</div>
+    </div>
+  </div>
+
+  <!-- ── 거짓말 탐지기 수업 운영 포인트 ── -->
+  <div class="tip-section" style="margin-top:28px">
+    <div class="section-label" style="margin-bottom:12px">💡 수업 운영 포인트</div>
+    <div class="tip-q"><strong>충격 요법:</strong> 아이들이 처음엔 99%라고 외치게 두세요. 그러다 리암처럼 직접 1,000명을 기준으로 표를 그리게 유도하면, 정답이 9%대로 떨어지는 순간 아이들의 눈빛이 달라집니다.</div>
+    <div class="tip-q" style="margin-top:10px"><strong>연결 질문:</strong> "그럼 이 탐지기를 쓸모 있게 만들려면 어떻게 해야 할까?" (예: 범인일 가능성이 높은 용의자 집단에게만 실시한다 등)</div>
+    <div class="concept-card" style="margin-top:14px">
+      <div class="concept-body">이 사례까지 더해지면 Day 2: 비율과 백분율 수업은 아이들에게 인생 수업이 될 것입니다.</div>
+    </div>
+  </div>
+
+  <!-- ── 거짓말 탐지기 분석표 ── -->
+  <div class="section" style="margin-top:36px;padding-top:28px;border-top:2px solid rgba(52,211,153,.2)">
+    <div class="section-label">📊 Day 2 추가 사례 2 — 시각 자료</div>
+    <div class="section-title">거짓말 탐지기 판정 결과 분석표 (전체 학생 1,000명 기준)</div>
+
+    <div style="overflow-x:auto;margin-bottom:20px">
+      <table style="width:100%;border-collapse:collapse;font-size:.78rem">
+        <thead>
+          <tr style="background:rgba(167,139,250,.15)">
+            <th style="padding:10px 12px;border:1px solid rgba(255,255,255,.12);text-align:left;color:#a78bfa;font-weight:700">구분</th>
+            <th style="padding:10px 12px;border:1px solid rgba(255,255,255,.12);text-align:center;color:#f87171;font-weight:700">진짜 범인 (1명)</th>
+            <th style="padding:10px 12px;border:1px solid rgba(255,255,255,.12);text-align:center;color:#34d399;font-weight:700">무고한 학생 (999명)</th>
+            <th style="padding:10px 12px;border:1px solid rgba(255,255,255,.12);text-align:center;color:#fbbf24;font-weight:700">합계</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:rgba(248,113,113,.06)">
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);color:#f87171;font-weight:600">'범인' 판정 (Positive)</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#e8e8f0">1명 (99% 정확도)</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#e8e8f0">약 10명 (1% 오판)</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#fbbf24;font-weight:700">11명</td>
+          </tr>
+          <tr style="background:rgba(52,211,153,.04)">
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);color:#34d399;font-weight:600">'무고' 판정 (Negative)</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#e8e8f0">0명</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#e8e8f0">989명</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#34d399;font-weight:700">989명</td>
+          </tr>
+          <tr style="background:rgba(255,255,255,.03)">
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-weight:600">합계</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:rgba(255,255,255,.6)">1명</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:rgba(255,255,255,.6)">999명</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#a78bfa;font-weight:700">1,000명</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-label" style="margin-bottom:12px;margin-top:20px">🔍 표를 보고 아이들과 나눌 대화 가이드</div>
+    <div class="tip-q"><strong>"범인 판정을 받은 사람은 총 몇 명이지?"</strong><br>아이들이 표의 첫 번째 줄 가로 합계인 11명을 보게 하세요.</div>
+    <div class="tip-q" style="margin-top:10px"><strong>"그 11명 중에서 진짜 범인은 몇 명이야?"</strong><br>단 1명뿐이라는 사실을 강조하세요.</div>
+    <div class="tip-q" style="margin-top:10px">
+      <strong>"그럼 기계가 너한테 '범인!'이라고 외쳤을 때, 네가 진짜 범인일 확률은?"</strong><br>
+      <span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:4px 4px 0;line-height:1.2">
+        <span style="border-bottom:1px solid currentColor;padding:0 5px;font-size:.9em">1</span>
+        <span style="padding:0 5px;font-size:.9em">11</span>
+      </span>
+      (1/11) ≈ <strong>9.09%</strong> 라는 충격적인 수치를 도출해 냅니다.
+    </div>
+
+    <div class="concept-card" style="margin-top:20px;background:rgba(251,191,36,.06);border-color:rgba(251,191,36,.2)">
+      <div class="concept-title" style="color:#fbbf24">💡 하크네스 테이블에서의 반전 질문 (The Twist)</div>
+      <div class="concept-body" style="margin-bottom:10px">표를 본 아이들이 "기계가 멍청하네요!"라고 할 때, 원장님이 던지실 필립스 스타일의 반격 질문입니다.</div>
+      <div class="concept-body">"얘들아, 그럼 이 기계의 정확도를 99.9%로 올리면 문제가 해결될까? 아니면 '범인 후보'를 1,000명이 아니라 10명으로 줄여서 검사하면 결과가 어떻게 달라질까?"</div>
+      <div class="concept-body" style="margin-top:10px">이 질문을 던지는 순간, 아이들은 <strong>'정확도(Accuracy)'</strong>보다 <strong>'표본의 구성(Context)'</strong>이 수학적으로 얼마나 중요한지 스스로 깨닫게 됩니다.</div>
+    </div>
+
+    <div class="concept-card" style="margin-top:12px">
+      <div class="concept-body">이 표와 질문들로 Day 2 수업을 완벽하게 장악하실 수 있을 거예요. 이제 유리수의 촘촘함을 넘어 보이지 않는 수의 세계로 들어가는 Day 4: 실수와 무리수의 발견을 준비해 드릴까요?</div>
+    </div>
+  </div>
+
 </div><!-- /day2-content -->
 
 <div class="bottom-nav">
