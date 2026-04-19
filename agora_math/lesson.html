@@ -1069,6 +1069,104 @@ body{background:#0f0f1a;color:#e8e8f0;font-family:'Segoe UI',sans-serif;min-heig
     </div>
   </div>
 
+  <!-- ── Day 2 추가 사례 3: 두 병원의 생존율 ── -->
+  <div class="section" style="margin-top:36px;padding-top:28px;border-top:2px solid rgba(167,139,250,.2)">
+    <div class="section-label">🎙️ Day 2 추가 사례 3</div>
+    <div class="section-title">하크네스 토론: "어느 병원으로 가야 할까?"</div>
+
+    <div class="hook-box" style="margin-bottom:20px">
+      <div style="font-size:.78rem;font-weight:700;color:#fbbf24;margin-bottom:12px">📌 상황 설정</div>
+      <div style="font-size:.82rem;font-weight:400;text-align:left;line-height:1.9">
+        심장 수술을 앞둔 환자가 두 병원 중 하나를 선택해야 합니다.<br><br>
+        <strong>A 병원:</strong> 최근 수술 생존율 90%<br>
+        <strong>B 병원:</strong> 최근 수술 생존율 80%<br><br>
+        대부분의 사람은 A 병원이 더 우수하다고 생각합니다. 하지만 세부 데이터를 열어보면 충격적인 반전이 일어납니다.
+      </div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">리암(Liam)</div>
+      <div class="scenario-line">"당연히 90%인 A 병원으로 가야지. 생존 확률이 10%나 더 높잖아. 이건 논쟁할 가치도 없어."</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">에밀리(Emily)</div>
+      <div class="scenario-line">"글쎄, 환자의 상태에 따라 다르지 않을까? 수술의 난이도를 나눠서 봐야 해. 여기 세부 데이터를 봐."</div>
+    </div>
+
+    <div style="overflow-x:auto;margin:16px 0">
+      <table style="width:100%;border-collapse:collapse;font-size:.76rem">
+        <thead>
+          <tr style="background:rgba(167,139,250,.15)">
+            <th style="padding:10px 12px;border:1px solid rgba(255,255,255,.12);text-align:left;color:#a78bfa;font-weight:700">환자 상태</th>
+            <th style="padding:10px 12px;border:1px solid rgba(255,255,255,.12);text-align:center;color:#60a5fa;font-weight:700">A 병원 생존율</th>
+            <th style="padding:10px 12px;border:1px solid rgba(255,255,255,.12);text-align:center;color:#34d399;font-weight:700">B 병원 생존율</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:rgba(248,113,113,.06)">
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);color:#f87171;font-weight:600">위중한 환자</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#e8e8f0">50% (100명 중 50명 생존)</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#34d399;font-weight:600">60% (500명 중 300명 생존)</td>
+          </tr>
+          <tr style="background:rgba(52,211,153,.04)">
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);color:#a78bfa;font-weight:600">일반 환자</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#e8e8f0">95% (900명 중 855명 생존)</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#34d399;font-weight:600">99% (100명 중 99명 생존)</td>
+          </tr>
+          <tr style="background:rgba(255,255,255,.05)">
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-weight:600">전체 합계</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#60a5fa;font-weight:700">90.5% (1,000명 중 905명)</td>
+            <td style="padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:center;color:#e8e8f0">66.5% (600명 중 399명)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">조슈아(Joshua)</div>
+      <div class="scenario-line">"잠깐만! 세부적으로 보니까 위중한 환자도 B 병원이 더 잘 살리고, 일반 환자도 B 병원이 더 잘 살리잖아? 그런데 어떻게 전체 합계는 A 병원이 더 높을 수 있어? 이건 마법 아니야?"</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">소피아(Sophia)</div>
+      <div class="scenario-line">"이건 마법이 아니라 '표본의 구성' 문제야. B 병원은 '위중한 환자'를 훨씬 많이(500명) 받았어. 생존하기 힘든 환자를 많이 수술하니까 전체 생존율이 깎여 보이는 거지. 반면 A 병원은 살리기 쉬운 '일반 환자' 위주로 수술해서 전체 점수가 높게 나온 거야."</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-speaker">노아(Noah)</div>
+      <div class="scenario-line">"와... 그럼 겉으로 보이는 '90%'라는 숫자만 믿고 A 병원에 갔다간, 실제로는 더 낮은 실력의 의사에게 수술받는 셈이네?"</div>
+    </div>
+  </div>
+
+  <!-- ── 병원 생존율 교훈 ── -->
+  <div class="section" style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06)">
+    <div class="section-label">🎯 원장님의 정리: "데이터 뒤에 숨은 맥락(Context)을 읽어라"</div>
+
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">전체와 부분의 괴리</div>
+      <div class="concept-body">"부분(위중/일반)에서 모두 이겼더라도, 합쳐졌을 때 결과가 뒤집힐 수 있어. 이걸 수학에서는 <strong>'심슨의 역설'</strong>이라고 불러."</div>
+    </div>
+    <div class="concept-card" style="margin-bottom:10px">
+      <div class="concept-title">데이터의 공정성</div>
+      <div class="concept-body">"만약 정부가 병원을 '전체 생존율'로만 평가한다면, 의사들은 점수를 높이기 위해 어려운 환자를 기피하게 될 거야. 숫자가 세상을 어떻게 왜곡할 수 있는지 보이지?"</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-title">가중치의 마법</div>
+      <div class="concept-body">"전체 평균은 항상 '표본이 많은 쪽'으로 끌려가게 되어 있어. A 병원은 일반 환자가 많아서 95% 쪽으로 끌려갔고, B 병원은 위중한 환자가 많아서 60% 쪽으로 끌려간 거야."</div>
+    </div>
+  </div>
+
+  <!-- ── 병원 생존율 수업 팁 ── -->
+  <div class="tip-section" style="margin-top:28px">
+    <div class="section-label" style="margin-bottom:12px">💡 수업 운영 팁 (교사용 가이드)</div>
+    <div class="tip-q"><strong>배신감 유도:</strong> 처음엔 전체 생존율만 보여주고 "어디 갈래?"라고 물어보세요. 90%를 선택한 아이들에게 세부 표를 보여주며 "너희의 선택이 틀렸다면?"이라고 자극하세요.</div>
+    <div class="tip-q" style="margin-top:10px"><strong>실생활 숙제:</strong> "야구 선수의 타율이나, 학교 시험 평균에서도 이런 일이 일어날 수 있을까? 사례를 하나씩 찾아와 보자."</div>
+    <div class="concept-card" style="margin-top:14px">
+      <div class="concept-body">원장님, 이 세 가지 사례(할인의 함정, 거짓말 탐지기, 병원 생존율)면 Day 2: 비율과 백분율은 더 이상 단순한 산수 수업이 아닌, <strong>'최고의 논리 수업'</strong>이 될 것입니다.<br><br>이제 정말로 수의 끝판왕인 Day 4: 무리수와 실수의 발견으로 넘어가도 될까요? 준비되시면 말씀해 주세요!</div>
+    </div>
+  </div>
+
 </div><!-- /day2-content -->
 
 <div class="bottom-nav">
