@@ -12402,6 +12402,74 @@ function buildQCExplain(q){
     exp=`<b style="${Y}">${answer}</b><br><br>${data.exp||''}`;
   } else if(subtype==='div_concept'){
     exp=`<b style="${Y}">${answer}</b><br><br>${data.exp||''}`;
+  } else if(subtype==='identify'){
+    const {set,comp}=data;
+    let fac=2; while(comp%fac!==0) fac++;
+    exp=`<b style="${B}">소수 = 1과 자신으로만 나눠지는 수</b><br><br>`+
+      set.map(n=>{
+        const ip=_isPrime(n);
+        let lf=2; while(n%lf!==0&&lf*lf<=n) lf++;
+        const composite=!ip&&lf>1&&lf<n;
+        return `<div style="background:rgba(99,102,241,.1);border-radius:6px;padding:5px 10px;margin:3px 0;font-size:.84rem">`+
+          (ip?`<b style="${G}">${n}</b> : 1과 ${n}으로만 → 소수 ✓`:
+              `<b style="color:#f87171">${n}</b> : ${fac} × ${n/fac}로 나눠짐 → 합성수 ✗`)+
+          `</div>`;
+      }).join('')+
+      `<br>정답: <b style="${Y}">${comp}</b>`;
+  } else if(subtype==='factorize'){
+    const {n,f,fStr,fList}=data;
+    let divSteps=''; let cur=n;
+    fList.forEach(p=>{
+      const e=f[p];
+      for(let i=0;i<e;i++){
+        const nxt=cur/p;
+        divSteps+=`<div style="font-size:.84rem;padding:3px 0"><b style="color:#e2e8f0">${cur}</b> ÷ <b style="${G}">${p}</b> = <b style="${Y}">${nxt}</b></div>`;
+        cur=nxt;
+      }
+    });
+    exp=`<b style="${B}">가장 작은 소수부터 차례로 나누기</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:8px 12px;margin:6px 0">${divSteps}</div>
+      <b style="${Y}">${n} = ${fStr}</b>`;
+  } else if(subtype==='prime_sum'){
+    const {n,fList,sum}=data;
+    exp=`<b style="${B}">① 소인수분해</b><br>
+      ${n} = <b>${_fStr(n)}</b><br><br>
+      <b style="${B}">② 소인수 (중복 없이 한 번씩)</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.88rem">
+        ${fList.join(' , ')}
+      </div>
+      <b style="${B}">③ 합산</b><br>
+      ${fList.join(' + ')} = <b style="${Y}">${sum}</b>`;
+  } else if(subtype==='lcm_three'){
+    const {a,b,c,L}=data;
+    const L12=lcm(a,b);
+    const ma=[],mb=[];
+    for(let i=a;i<=L12;i+=a) ma.push(i);
+    for(let i=b;i<=L12;i+=b) mb.push(i);
+    exp=`<b style="${B}">① 먼저 두 수의 최소공배수</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:5px 10px;margin:4px 0;font-size:.82rem">
+        ${a}의 배수: ${ma.map(v=>v===L12?`<b style="${Y}">${v}</b>`:v).join(', ')}<br>
+        ${b}의 배수: ${mb.map(v=>v===L12?`<b style="${Y}">${v}</b>`:v).join(', ')}<br>
+        LCM(${a},${b}) = <b style="${Y}">${L12}</b>
+      </div>
+      <b style="${B}">② LCM(${L12}, ${c}) = ?</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:5px 10px;margin:4px 0;font-size:.82rem">
+        ${L12}의 배수 중 ${c}의 배수: <b style="${Y}">${L}</b>
+      </div>
+      LCM(${a}, ${b}, ${c}) = <b style="${Y}">${L}</b>`;
+  } else if(subtype==='coprime'){
+    const {a,b,g,isCop}=data;
+    const fA=_fStr(a), fB=_fStr(b);
+    exp=`<b style="${B}">① 소인수분해</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.84rem">
+        ${a} = <b>${fA}</b><br>
+        ${b} = <b>${fB}</b>
+      </div>
+      <b style="${B}">② 최대공약수(GCD)</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.84rem">
+        ${isCop?`공통 소인수 없음 → GCD = 1`:`GCD(${a},${b}) = <b style="${Y}">${g}</b>`}
+      </div>
+      <b style="${Y}">${isCop?`서로소 ✓ (GCD = 1)`:`서로소 아님 — GCD = ${g}`}</b>`;
   } else {
     exp=`정답: <b style="${Y}">${answer}</b>`;
   }
