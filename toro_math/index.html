@@ -39,7 +39,7 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
 @keyframes toroBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
 .home-title{font-size:2.4rem;color:var(--green);text-shadow:0 0 30px rgba(46,204,113,.4);text-align:center}
 .home-sub{font-size:1rem;color:var(--gray);text-align:center;margin:8px 0 24px}
-.topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:500px}
+.topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:620px}
 .topic-card{background:var(--card);border-radius:18px;padding:20px 14px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.2s}
 .topic-card:hover{border-color:var(--green);transform:translateY(-3px)}
 .topic-card .ico{font-size:2.5rem;margin-bottom:8px}
@@ -128,7 +128,7 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
 .bar-pct{width:40px;font-size:.8rem;color:var(--yellow);font-family:'Jua',sans-serif}
 
 /* 결과 화면 */
-#result{max-width:500px;width:100%;text-align:center}
+#result{max-width:620px;width:100%;text-align:center}
 .result-toro{font-size:5rem;margin:10px 0;display:block;animation:toroBounce 1.5s ease-in-out infinite}
 .result-score{font-family:'Jua',sans-serif;font-size:3rem;margin:8px 0}
 .result-msg{font-size:1rem;color:var(--gray);margin-bottom:20px}
@@ -204,7 +204,7 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
 }
 
 /* ── 약수·배수 3단계 융합 커리큘럼 ── */
-.fm-card{background:var(--card);border-radius:18px;padding:18px 16px;cursor:pointer;border:2px solid transparent;transition:.2s;display:flex;align-items:center;gap:14px;margin-bottom:10px;width:100%;max-width:500px}
+.fm-card{background:var(--card);border-radius:18px;padding:18px 16px;cursor:pointer;border:2px solid transparent;transition:.2s;display:flex;align-items:center;gap:14px;margin-bottom:10px;width:100%;max-width:620px}
 .fm-card:active{transform:scale(.97)}
 .fm-card.fi:hover,.fm-card.fi:focus{border-color:rgba(46,204,113,.5)}
 .fm-card.sg:hover,.fm-card.sg:focus{border-color:rgba(52,152,219,.5)}
@@ -214,26 +214,52 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
 .fm-info{flex:1}
 .fm-title{font-family:'Jua',sans-serif;font-size:1.05rem}
 .fm-sub{font-size:.78rem;color:var(--gray);margin-top:3px;line-height:1.5}
-.fm-badge-box{background:linear-gradient(135deg,#1a1000,#2d1e00);border:2px solid #d4a017;border-radius:16px;padding:14px 18px;text-align:center;box-shadow:0 0 24px rgba(212,160,23,.18);width:100%;max-width:500px}
+.fm-badge-box{background:linear-gradient(135deg,#1a1000,#2d1e00);border:2px solid #d4a017;border-radius:16px;padding:14px 18px;text-align:center;box-shadow:0 0 24px rgba(212,160,23,.18);width:100%;max-width:620px}
 .bar-row{display:flex;align-items:center;gap:6px;margin-bottom:8px}
 .bar-label{font-size:.78rem;color:var(--gray);width:52px;flex-shrink:0;text-align:right}
 .bar-track{display:flex;flex:1;gap:2px}
 .bar-seg{height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:#fff}
 .fm-method-tag{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:4px 12px;font-size:.78rem;font-weight:700;margin-bottom:10px}
-.fm-parent-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:var(--gray);border-radius:10px;padding:8px 16px;font-size:.78rem;cursor:pointer;width:100%;max-width:500px;margin-top:6px}
+.fm-parent-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:var(--gray);border-radius:10px;padding:8px 16px;font-size:.78rem;cursor:pointer;width:100%;max-width:620px;margin-top:6px}
 .fm-parent-btn:hover{border-color:rgba(52,152,219,.4);color:var(--blue)}
-.fm-report{background:var(--card2);border-radius:14px;padding:14px 16px;width:100%;max-width:500px;margin-top:8px}
+.fm-report{background:var(--card2);border-radius:14px;padding:14px 16px;width:100%;max-width:620px;margin-top:8px}
 @keyframes seaWave{0%,100%{transform:translateX(0) scaleY(1)}50%{transform:translateX(-18px) scaleY(1.08)}}
 @keyframes seaGlow{0%,100%{opacity:.12}50%{opacity:.28}}
 @keyframes toroPopIn{0%{opacity:0;transform:scale(.85) translateY(10px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+
+/* ── 칸아카데미 패널 (Method A — equation) ── */
+.khan-panel{margin:0 0 12px;border-radius:14px;overflow:hidden;border:1px solid rgba(251,191,36,.22)}
+.khan-toggle{width:100%;background:rgba(251,191,36,.07);border:none;color:#fde68a;padding:11px 16px;font-family:'Jua',sans-serif;font-size:.85rem;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;transition:.15s}
+.khan-toggle:hover{background:rgba(251,191,36,.13)}
+.khan-body{display:none;padding:14px 16px;background:rgba(0,0,0,.22)}
+.khan-why-title{font-family:'Jua',sans-serif;color:#fbbf24;font-size:.8rem;margin-bottom:5px}
+.khan-why-text{font-size:.8rem;color:#d0e0f0;line-height:1.75;margin-bottom:10px}
+.khan-visual{background:rgba(255,255,255,.04);border-radius:10px;padding:10px 12px;margin:6px 0 10px;font-size:.78rem}
+.khan-steps-list{display:flex;flex-direction:column;gap:6px;margin:6px 0 10px}
+.khan-step-row{display:flex;align-items:flex-start;gap:8px}
+.khan-step-num{width:20px;height:20px;border-radius:50%;background:rgba(251,191,36,.18);color:#fbbf24;font-size:.7rem;font-family:'Jua',sans-serif;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.khan-step-text{font-size:.79rem;color:#c0d0e0;line-height:1.6}
+.khan-check{background:rgba(46,204,113,.07);border:1px solid rgba(46,204,113,.2);border-radius:8px;padding:8px 12px;font-size:.78rem;color:#86efac;text-align:center}
+
+/* ── 칸아카데미 이해 점검 (Method B — inequality) ── */
+.khan-feedback{border-radius:12px;overflow:hidden;border:1px solid rgba(248,113,113,.28);margin-top:12px}
+.khan-fb-header{background:rgba(248,113,113,.1);padding:9px 14px;font-family:'Jua',sans-serif;color:#f87171;font-size:.82rem;display:flex;align-items:center;gap:6px}
+.khan-fb-body{padding:12px 14px;background:rgba(0,0,0,.18)}
+.khan-key-box{background:rgba(255,255,255,.04);border-radius:8px;padding:8px 10px;margin:7px 0;font-family:monospace;font-size:.77rem;color:#86efac;line-height:1.6}
+.khan-self-check{display:flex;gap:8px;margin-top:10px}
+.khan-self-btn{flex:1;padding:9px;border-radius:10px;border:none;font-family:'Jua',sans-serif;font-size:.78rem;cursor:pointer;transition:.15s}
+.khan-self-ok{background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.28);color:#86efac}
+.khan-self-ok:hover{background:rgba(46,204,113,.22)}
+.khan-self-no{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.28);color:#f87171}
+.khan-self-no:hover{background:rgba(248,113,113,.22)}
+.khan-self-msg{text-align:center;font-size:.78rem;padding:7px 0;min-height:22px;transition:.3s}
 </style>
 </head>
 <body>
-<button onclick="history.back()" style="position:fixed;top:12px;left:12px;z-index:999;background:rgba(10,10,26,.88);border:1px solid rgba(168,85,247,.4);color:#c084fc;border-radius:20px;padding:6px 15px;font-family:'Jua',sans-serif;font-size:.8rem;backdrop-filter:blur(8px);cursor:pointer">← 뒤로</button>
 
 <!-- Home - Armonia Math Kingdom -->
 <div id="home" class="screen active">
-  <div style="width:100%;max-width:500px">
+  <div style="width:100%;max-width:620px">
     <div style="text-align:right;padding:8px 0 4px">
       <a href="../armoonia_hub/index.html" style="font-family:'Jua',sans-serif;font-size:.82rem;color:var(--gray);text-decoration:none;background:rgba(255,255,255,.07);padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.12)">← 메인 허브</a>
     </div>
@@ -602,8 +628,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
 </div>
 
 <div id="factmult" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:1rem;text-align:center;color:#fbbf24">🔢 약수와 배수 — 3단계 융합</h2>
       <div style="width:60px"></div>
@@ -650,8 +676,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      소인수분해 허브
 ══════════════════════════════════ -->
 <div id="prime-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#a5b4fc">🧬 소인수분해 — 3단계 융합</h2>
       <div style="width:60px"></div>
@@ -696,8 +722,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      일차방정식 허브
 ══════════════════════════════════ -->
 <div id="equation-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#d8b4fe">⚖️ 일차방정식의 활용</h2>
       <div style="width:60px"></div>
@@ -761,8 +787,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      항등식 허브
 ══════════════════════════════════ -->
 <div id="eq-identity-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#a5b4fc">📜 항등식의 법전</h2>
       <div style="width:60px"></div>
@@ -788,8 +814,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      일차방정식 개념 가이드 & 문제 목록
 ══════════════════════════════════ -->
 <div id="eq-concept" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('equation-hub')">← 일차방정식</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.9rem;text-align:center;color:#d8b4fe">📖 개념 가이드 &amp; 문제</h2>
       <div style="width:60px"></div>
@@ -821,8 +847,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      일차방정식 하브루타 토론관
 ══════════════════════════════════ -->
 <div id="eq-havruta" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('equation-hub')">← 일차방정식</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.9rem;text-align:center;color:#fde68a">✡️ 하브루타 토론관</h2>
       <div style="width:60px"></div>
@@ -853,8 +879,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      평균과 가능성 허브
 ══════════════════════════════════ -->
 <div id="avg-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#86efac">📊 평균과 가능성</h2>
       <div style="width:60px"></div>
@@ -896,8 +922,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      다항식·나머지 정리 허브 (고1)
 ══════════════════════════════════ -->
 <div id="poly-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#f9a8d4">📜 다항식·나머지 정리</h2>
       <div style="width:60px"></div>
@@ -936,8 +962,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      이차방정식 (실근의 위치) 허브 — 고1
 ══════════════════════════════════ -->
 <div id="quad-eq-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#fb923c">📐 이차방정식</h2>
       <div style="width:60px"></div>
@@ -973,8 +999,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      복소수 허브 — 고1
 ══════════════════════════════════ -->
 <div id="complex-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#c4b5fd">🌀 복소수</h2>
       <div style="width:60px"></div>
@@ -1010,8 +1036,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      이차함수 허브 — 고1
 ══════════════════════════════════ -->
 <div id="quad-func-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#fbbf24">📊 이차함수</h2>
       <div style="width:60px"></div>
@@ -1047,8 +1073,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      연립방정식 허브
 ══════════════════════════════════ -->
 <div id="simultaneous-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#7dd3fc">🔗 연립방정식</h2>
       <div style="width:60px"></div>
@@ -1093,8 +1119,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      기본 도형 허브
 ══════════════════════════════════ -->
 <div id="geometry-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#c4b5fd">📐 기본 도형</h2>
       <div style="width:60px"></div>
@@ -1130,8 +1156,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      일차부등식 허브
 ══════════════════════════════════ -->
 <div id="inequality-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#f87171">📊 일차부등식</h2>
       <div style="width:60px"></div>
@@ -1182,8 +1208,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      일차함수 허브
 ══════════════════════════════════ -->
 <div id="linear-func-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#34d399">📈 일차함수</h2>
       <div style="width:60px"></div>
@@ -1222,8 +1248,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      이차방정식 허브
 ══════════════════════════════════ -->
 <div id="quadratic-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#fb923c">🎯 이차방정식</h2>
       <div style="width:60px"></div>
@@ -1259,8 +1285,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      제곱근과 실수 허브
 ══════════════════════════════════ -->
 <div id="sqrt-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.95rem;text-align:center;color:#2dd4bf">🌱 제곱근과 실수</h2>
       <div style="width:60px"></div>
@@ -1299,8 +1325,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      중3-1학기 4개국 허브
 ══════════════════════════════════ -->
 <div id="mid3-hub" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('home')">← 수학왕국</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:.88rem;text-align:center;color:#a78bfa">🏰 중3-1학기 4개국 완전정복</h2>
       <div style="width:60px"></div>
@@ -1347,8 +1373,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      카드 뷰어
 ══════════════════════════════════ -->
 <div id="cardviewer" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen(CS.from)">← 뒤로</button>
       <h2 id="cv-title" style="flex:1;font-family:'Jua',sans-serif;font-size:.8rem;text-align:center;color:#d8b4fe;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></h2>
       <div id="cv-num" style="font-family:'Jua',sans-serif;color:#aaa;font-size:.8rem;min-width:50px;text-align:right">1 / 1</div>
@@ -1432,8 +1458,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      약수·배수 퀴즈
 ══════════════════════════════════ -->
 <div id="fm-quiz" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('factmult')">← 돌아가기</button>
       <div id="fm-q-prog" style="flex:1;height:8px;background:#223;border-radius:4px;margin:0 10px">
         <div id="fm-q-prog-fill" style="height:8px;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--yellow));transition:.4s;width:0%"></div>
@@ -1449,8 +1475,8 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
      학부모 리포트
 ══════════════════════════════════ -->
 <div id="fm-report" class="screen">
-  <div style="width:100%;max-width:500px">
-    <div class="nav-bar" style="max-width:500px">
+  <div style="width:100%;max-width:620px">
+    <div class="nav-bar" style="max-width:620px">
       <button class="nav-back" onclick="showScreen('factmult')">← 돌아가기</button>
       <h2 style="flex:1;font-family:'Jua',sans-serif;font-size:1rem;text-align:center;color:var(--blue)">📊 학부모 학습 리포트</h2>
       <div style="width:60px"></div>
@@ -1471,6 +1497,7 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
   <div id="quiz-inner" style="width:100%;max-width:580px"></div>
   <div id="feedback-area" class="feedback"></div>
   <div style="display:flex;gap:10px;margin-top:10px;width:100%;max-width:580px">
+    <button class="btn btn-sub" id="btn-prev" onclick="prevQ()" style="flex:1">← 이전</button>
     <button class="btn btn-sub" id="btn-skip" onclick="skipQ()" style="flex:1">건너뛰기</button>
     <button class="btn btn-sub" id="btn-next" onclick="nextQ()" style="flex:1;display:none">다음 →</button>
     <button class="btn btn-sub" id="btn-dok" onclick="showDok()" style="display:none">💡 사고력</button>
@@ -10169,8 +10196,11 @@ function toggleCVAnswer() {
   const area = document.getElementById('cv-ans-area');
   const btn  = document.getElementById('cv-ans-btn');
   CS.showAns = !CS.showAns;
-  if (CS.showAns) { area.innerHTML = d.ans; area.style.display=''; btn.textContent='🙈 정답 숨기기'; }
-  else { area.style.display='none'; btn.textContent='💡 정답/풀이 보기'; }
+  if (CS.showAns) {
+    const khanHtml = CS.set==='ineq-word' ? khanIneqCheck(d) : '';
+    area.innerHTML = d.ans + khanHtml;
+    area.style.display=''; btn.textContent='🙈 정답 숨기기';
+  } else { area.style.display='none'; btn.textContent='💡 정답/풀이 보기'; }
 }
 
 function cvNav(dir) {
@@ -11463,11 +11493,11 @@ function genFmGCDBasic(){
   const stories=[
     ()=>`🇸🇬 막대 모델: ${a}cm${gwa(a)} ${b}cm 막대를 남는 부분 없이 같은 길이로 자르려 해요. 가장 큰 조각 길이는?`,
     ()=>`🇫🇮 사과 ${a}개와 귤 ${b}개를 친구들에게 각각 같은 수씩 남김없이 나눌 때 최대 몇 명?`,
-    ()=>`✡️ ${a}${gwa(a)} ${b}의 최대공약수(GCD)는?`,
   ];
-  const choices=[String(g)];
-  [String(g*2),String(g+2<a?g+2:g-2>0?g-2:g+3),String(a),String(b)].filter(v=>!choices.includes(v)&&Number(v)>0).forEach(w=>choices.push(w));
-  return {type:'fm',subtype:'gcd',story:rnd(stories)(),data:{a,b,g},answer:String(g),choices:shuffle(choices.slice(0,4))};
+  const rawGcd=[String(g),String(g*2),String(g+3),String(g-1>0?g-1:g+4),String(a),String(b),String(a+b)];
+  const choices=[...new Set(rawGcd.filter(v=>Number(v)>0))].slice(0,4);
+  while(choices.length<4) choices.push(String(Number(choices[choices.length-1])+1));
+  return {type:'fm',subtype:'gcd',story:rnd(stories)(),data:{a,b,g},answer:String(g),choices:shuffle(choices)};
 }
 function genFmLCMBasic(){
   const cases=[
@@ -11480,11 +11510,11 @@ function genFmLCMBasic(){
   const stories=[
     ()=>`🇸🇬 막대 기차: ${a}cm 막대와 ${b}cm 막대를 이어 붙여요. 처음으로 길이가 같아지는 지점은?`,
     ()=>`🇫🇮 버스는 ${a}분마다, 지하철은 ${b}분마다 와요. 방금 동시 출발했다면 다음 동시 출발까지 몇 분?`,
-    ()=>`✡️ ${a}${gwa(a)} ${b}의 최소공배수(LCM)는?`,
   ];
-  const choices=[String(L)];
-  [String(a*b),String(L+a),String(L-b>0?L-b:L+b+1)].filter(v=>!choices.includes(v)&&Number(v)>0).forEach(w=>choices.push(w));
-  return {type:'fm',subtype:'lcm',story:rnd(stories)(),data:{a,b,L},answer:String(L),choices:shuffle(choices.slice(0,4))};
+  const rawLcm=[String(L),String(a*b),String(L+a),String(L+b),String(L-a>0?L-a:L+a+1)];
+  const choicesL=[...new Set(rawLcm.filter(v=>Number(v)>0))].slice(0,4);
+  while(choicesL.length<4) choicesL.push(String(Number(choicesL[choicesL.length-1])+1));
+  return {type:'fm',subtype:'lcm',story:rnd(stories)(),data:{a,b,L},answer:String(L),choices:shuffle(choicesL)};
 }
 function genFmDivisorCount(){
   const nums=[
@@ -11495,7 +11525,6 @@ function genFmDivisorCount(){
   const {n,cnt}=rnd(nums);
   const stories=[
     ()=>`🇫🇮 ${n}개의 사탕을 남김없이 나눠 갖는 방법은 몇 가지? (1명, ${n}명 포함)`,
-    ()=>`✡️ ${n}의 약수는 모두 몇 개인가요?`,
     ()=>`🇸🇬 ${n}을 나누어 떨어지게 하는 자연수는 몇 개인가요?`,
   ];
   const choices=[String(cnt)];
@@ -11528,8 +11557,77 @@ function genFmLCMWord(){
   [String(a*b),String(L+a),String(L-b>0?L-b:L+b+1)].filter(v=>!choices.includes(v)&&Number(v)>0).forEach(w=>choices.push(w));
   return {type:'fm',subtype:'lcm_word',story,data:{a,b,L},answer:String(L),choices:shuffle(choices.slice(0,4))};
 }
+function genFmGCDConcept(){
+  const qs=[
+    {q:'🇫🇮 두 수의 최대공약수가 1일 때 두 수의 관계는?', ans:'두 수는 서로소다',
+     exp:'최대공약수 = 1 → 공약수가 1밖에 없다 = 서로소<br>예: 최대공약수(8,15)=1 → 서로소<br>서로소인 두 수는 공통 약수가 없음',
+     choices:['한 수가 다른 수의 약수다','두 수는 서로소다','두 수는 모두 소수다','두 수의 합이 소수다']},
+    {q:'✡️ 다음 중 서로소인 쌍은? (최대공약수 = 1)', ans:'8과 15',
+     exp:'6과 9: 최대공약수=3 ✗<br>8과 15: 8=2³, 15=3×5 → 공통 소인수 없음 → 최대공약수=1 ✓<br>4과 10: 최대공약수=2 ✗ / 6과 15: 최대공약수=3 ✗',
+     choices:['6과 9','8과 15','4과 10','6과 15']},
+    {q:'🇸🇬 두 수의 최대공약수가 6일 때 두 수가 될 수 없는 쌍은?', ans:'9와 15',
+     exp:'최대공약수가 6이면 두 수 모두 6의 배수여야 함<br>9와 15: 9=3², 15=3×5 → 최대공약수=3 (6이 아님) ✗<br>6과 12, 12와 18, 18과 24는 모두 최대공약수가 6',
+     choices:['6과 12','12와 18','9와 15','18과 24']},
+    {q:'🇫🇮 두 소수의 최대공약수는 항상?', ans:'1',
+     exp:'소수는 1과 자기 자신으로만 나눠짐<br>두 소수가 다르면 공통 약수가 1밖에 없음<br>예: 최대공약수(5,7)=1, 최대공약수(11,13)=1',
+     choices:['1','두 수 중 작은 것','두 수의 합','알 수 없다']},
+    {q:'✡️ 12와 18의 최대공약수가 6이다. 24와 36의 최대공약수는?', ans:'12',
+     exp:'24 = 12×2, 36 = 18×2<br>두 수를 모두 2배 하면 최대공약수도 2배<br>최대공약수(24,36) = 6×2 = <b style="color:var(--yellow)">12</b>',
+     choices:['6','10','12','18']},
+  ];
+  const q=rnd(qs);
+  return {type:'fm',subtype:'gcd_concept',story:q.q,data:{exp:q.exp},answer:q.ans,choices:shuffle([...q.choices])};
+}
+
+function genFmDivisorConcept(){
+  const qs=[
+    {q:'🇸🇬 약수의 개수가 홀수인 수는 어떤 수인가?', ans:'완전제곱수',
+     exp:'약수는 보통 쌍(a×b=n)으로 나타남.<br>완전제곱수는 가운데 약수가 혼자 (예: 36 → 6×6)<br>예: 36의 약수: 1,2,3,4,<b style="color:var(--yellow)">6</b>,9,12,18,36 → 9개(홀수)',
+     choices:['소수','짝수','완전제곱수','3의 배수']},
+    {q:'🇫🇮 다음 중 약수의 개수가 홀수인 수는?', ans:'36',
+     exp:'36 = 6² → 완전제곱수 → 약수 개수 홀수<br>12: 6개 / 24: 8개 / 30: 8개 → 짝수<br><b style="color:var(--yellow)">36의 약수: 9개(홀수)</b>',
+     choices:['12','24','36','30']},
+    {q:'✡️ 약수가 정확히 3개인 수의 형태는?', ans:'소수²',
+     exp:'약수 3개 = (지수+1) = 3 → 지수 = 2<br>소인수가 하나이고 지수가 2인 수 = 소수²<br>예: 4 = 2² → 약수: 1,2,4 (3개) / 9 = 3² → 약수: 1,3,9 (3개)',
+     choices:['소수×2','소수²','소수+1','소수³']},
+    {q:'🇸🇬 16의 약수 개수가 홀수인 이유는?', ans:'16이 완전제곱수(4²)이기 때문',
+     exp:'16 = 4² → 완전제곱수<br>약수: 1,2,4,8,16 → 5개(홀수)<br>가운데 약수 4가 혼자(4×4=16)',
+     choices:['16이 짝수이기 때문','16이 2의 배수이기 때문','16이 완전제곱수(4²)이기 때문','16이 합성수이기 때문']},
+    {q:'🇫🇮 (지수+1)의 곱이 홀수가 되려면?', ans:'모든 지수가 짝수여야 한다',
+     exp:'홀수×홀수=홀수, 짝수가 하나라도 있으면 곱이 짝수<br>(지수+1)이 모두 홀수 → 각 지수가 모두 짝수<br>→ 소인수의 지수가 모두 짝수 = 완전제곱수',
+     choices:['지수가 모두 1이어야 한다','모든 지수가 짝수여야 한다','소인수가 하나여야 한다','지수의 합이 짝수여야 한다']},
+  ];
+  const q=rnd(qs);
+  return {type:'fm',subtype:'div_concept',story:q.q,data:{exp:q.exp},answer:q.ans,choices:shuffle([...q.choices])};
+}
+
+function genFmFinnishScenario(){
+  const qs=[
+    { story:'🇫🇮 A 알약은 6시간마다, B 알약은 9시간마다 먹어요. 월요일 오전 9시부터 시작하면 수요일이 되기 전까지 두 알약을 동시에 먹는 횟수는?',
+      ans:'3번', exp:'최소공배수(6,9)=18시간 → 18시간마다 동시 복용<br>0h(월9시) → 18h(화3시) → 36h(화21시) → 54h는 수요일 이후 제외<br><b style="color:var(--yellow)">총 3번</b>',
+      choices:['2번','3번','4번','5번'] },
+    { story:'🇫🇮 셔틀버스는 15분마다, 지하철은 12분마다 와요. 오후 3시 18분에 동시 도착했다면 다음 동시 도착은?',
+      ans:'오후 4시 18분', exp:'최소공배수(15,12)=60분<br>3시 18분 + 60분 = <b style="color:var(--yellow)">오후 4시 18분</b>',
+      choices:['오후 3시 48분','오후 4시 18분','오후 4시 30분','오후 5시'] },
+    { story:'🇫🇮 가로등 A는 20초마다, B는 30초마다 반복해요. 동시에 켜지기 시작하면 다시 동시에 켜지는 데 걸리는 시간은?',
+      ans:'1분', exp:'A 주기 20초, B 주기 30초<br>최소공배수(20,30)=60초 = <b style="color:var(--yellow)">1분</b>',
+      choices:['30초','45초','1분','2분'] },
+    { story:'🇫🇮 준표는 8일마다 도서관, 민지는 12일마다 가요. 오늘 둘 다 갔다면 다음에 함께 가는 날은 며칠 후?',
+      ans:'24일', exp:'최소공배수(8,12)=<b style="color:var(--yellow)">24일</b><br>8의 배수: 8,16,<b style="color:var(--yellow)">24</b> / 12의 배수: 12,<b style="color:var(--yellow)">24</b>',
+      choices:['12일','18일','24일','48일'] },
+    { story:'🇫🇮 사과 24개와 귤 36개를 친구들에게 남김없이 같은 수로 나눌 때 최대 몇 명?',
+      ans:'12명', exp:'최대공약수(24,36)=12<br>24÷12=2개, 36÷12=3개씩 → <b style="color:var(--yellow)">12명</b>',
+      choices:['6명','9명','12명','18명'] },
+    { story:'🇫🇮 리본 30cm와 45cm를 남김없이 같은 길이로 자를 때 가장 긴 조각의 길이는?',
+      ans:'15cm', exp:'최대공약수(30,45)=15<br>30÷15=2조각, 45÷15=3조각 → <b style="color:var(--yellow)">15cm</b>',
+      choices:['5cm','10cm','15cm','20cm'] },
+  ];
+  const q=rnd(qs);
+  return {type:'fm',subtype:'fi_scenario',story:q.story,data:{exp:q.exp},answer:q.ans,choices:shuffle([...q.choices])};
+}
+
 function genQsFm(){
-  const fns=[genFmGCDBasic,genFmLCMBasic,genFmDivisorCount,genFmGCDWord,genFmLCMWord];
+  const fns=[genFmGCDBasic,genFmGCDConcept,genFmLCMBasic,genFmDivisorConcept,genFmGCDWord,genFmLCMWord,genFmFinnishScenario];
   const qs=fns.map(f=>f());
   const extra=Array.from({length:5},()=>rnd(fns)());
   return shuffle([...qs,...extra]).slice(0,10);
@@ -11567,7 +11665,8 @@ function setGrade(g,el){
 }
 
 function updatePoints(){
-  document.getElementById('pts-display').textContent=`${ST.points.toLocaleString()} P`;
+  const el=document.getElementById('pts-display');
+  if(el) el.textContent=`${ST.points.toLocaleString()} P`;
   localStorage.setItem('toroPoints',ST.points);
 }
 
@@ -12116,9 +12215,15 @@ function renderQ(){
     const eqHints={distance:'거리 = 속력×시간, 왕복 조심! ⚖️',salt:'농도 문제: 소금만 늘어요! 💪',work:'일의 양 전체=1이라는 빵! 🔥',profit:'정가 = 원가×(1+이익률), 할인 주의! 💰',savings:'역전 조건: 동생 저금액 > 형 저금액! 📈'};
     lines=[eqHints[q.subtype]||lines[0]];
   }
+  if(ST.topic==='fm'&&q.subtype){
+    const fmHints={gcd_basic:'공약수 중 가장 큰 것 = 최대공약수(GCD)! 🪵',gcd_word:'공통으로 나눌 수 있는 가장 큰 수를 찾아! 🪵',lcm:'공배수 중 가장 작은 것 = 최소공배수(LCM)! 🌳',lcm_word:'두 주기가 처음으로 같이 만나는 시간! 🌳',div_count:'약수 개수 = (지수+1) 곱하기! 🦕'};
+    lines=[fmHints[q.subtype]||lines[0]];
+  }
   const vis=renderVisual(q);
   const hardBadge=ST.hardMode?`<div style="text-align:center;margin-bottom:8px"><span style="background:rgba(231,76,60,.2);border:1px solid rgba(231,76,60,.4);color:#e74c3c;border-radius:20px;padding:3px 14px;font-size:.8rem;font-family:'Jua',sans-serif">🔥 심화 도전 중</span></div>`:'';
+  const khanPanel=ST.topic==='equation'?khanExplainEq(q):'';
   document.getElementById('quiz-inner').innerHTML=`
+  ${khanPanel}
   ${hardBadge}
   <div class="toro-bubble">
     <span class="toro-face">🦕</span>
@@ -12131,7 +12236,399 @@ function renderQ(){
   <div id="q-steps-wrap"></div>
   <div id="q-hint-area"></div>`;
 
-  renderQSteps();
+  if(ST.topic==='equation') renderQReveal();
+  else if(q.choices && q.choices.length) renderQChoices();
+  else renderQSteps();
+}
+
+function renderQChoices(){
+  const q=ST.qs[ST.cur];
+  const letters=['①','②','③','④'];
+  const h=`<div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+    ${q.choices.map((c,i)=>`
+      <button class="choice-btn" id="cb-${i}" onclick="checkQChoice('${c}')"
+        style="text-align:left;padding:12px 16px;font-size:1rem;border-radius:10px">
+        ${letters[i]} ${c}
+      </button>`).join('')}
+  </div>
+  <div id="qc-result" style="margin-top:12px"></div>
+  <div id="qc-explain" style="display:none;margin-top:10px;background:rgba(99,102,241,.1);border-left:3px solid #6366f1;padding:12px 14px;border-radius:8px;font-size:.9rem;line-height:1.7;color:#c0d0e0"></div>`;
+  document.getElementById('q-steps-wrap').innerHTML=h;
+}
+
+function checkQChoice(val){
+  if(ST.answered) return;
+  ST.answered=true;
+  const q=ST.qs[ST.cur];
+  const ok=val===q.answer;
+  if(ok) ST.score++;
+  const earn=ok?2:1;
+  ST.points+=earn; updatePoints();
+
+  // 선택한 버튼 색상
+  document.querySelectorAll('.choice-btn').forEach(b=>{
+    const bval=b.textContent.trim().replace(/^[①②③④]\s*/,'');
+    if(bval===val) b.style.borderColor=ok?'var(--green)':'var(--red)';
+    if(bval===q.answer && !ok) b.style.borderColor='var(--green)';
+    b.disabled=true;
+  });
+
+  // 결과
+  document.getElementById('qc-result').innerHTML=
+    `<div style="font-size:.95rem;color:${ok?'var(--green)':'var(--red)'};margin-bottom:8px">
+      ${ok?'✅ 정답!':'❌ 틀렸어요.'} 정답: <b style="color:var(--yellow)">${q.answer}</b>
+    </div>
+    <button id="qc-explain-btn" onclick="toggleQCExplain()" style="background:rgba(99,102,241,.2);border:1px solid #6366f1;color:#a5b4fc;border-radius:8px;padding:7px 16px;font-size:.85rem;cursor:pointer">📖 풀이 보기</button>
+    <div id="qc-explain" style="display:none;margin-top:10px;background:rgba(99,102,241,.1);border-left:3px solid #6366f1;padding:12px 14px;border-radius:8px;font-size:.88rem;line-height:1.8;color:#c0d0e0"></div>`;
+
+  const fb=document.getElementById('feedback-area');
+  fb.style.display='block';
+  fb.className=`feedback ${ok?'correct':'wrong'}`;
+  fb.innerHTML=`<div class="feedback-title">${ok?`🎉 정답! +${earn}P`:`👏 수고했어! +${earn}P`}</div>`;
+  document.getElementById('btn-next').style.display='';
+  document.getElementById('btn-skip').style.display='none';
+}
+
+function primeFactorize(n){
+  const f={};
+  for(let d=2;d*d<=n;d++) while(n%d===0){f[d]=(f[d]||0)+1;n=Math.floor(n/d);}
+  if(n>1) f[n]=(f[n]||0)+1;
+  return f;
+}
+function factorStr(n){
+  const f=primeFactorize(n);
+  const sup={1:'¹',2:'²',3:'³',4:'⁴',5:'⁵',6:'⁶',7:'⁷',8:'⁸'};
+  return Object.entries(f).map(([p,e])=>e===1?p:`${p}${sup[e]||'^'+e}`).join(' × ');
+}
+function superscript(e){ return ['','¹','²','³','⁴','⁵','⁶','⁷','⁸'][e]||'^'+e; }
+
+function toggleQCExplain(){
+  const el=document.getElementById('qc-explain');
+  const btn=document.getElementById('qc-explain-btn');
+  if(!el) return;
+  const showing=el.style.display==='block';
+  if(!showing){
+    el.innerHTML=buildQCExplain(ST.qs[ST.cur]);
+    el.style.display='block';
+    btn.textContent='📖 풀이 닫기';
+  } else {
+    el.style.display='none';
+    btn.textContent='📖 풀이 보기';
+  }
+}
+
+function buildQCExplain(q){
+  const {subtype,data,answer}=q;
+  const Y='color:var(--yellow)';
+  const G='color:#4ade80';
+  const B='color:#7dd3fc';
+  let exp='';
+
+  if(subtype==='gcd'||subtype==='gcd_basic'){
+    const {a,b,g}=data;
+    const divisors=[];
+    for(let i=1;i<=Math.min(a,b);i++) if(a%i===0&&b%i===0) divisors.push(i);
+    exp=`<b style="${B}">${a}와 ${b}의 공약수</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.88rem">
+        ${divisors.map(d=>d===g?`<b style="${Y}">${d}</b>`:d).join(', ')}
+      </div>
+      공약수 중 가장 큰 것 = 최대공약수 = <b style="${Y}">${g}</b>`;
+  } else if(subtype==='gcd_word'){
+    const {a,b,g}=data;
+    // 공약수 나열 방식 — 더 직관적
+    const divisors=[];
+    for(let i=1;i<=Math.min(a,b);i++) if(a%i===0&&b%i===0) divisors.push(i);
+    exp=`<b style="${B}">① ${a}와 ${b}의 공약수 나열</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:6px 0;font-size:.88rem">
+        ${divisors.map(d=>d===g?`<b style="${Y}">${d}</b>`:d).join(', ')}
+      </div>
+      <b style="${B}">② 공약수 중 가장 큰 것 = 최대공약수</b><br>
+      GCD(${a}, ${b}) = <b style="${Y}">${g}</b>`;
+
+  } else if(subtype==='lcm'){
+    const {a,b,L}=data;
+    const ma=[], mb=[];
+    for(let i=a;i<=L;i+=a) ma.push(i);
+    for(let i=b;i<=L;i+=b) mb.push(i);
+    exp=`<b style="${B}">${a}의 배수</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.88rem">
+        ${ma.map(v=>v===L?`<b style="${Y}">${v}</b>`:v).join(', ')}
+      </div>
+      <b style="${B}">${b}의 배수</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.88rem">
+        ${mb.map(v=>v===L?`<b style="${Y}">${v}</b>`:v).join(', ')}
+      </div>
+      처음 만나는 수 → LCM(${a}, ${b}) = <b style="${Y}">${L}</b>`;
+  } else if(subtype==='lcm_word'){
+    const {a,b,L}=data;
+    // 배수 나열 방식 — 더 직관적
+    const ma=[], mb=[];
+    for(let i=a;i<=L;i+=a) ma.push(i);
+    for(let i=b;i<=L;i+=b) mb.push(i);
+    exp=`<b style="${B}">① ${a}의 배수</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.88rem">
+        ${ma.map(v=>v===L?`<b style="${Y}">${v}</b>`:v).join(', ')}
+      </div>
+      <b style="${B}">② ${b}의 배수</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.88rem">
+        ${mb.map(v=>v===L?`<b style="${Y}">${v}</b>`:v).join(', ')}
+      </div>
+      처음으로 만나는 수 = LCM(${a}, ${b}) = <b style="${Y}">${L}</b>`;
+
+  } else if(subtype==='div_count'){
+    const {n,cnt}=data;
+    const f=primeFactorize(n);
+    const parts=Object.entries(f).map(([p,e])=>`(${e}+1)`).join(' × ');
+    const vals=Object.entries(f).map(([p,e])=>e+1).join(' × ');
+    const fStr=factorStr(n)||String(n);
+    const choiceRows=Object.entries(f).map(([p,e])=>`
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:5px 10px;font-size:.82rem">
+        ${p}의 지수 = ${e} → ${p}⁰, ${Array.from({length:e},(_,i)=>`${p}${superscript(i+1)}`).join(', ')} → <b style="${G}">${e+1}가지</b>
+      </div>`).join('');
+    exp=`<b style="${B}">① 소인수분해</b><br>
+      ${n} = <b>${fStr}</b><br><br>
+      <b style="${B}">② 각 소인수의 선택 경우의 수</b><br>
+      <div style="display:flex;flex-direction:column;gap:5px;margin:6px 0">${choiceRows}</div>
+      <b style="${B}">③ (지수+1) 곱하기</b><br>
+      ${parts} = ${vals} = <b style="${Y}">${cnt}개</b><br><br>
+      <span style="color:#a0aec0;font-size:.8rem">약수 하나 = 소인수마다 지수를 하나씩 고르는 것. 경우의 수를 모두 곱하면 약수의 총 개수!</span>`;
+
+  } else if(subtype==='fi_scenario'){
+    exp=data.exp||`정답: <b style="${Y}">${answer}</b>`;
+  } else if(subtype==='gcd_concept'){
+    exp=`<b style="${Y}">${answer}</b><br><br>${data.exp||''}`;
+  } else if(subtype==='div_concept'){
+    exp=`<b style="${Y}">${answer}</b><br><br>${data.exp||''}`;
+  } else {
+    exp=`정답: <b style="${Y}">${answer}</b>`;
+  }
+  return exp;
+}
+
+// ══════════════════════════════════════════════════
+//  칸아카데미 Method A — 방정식 "왜 이렇게 하나요?" 패널
+// ══════════════════════════════════════════════════
+function toggleKhan(btn){
+  const body=btn.nextElementSibling;
+  const isOpen=body.style.display==='block';
+  body.style.display=isOpen?'':'block';
+  btn.innerHTML=btn.innerHTML.replace(isOpen?'▴':'▾', isOpen?'▾':'▴');
+}
+
+function khanExplainEq(q){
+  if(!q||q.type!=='equation') return '';
+  const sub=q.subtype||'simple';
+  const E={
+    simple:{
+      why:'방정식에서 x는 아직 모르는 수예요. x가 있는 항을 한쪽으로 모아서 등식을 유지하면 x를 구할 수 있어요!',
+      visual:`<div style="display:flex;justify-content:center;align-items:center;gap:10px;padding:4px 0;font-family:'Jua',sans-serif">
+        <div style="background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.3);border-radius:8px;padding:7px 14px;color:#d8b4fe">왼쪽</div>
+        <div style="color:var(--yellow);font-size:1.1rem;font-weight:700">=</div>
+        <div style="background:rgba(46,204,113,.15);border:1px solid rgba(46,204,113,.3);border-radius:8px;padding:7px 14px;color:#86efac">오른쪽</div>
+      </div>
+      <div style="text-align:center;color:var(--gray);margin-top:5px">⚖️ 저울처럼 — 양쪽이 항상 같아야 해요</div>`,
+      steps:['모르는 수를 x로 놓아요','x가 있는 항을 왼쪽으로 이항해요 (부호 바뀜!)','x의 계수로 나눠 x를 구해요']
+    },
+    rod:{
+      why:'두 조각을 더하면 전체가 돼요. "부분 + 부분 = 전체"를 식으로 쓰면 방정식 완성!',
+      visual:`<div style="padding:6px 0">
+        <div style="display:flex;border-radius:4px;overflow:hidden;height:28px">
+          <div style="flex:3;background:rgba(99,102,241,.3);display:flex;align-items:center;justify-content:center;color:#a5b4fc;font-family:'Jua',sans-serif;font-size:.78rem">x cm</div>
+          <div style="width:2px;background:#0d1f3a"></div>
+          <div style="flex:2;background:rgba(46,204,113,.3);display:flex;align-items:center;justify-content:center;color:#86efac;font-family:'Jua',sans-serif;font-size:.78rem">알고있는 수</div>
+        </div>
+        <div style="text-align:center;color:var(--gray);font-size:.72rem;margin-top:4px">⟵ 전체 길이 ⟶</div>
+      </div>`,
+      steps:['x + 알고있는 수 = 전체 식을 세워요','알고있는 수를 오른쪽으로 이항해요','x를 구해요']
+    },
+    age:{
+      why:'x년 후 모든 사람의 나이는 지금 나이에 x를 더한 값이에요. 나이 관계를 등식으로!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:2">
+        <div>지금: 아버지 나이, 아들 나이</div>
+        <div><b style="color:#fbbf24">x년 후:</b> 아버지 <span style="color:#a5b4fc">지금+x</span>, 아들 <span style="color:#86efac">지금+x</span></div>
+        <div>→ 두 나이의 관계로 등식 세우기!</div>
+      </div>`,
+      steps:['x년 후 각자 나이를 x로 표현해요','나이 관계 조건으로 등식을 만들어요','이항해서 x를 구해요']
+    },
+    rect:{
+      why:'둘레 = 2 × (가로 + 세로). 이 공식에 x를 대입하면 방정식이 돼요!',
+      visual:`<div style="display:flex;justify-content:center;padding:6px 0">
+        <svg width="110" height="68" style="overflow:visible">
+          <rect x="8" y="8" width="94" height="52" fill="none" stroke="rgba(52,152,219,.5)" stroke-width="2" rx="3"/>
+          <text x="55" y="24" text-anchor="middle" font-size="10" fill="#7dd3fc" font-family="Jua,sans-serif">가로 = x+?</text>
+          <text x="100" y="40" text-anchor="middle" font-size="10" fill="#86efac" font-family="Jua,sans-serif">세로=x</text>
+        </svg>
+      </div>
+      <div style="text-align:center;color:var(--gray);font-size:.72rem">둘레 = 2×(가로+세로)</div>`,
+      steps:['세로를 x, 가로를 x+?로 표현해요','둘레 공식 2(가로+세로) = 주어진 값을 써요','풀어서 x를 구해요']
+    },
+    candy:{
+      why:'"나눠주는 방법이 다르더라도 총 사탕 수는 하나" — 두 식이 같다고 등식을 세워요!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>방법 ①: <span style="color:#86efac">a개씩 × n명 + 남는 수</span></div>
+        <div>방법 ②: <span style="color:#7dd3fc">b개씩 × n명 − 부족한 수</span></div>
+        <div style="color:#fbbf24;margin-top:4px">⚖️ 방법① = 방법② → n 구하기</div>
+      </div>`,
+      steps:['각 상황으로 총 사탕을 x(명수)로 표현해요','두 표현이 같다는 등식을 세워요','x를 구하고 총 개수를 확인해요']
+    },
+    money:{
+      why:'"낸 돈 − 거스름돈 = 실제 물건 값"이에요. 물건 값 = 단가 × 개수(x)로 식을 세워요!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>💵 낸 돈 − 💰 거스름돈 = 🛒 실제 물건 값</div>
+        <div style="color:#fbbf24">물건 값 = 단가 × 개수(x)</div>
+      </div>`,
+      steps:['실제 물건 값 = 낸 돈 − 거스름돈으로 계산해요','단가 × x = 물건 값 등식을 세워요','x를 구해요']
+    },
+    distance:{
+      why:'"시간 = 거리 ÷ 속력". 왕복 시간의 합이 주어지면 x(거리)로 분수 방정식을 세워요!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>🏠 ─── x km ─── 🏫</div>
+        <div>갈 때: <span style="color:#86efac">x ÷ 속력₁</span> 시간</div>
+        <div>올 때: <span style="color:#7dd3fc">x ÷ 속력₂</span> 시간</div>
+        <div style="color:#fbbf24">⚠️ 분(min) → 시간(h) 변환 필수!</div>
+      </div>`,
+      steps:['거리를 x km로 설정해요','갈 때 시간 + 올 때 시간 = 총 시간 (분→시간 변환!)','분수를 없애고 x를 구해요']
+    },
+    salt:{
+      why:'소금물에 소금만 추가하면 소금 양이 늘어요. 물의 양은 그대로! 소금을 추적하세요.',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>🫙 처음 소금: 전체 × 농도%</div>
+        <div>소금 x g 추가 → <span style="color:#fbbf24">소금↑, 물은 그대로</span></div>
+        <div style="color:#a5b4fc">새 농도 = 새 소금 ÷ 새 전체</div>
+      </div>`,
+      steps:['처음 소금 양을 계산해요 (전체×농도÷100)','소금 추가 후 새 농도 조건으로 등식을 써요','풀어서 x를 구해요']
+    },
+    work:{
+      why:'전체 일을 1이라는 빵으로! A는 a일에 완성 → 하루에 1/a씩 진행.',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>🍞 전체 일 = 1</div>
+        <div>A: 하루에 <span style="color:#86efac">1/a</span> 진행</div>
+        <div>B: 하루에 <span style="color:#7dd3fc">1/b</span> 진행</div>
+        <div style="color:#fbbf24">함께: (1/a + 1/b) × x일 = 1</div>
+      </div>`,
+      steps:['각자 하루 일의 양을 분수로 표현해요','함께하면: (합) × x = 1 등식을 세워요','x = 1 ÷ 합 으로 계산해요']
+    },
+    profit:{
+      why:'정가 = 원가×(1+이익률), 판매가 = 정가×(1−할인율). 이 사슬을 x로 표현해요!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>원가 x → ×(1+이익률) → 정가</div>
+        <div>정가 → ×(1−할인율) → 판매가</div>
+        <div style="color:#fbbf24">이익 = 판매가 − 원가 = 조건</div>
+      </div>`,
+      steps:['원가를 x로, 정가를 x×배율로 써요','판매가 = 정가 − 할인 금액으로 계산해요','이익 조건 등식을 세워 x를 구해요']
+    },
+    savings:{
+      why:'두 저금액이 역전되는 x달 후를 구해요. 불등호가 처음 바뀌는 순간!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>📈 <span style="color:#7dd3fc">형</span>: 천천히 증가</div>
+        <div>📈 <span style="color:#f87171">동생</span>: 빠르게 증가</div>
+        <div style="color:#86efac">역전 조건: 동생 저금 > 형 저금</div>
+      </div>`,
+      steps:['x달 후 각자 저금액을 x로 표현해요','역전 조건: 동생 > 형 부등식을 세워요','처음 역전되는 정수 달을 찾아요']
+    },
+    chase:{
+      why:'만나는 순간 = 두 사람이 이동한 거리가 같은 순간이에요!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>🚶 먼저 출발 (시간 앞섬)</div>
+        <div>🚗 나중 출발 (더 빠름)</div>
+        <div style="color:#fbbf24">만남: 두 이동 거리 = 같음!</div>
+      </div>`,
+      steps:['빠른 쪽 출발 후 x분 경과로 설정해요','각자의 이동 거리를 x로 표현해요','두 거리가 같다는 등식을 풀어요']
+    },
+    mix_salt:{
+      why:'두 소금물을 섞어도 소금 양의 합은 보존돼요. 섞기 전 소금 합 = 섞은 후 소금!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>🫙A + 🫙B = 🫙결과</div>
+        <div style="color:#fbbf24">A의 소금 + B의 소금 = 전체 소금</div>
+        <div style="color:#86efac">전체 부피도 합산해요!</div>
+      </div>`,
+      steps:['각 소금물의 소금 양 = 전체×농도÷100으로 계산해요','소금 보존 등식을 세워요','x를 구해요']
+    },
+    digit:{
+      why:'두 자리 수 AB = 10A + B예요. 자리 바꿈 = 십의 자리와 일의 자리가 서로 바뀌는 것!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>AB = <span style="color:#fbbf24">A×10</span> + <span style="color:#86efac">B×1</span></div>
+        <div>BA = <span style="color:#86efac">B×10</span> + <span style="color:#fbbf24">A×1</span></div>
+      </div>`,
+      steps:['십의 자리를 a, 일의 자리를 b로 놓아요','조건(합, 차)으로 연립 방정식을 세워요','두 식으로 a, b를 구해요']
+    },
+    hard_river:{
+      why:'배 속력 ± 강 유속 = 실제 속력. 하류는 +, 상류는 −!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>🚤+🌊(하류): v+w 빠름</div>
+        <div>🚤−🌊(상류): v−w 느림</div>
+        <div style="color:#fbbf24">거리 = 속력×시간 → 연립방정식!</div>
+      </div>`,
+      steps:['배 속력 v, 유속 w로 설정해요','하류 조건: (v+w)×t₁=d','상류 조건: (v−w)×t₂=d','두 식을 연립해서 v, w를 구해요']
+    },
+    hard_taps:{
+      why:'수도꼭지는 각자 속도로 채워요. 배수구는 빼기(−). 모두 더하면 알짜 속도!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>🚰A: 시간당 <span style="color:#86efac">1/a</span> 채움</div>
+        <div>🚰B: 시간당 <span style="color:#7dd3fc">1/b</span> 채움</div>
+        <div>🕳️C: 시간당 <span style="color:#f87171">−1/c</span> 비움</div>
+        <div style="color:#fbbf24">알짜: 1/a + 1/b − 1/c</div>
+      </div>`,
+      steps:['각자 시간당 작업량을 분수로 써요','배수구는 음수로 더해요','전체(1) ÷ 알짜 = 소요 시간']
+    },
+    hard_loss:{
+      why:'두 물건을 이익/손해로 팔 때, 각각의 손익을 더해서 전체 손익을 계산해요!',
+      visual:`<div style="font-size:.79rem;color:#c0d0e0;line-height:1.9">
+        <div>물건A: 원가×(1+이익률) = 판매가A</div>
+        <div>물건B: 원가×(1−손실률) = 판매가B</div>
+        <div style="color:#fbbf24">총손익 = 두 이익의 합</div>
+      </div>`,
+      steps:['원가를 x로 정가와 판매가를 표현해요','각각의 이익/손해 금액을 계산해요','전체 손익 조건으로 방정식을 풀어요']
+    }
+  };
+  const e=E[sub]||E.simple;
+  return `<div class="khan-panel">
+  <button class="khan-toggle" onclick="toggleKhan(this)">💡 왜 이렇게 푸나요? ▾</button>
+  <div class="khan-body">
+    <div class="khan-why-title">📌 핵심 개념</div>
+    <div class="khan-why-text">${e.why}</div>
+    <div class="khan-visual">${e.visual}</div>
+    <div class="khan-steps-list">${e.steps.map((s,i)=>`<div class="khan-step-row"><div class="khan-step-num">${i+1}</div><div class="khan-step-text">${s}</div></div>`).join('')}</div>
+    <div class="khan-check">✅ 이해됐나요? → 아래 문제를 풀어보세요!</div>
+  </div>
+</div>`;
+}
+
+// ══════════════════════════════════════════════════
+//  칸아카데미 Method B — 부등식 활용 이해 점검 패널
+// ══════════════════════════════════════════════════
+function khanIneqCheck(d){
+  const tag=d?d.tag||'':'';
+  const checks={
+    '예산':{concept:'총 비용 ≤ 예산 (이하)',key:'고정비 + 변동비×x ≤ 예산',tip:'소수점 결과는 내림 — 살 수 있는 최대 개수니까요!'},
+    '평균':{concept:'평균 목표 달성 조건',key:'(기존 합 + 새 점수) ÷ 횟수 ≥ 목표',tip:'양변에 횟수를 곱해서 분수를 없애면 쉬워요!'},
+    '거리':{concept:'속력×시간 ≤ 또는 ≥ 거리',key:'걸리는 시간 = 거리 ÷ 속력',tip:'단위 통일! km/h면 시간, m/s면 초로 맞춰요.'},
+    '농도':{concept:'소금 양 ÷ 전체 ≥ 목표 농도',key:'소금 = 전체 × 농도%',tip:'소금만 추가 시 물의 양은 변하지 않아요!'},
+    '이익':{concept:'판매가 − 원가 ≥ 목표 이익',key:'판매가 = 정가 × (1 − 할인율)',tip:'이익이 "이상"이면 ≥, "초과"이면 >를 써요.'},
+    '나이':{concept:'x년 후 = 지금 나이 + x',key:'나이 관계식에 x를 대입해요',tip:'x는 양의 정수여야 해요!'},
+    '개수':{concept:'단가 × 개수 ≤ 예산',key:'개수(x) ≤ 예산 ÷ 단가',tip:'개수는 정수 — 소수 결과는 내림!'},
+    '속력':{concept:'이동 거리 = 속력 × 시간',key:'목적에 따라 ≤ 또는 ≥를 결정해요',tip:'더 빠르려면 ≤, 늦지 않으려면 같은 방향!'},
+    '인원':{concept:'조건 × 인원 ≤ 또는 ≥ 총량',key:'인원 × 단위 조건 = 총 조건',tip:'인원수는 자연수예요 — 소수 나오면 올림/내림 확인!'},
+    '점수':{concept:'최소 점수 구하기',key:'(기존 + 새 점수) ÷ n ≥ 목표',tip:'목표의 "이상"이면 ≥, "초과"이면 >!'},
+  };
+  let m=null;
+  for(const[k,v]of Object.entries(checks)){if(tag.includes(k)){m=v;break;}}
+  if(!m) m={concept:'부등식 핵심 원리',key:'음수로 나누면 부등호 방향이 뒤집혀요!',tip:'결과가 소수이면 문제 조건에 따라 올림/내림을 결정해요.'};
+  return `<div class="khan-feedback">
+  <div class="khan-fb-header">💡 칸아카데미 이해 점검</div>
+  <div class="khan-fb-body">
+    <div style="font-size:.8rem;color:#c0d0e0;line-height:1.85">
+      <div><b style="color:#fde68a">📌 핵심 개념:</b> ${m.concept}</div>
+      <div class="khan-key-box">${m.key}</div>
+      <div><b style="color:#7dd3fc">⚠️ 자주 하는 실수:</b> ${m.tip}</div>
+    </div>
+    <div class="khan-self-check">
+      <button class="khan-self-btn khan-self-ok" onclick="document.getElementById('ksc-${CS.cur}').textContent='완벽해요! 다음으로 가요 🎉'">✅ 이해됐어요!</button>
+      <button class="khan-self-btn khan-self-no" onclick="document.getElementById('ksc-${CS.cur}').textContent='괜찮아요! 풀이를 다시 천천히 읽어봐요 💪'">🤔 좀 더 볼게요</button>
+    </div>
+    <div id="ksc-${CS.cur}" class="khan-self-msg"></div>
+  </div>
+</div>`;
 }
 
 function renderVisual(q){
@@ -12257,6 +12754,70 @@ function updateFracVisual(q){
   box.innerHTML=html;
 }
 
+function renderQReveal(){
+  const q=ST.qs[ST.cur];
+  const lastStep=q.qsteps[q.qsteps.length-1];
+  const unit=lastStep?lastStep.unit:'';
+  let h=`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0">
+    <input id="eq-final-input" type="text" inputmode="numeric" class="num-input" style="width:100px" placeholder="?" onkeydown="if(event.key==='Enter')checkEqFinal()">
+    <span style="color:var(--gray);font-size:.9rem">${unit}</span>
+    <button class="btn btn-main" onclick="checkEqFinal()" style="padding:8px 18px;font-size:.95rem">채점</button>
+  </div>
+  <div id="eq-grade-result"></div>
+  <div id="reveal-steps" style="display:none">`;
+  q.qsteps.forEach((s,i)=>{
+    h+=`<div class="step-quiz" style="border-color:#2a3a4a">
+      <div class="step-quiz-label" style="color:var(--gray)">📝 단계 ${i+1}</div>
+      <div class="step-quiz-q">${s.q}</div>
+      <div style="font-size:.9rem;color:var(--green);margin-top:6px">→ <b>${s.ans}${s.unit}</b></div>
+    </div>`;
+  });
+  h+=`</div>`;
+  document.getElementById('q-steps-wrap').innerHTML=h;
+  setTimeout(()=>document.getElementById('eq-final-input')?.focus(),80);
+}
+
+function checkEqFinal(){
+  if(ST.answered) return;
+  const q=ST.qs[ST.cur];
+  const val=document.getElementById('eq-final-input')?.value?.trim();
+  if(!val) return;
+  const lastStep=q.qsteps[q.qsteps.length-1];
+  const correctAns=lastStep?lastStep.ans:'';
+  const norm=s=>s.replace(/,/g,'').trim();
+  const ok=norm(val)===norm(correctAns);
+  ST.answered=true;
+  const earn=ok?2:1;
+  if(ok) ST.score++;
+  ST.points+=earn; updatePoints();
+  const gr=document.getElementById('eq-grade-result');
+  gr.innerHTML=`<div style="font-size:.95rem;color:${ok?'var(--green)':'var(--red)'};margin-bottom:6px">${ok?'✅ 정답!':'❌ 틀렸어요.'} 정답: <b style="color:var(--yellow)">${q.answer}</b></div>`;
+  document.getElementById('reveal-steps').style.display='block';
+  document.getElementById('eq-final-input').disabled=true;
+  ST.log.push({
+    time:new Date().toLocaleString('ko-KR'), topic:ST.topic,
+    story:q.story.replace(/<[^>]+>/g,'').substring(0,60),
+    answer:q.answer, allOk:ok, stepResults:[], grade:ST.grade,
+  });
+  localStorage.setItem('toroLog',JSON.stringify(ST.log.slice(-50)));
+  const fb=document.getElementById('feedback-area');
+  fb.style.display='block';
+  fb.className=`feedback ${ok?'correct':'wrong'}`;
+  fb.innerHTML=`<div class="feedback-title">${ok?`🎉 정답! +${earn}P`:`👏 수고했어! +${earn}P`}</div>`;
+  document.getElementById('btn-next').style.display='';
+  document.getElementById('btn-skip').style.display='none';
+}
+
+function makeStepChoices(ans){
+  const n=Number(ans);
+  const raw=isNaN(n)?[ans]:
+    [String(n+1),String(n-1>0?n-1:n+2),String(Math.round(n*2)),String(n+3)];
+  const choices=[ans];
+  raw.filter(v=>v!==ans&&Number(v)>0).forEach(v=>{if(choices.length<4)choices.push(v);});
+  while(choices.length<4) choices.push(String(Number(choices[choices.length-1])+1));
+  return shuffle([...choices]);
+}
+
 function renderQSteps(){
   const q=ST.qs[ST.cur];
   let h='';
@@ -12271,21 +12832,32 @@ function renderQSteps(){
     if(done!==null){
       h+=`<div style="font-size:.9rem;color:${done?'var(--green)':'var(--red)'}">${done?'정답!':'틀렸어요.'} 정답: <b>${s.ans}${s.unit}</b></div>`;
     } else if(isCurrent){
-      h+=`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <input id="q-step-input" type="number" class="num-input" style="width:90px" placeholder="?" onkeydown="if(event.key==='Enter')checkQStep()">
-        <span style="color:var(--gray);font-size:.9rem">${s.unit}</span>
-        <button class="btn btn-main" onclick="checkQStep()" style="padding:8px 16px;font-size:.9rem">확인</button>
-        <button class="btn btn-sub" onclick="showQHint()" style="padding:8px 12px;font-size:.85rem">💡 힌트</button>
-      </div>`;
+      const ch=makeStepChoices(s.ans);
+      h+=`<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+        ${ch.map(c=>`<button class="choice-btn" onclick="checkQStepChoice('${c}')" style="min-width:60px;padding:8px 14px;font-size:1rem">${c}${s.unit}</button>`).join('')}
+      </div>
+      <div style="margin-top:6px"><button class="btn btn-sub" onclick="showQHint()" style="padding:6px 12px;font-size:.82rem">💡 힌트</button></div>`;
     } else {
       h+=`<div style="color:#334;font-size:.82rem">이전 단계를 먼저 완료해요</div>`;
     }
     h+='</div>';
   });
   document.getElementById('q-steps-wrap').innerHTML=h;
-  setTimeout(()=>document.getElementById('q-step-input')?.focus(),80);
   const qc=ST.qs[ST.cur];
   if(qc.type==='frac_add'||qc.type==='frac_sub') setTimeout(()=>updateFracVisual(qc),10);
+}
+
+function checkQStepChoice(val){
+  const q=ST.qs[ST.cur];
+  const s=q.qsteps[qStep];
+  const correct=val===s.ans;
+  qStepDone[qStep]=correct;
+  if(!correct){
+    setTimeout(()=>{ qStep++; advanceQStep(); },700);
+  } else {
+    qStep++; setTimeout(()=>advanceQStep(),300);
+  }
+  renderQSteps();
 }
 
 function showQHint(){
@@ -12359,6 +12931,16 @@ function nextQ(){
   renderQ();
 }
 
+function prevQ(){
+  if(ST.cur<=0) return;
+  ST.cur--;
+  ST.score=Math.max(0,ST.score-1);
+  ST.answered=false;
+  renderQ();
+  const p=document.getElementById('btn-prev');
+  if(p) p.style.opacity=ST.cur===0?'.35':'1';
+}
+
 
 
 
@@ -12385,15 +12967,15 @@ const FM_QS = {
     { q:'빨간 막대 4cm, 파란 막대 6cm를 각각 여러 개 이어 붙여요. 처음으로 두 줄이 같은 길이가 되는 건?',
       visual:{type:'lcm',a:4,b:6,colors:['var(--red)','var(--blue)']},
       choices:['10cm','12cm','18cm','24cm'], ans:1,
-      explain:'빨간: 4→8→12 / 파란: 6→12 ← 12cm에서 처음 만나! 최소공배수(4,6)=12' },
+      explain:'<svg width="270" height="72" style="display:block;margin:8px 0 12px"><rect x="0" y="4" width="78" height="26" fill="#ef4444" rx="3"/><text x="39" y="21" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">4cm</text><rect x="80" y="4" width="78" height="26" fill="#ef4444" rx="3"/><text x="119" y="21" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">4cm</text><rect x="160" y="4" width="78" height="26" fill="#ef4444" rx="3"/><text x="199" y="21" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">4cm</text><text x="244" y="21" fill="#fde68a" font-size="11" font-family="sans-serif" font-weight="bold">12✓</text><rect x="0" y="38" width="118" height="26" fill="#3b82f6" rx="3"/><text x="59" y="55" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">6cm</text><rect x="120" y="38" width="118" height="26" fill="#3b82f6" rx="3"/><text x="179" y="55" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">6cm</text><text x="244" y="55" fill="#fde68a" font-size="11" font-family="sans-serif" font-weight="bold">12✓</text></svg>빨간: 4→8→12 / 파란: 6→12 ← 12cm에서 처음 만나! 최소공배수(4,6)=12' },
     { q:'노란 막대 3cm, 초록 막대 5cm를 이어 붙여요. 처음으로 두 줄이 같아지는 길이는?',
       visual:{type:'lcm',a:3,b:5,colors:['var(--yellow)','var(--green)']},
       choices:['8cm','10cm','15cm','20cm'], ans:2,
-      explain:'노란: 3→6→9→12→15 / 초록: 5→10→15 ← 15cm에서 첫 만남! 최소공배수(3,5)=15' },
+      explain:'<svg width="270" height="72" style="display:block;margin:8px 0 12px"><rect x="0" y="4" width="46" height="26" fill="#eab308" rx="3"/><text x="23" y="21" text-anchor="middle" fill="white" font-size="10" font-family="sans-serif">3</text><rect x="48" y="4" width="46" height="26" fill="#eab308" rx="3"/><text x="71" y="21" text-anchor="middle" fill="white" font-size="10" font-family="sans-serif">3</text><rect x="96" y="4" width="46" height="26" fill="#eab308" rx="3"/><text x="119" y="21" text-anchor="middle" fill="white" font-size="10" font-family="sans-serif">3</text><rect x="144" y="4" width="46" height="26" fill="#eab308" rx="3"/><text x="167" y="21" text-anchor="middle" fill="white" font-size="10" font-family="sans-serif">3</text><rect x="192" y="4" width="46" height="26" fill="#eab308" rx="3"/><text x="215" y="21" text-anchor="middle" fill="white" font-size="10" font-family="sans-serif">3</text><text x="244" y="21" fill="#fde68a" font-size="11" font-family="sans-serif" font-weight="bold">15✓</text><rect x="0" y="38" width="78" height="26" fill="#22c55e" rx="3"/><text x="39" y="55" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">5cm</text><rect x="80" y="38" width="78" height="26" fill="#22c55e" rx="3"/><text x="119" y="55" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">5cm</text><rect x="160" y="38" width="78" height="26" fill="#22c55e" rx="3"/><text x="199" y="55" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">5cm</text><text x="244" y="55" fill="#fde68a" font-size="11" font-family="sans-serif" font-weight="bold">15✓</text></svg>노란: 3→6→9→12→15 / 초록: 5→10→15 ← 15cm에서 첫 만남! 최소공배수(3,5)=15' },
     { q:'보라 막대 6cm, 주황 막대 9cm를 이어 붙여요. 처음으로 두 줄이 같아지는 길이는?',
       visual:{type:'lcm',a:6,b:9,colors:['var(--purple)','var(--orange)']},
       choices:['15cm','18cm','27cm','36cm'], ans:1,
-      explain:'6→12→18 / 9→18 ← 18cm에서 첫 만남! 최소공배수(6,9)=18. 둘의 공통 배수 중 가장 작은 값이에요.' }
+      explain:'<svg width="270" height="72" style="display:block;margin:8px 0 12px"><rect x="0" y="4" width="82" height="26" fill="#a855f7" rx="3"/><text x="41" y="21" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">6cm</text><rect x="84" y="4" width="82" height="26" fill="#a855f7" rx="3"/><text x="125" y="21" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">6cm</text><rect x="168" y="4" width="82" height="26" fill="#a855f7" rx="3"/><text x="209" y="21" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">6cm</text><text x="255" y="21" fill="#fde68a" font-size="11" font-family="sans-serif" font-weight="bold">18✓</text><rect x="0" y="38" width="124" height="26" fill="#f97316" rx="3"/><text x="62" y="55" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">9cm</text><rect x="126" y="38" width="124" height="26" fill="#f97316" rx="3"/><text x="188" y="55" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif">9cm</text><text x="255" y="55" fill="#fde68a" font-size="11" font-family="sans-serif" font-weight="bold">18✓</text></svg>6→12→18 / 9→18 ← 18cm에서 첫 만남! 최소공배수(6,9)=18. 둘의 공통 배수 중 가장 작은 값이에요.' }
   ],
   jw:[
     { q:'"모든 짝수는 2를 약수로 가진다" — 왜 그럴까요? 가장 논리적인 이유는?',
@@ -12404,7 +12986,7 @@ const FM_QS = {
       explain:'약수의 정의: 나머지 없이 나누어 떨어지게 하는 수. 5÷1=5, 100÷1=100 — 항상 나머지 0!' },
     { q:'"36의 약수 개수"를 가장 빠르게 구하는 방법은?',
       choices:['1부터 36까지 하나씩 나눠본다','36 = 2² × 3² → 지수에 1씩 더해 곱한다: (2+1)(2+1)=9','36의 절반인 18까지만 확인한다','짝수 약수만 세고 2를 곱한다'], ans:1,
-      explain:'소인수분해 후 (지수+1) 곱하기! 36=2²×3² → (2+1)×(2+1)=9개. 수가 커질수록 이 방법이 압도적으로 빨라요!' }
+      explain:'소인수분해 후 (지수+1) 곱하기! 36=2²×3² → (2+1)×(2+1)=9개. 수가 커질수록 이 방법이 압도적으로 빨라요!<br><br><b style="color:#a78bfa">왜 (지수+1)을 곱할까?</b><br><br>36 = 2² × 3²이면 약수는 <b>2ᵃ × 3ᵇ</b> 꼴<br>a는 0, 1, 2 → <b>3가지</b> (= 지수 2 + 1)<br>b는 0, 1, 2 → <b>3가지</b> (= 지수 2 + 1)<br><br><div style="background:rgba(167,139,250,.1);border-left:3px solid #a78bfa;padding:8px 12px;border-radius:4px;margin:8px 0">a와 b를 각각 고르면 약수 하나가 결정된다.<br>경우의 수 = 3 × 3 = <b style="color:#fde68a">9개</b></div>예: a=1, b=2 → 2¹×3² = 18 → 36의 약수 ✓<br>예: a=0, b=0 → 2⁰×3⁰ = 1 → 36의 약수 ✓' }
   ]
 };
 
