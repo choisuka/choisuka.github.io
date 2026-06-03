@@ -10689,6 +10689,12 @@ function genPerfectSquare(){
   const needed=Object.entries(f).filter(([p,e])=>e%2!==0).map(([p])=>Number(p));
   const minN=needed.reduce((a,b)=>a*b,1); const result=n*minN;
   const sqrtRes=Math.round(Math.sqrt(result));
+  if(n===28){
+    return {type:'prime',subtype:'perfect_sq',
+      story:`🇫🇮 어떤 자연수 <i>n</i>에 대해 28 × <i>n</i>이 완전제곱수가 되려면 <i>n</i>의 최솟값은?<br><span style="font-size:.8em;color:#aaa">(28 = 2² × 7)</span>`,
+      data:{n:28,f:{2:2,7:1},fStr:'2² × 7',minN:7,result:196,sqrtRes:14},
+      answer:'7',choices:shuffle(['2','7','14','28'])};
+  }
   const stories=[
     ()=>`✡️ [하브루타] ${n} = ${fStr}. ${n}에 자연수 n을 곱해서 완전제곱수가 되게 하는 가장 작은 n은?\n(힌트: 모든 소인수의 지수가 짝수여야 해요!)`,
     ()=>`✡️ ${n} × n = 어떤 수의 제곱이 되려면? 지수가 홀수인 소인수를 찾아요. 최소 n은? (${n} = ${fStr})`,
