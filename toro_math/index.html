@@ -10730,7 +10730,7 @@ function genDivisorEq(){
   const {b,target,a}=rnd(cases);
   const stories=[
     ()=>`🇸🇬 2ᵃ × 3${_sup(b)}의 약수의 개수가 ${target}개일 때, 자연수 a의 값은?\n(약수 개수 = (a+1) × (${b}+1))`,
-    ()=>`🇸🇬 (a+1) × ${b+1} = ${target}. 약수 개수 공식을 이용해 a를 구하세요.`,
+    ()=>`🇸🇬 어떤 수를 소인수분해하면 2ᵃ × 3${_sup(b)}이에요. 이 수의 약수가 ${target}개라면, a는 얼마일까요?`,
   ];
   const choices=[String(a)];
   [String(a-1),String(a+1),String(target/(b+1)),String(a+2)].filter(v=>Number(v)>0).forEach(w=>{if(!choices.includes(w))choices.push(w);});
@@ -12470,6 +12470,60 @@ function buildQCExplain(q){
         ${isCop?`공통 소인수 없음 → GCD = 1`:`GCD(${a},${b}) = <b style="${Y}">${g}</b>`}
       </div>
       <b style="${Y}">${isCop?`서로소 ✓ (GCD = 1)`:`서로소 아님 — GCD = ${g}`}</b>`;
+  } else if(subtype==='perfect_sq'){
+    const {n,f,fStr,minN,result,sqrtRes}=data;
+    const oddEntries=Object.entries(f).filter(([p,e])=>e%2!==0);
+    exp=`<b style="${B}">① 소인수분해</b><br>
+      ${n} = <b>${fStr}</b><br><br>
+      <b style="${B}">② 지수가 홀수인 소인수 찾기</b><br>
+      <div style="display:flex;flex-direction:column;gap:3px;margin:4px 0">
+        ${Object.entries(f).map(([p,e])=>`<div style="background:rgba(99,102,241,.1);border-radius:6px;padding:4px 10px;font-size:.83rem">
+          ${p}의 지수 = ${e} → ${e%2===0?`<b style="color:#4ade80">짝수 ✓</b>`:`<b style="color:#f87171">홀수 ✗ → ${p}를 한 번 더 곱해야</b>`}
+        </div>`).join('')}
+      </div>
+      <b style="${B}">③ 최소 n</b><br>
+      ${oddEntries.map(([p])=>p).join(' × ')} = <b style="${Y}">${minN}</b><br><br>
+      확인: ${n} × ${minN} = ${result} = ${sqrtRes}²`;
+  } else if(subtype==='lcm_gcd_pair'){
+    const {g,L,a,b}=data;
+    exp=`<b style="${B}">공식: 두 수의 곱 = GCD × LCM</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.84rem">
+        A × B = ${g} × ${L} = ${g*L}
+      </div>
+      <b style="${B}">② 두 수 = g×a, g×b (gcd(a,b)=1)</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.84rem">
+        a × b = LCM ÷ GCD = ${L} ÷ ${g} = ${L/g}<br>
+        서로소이면서 곱이 ${L/g}인 쌍: (${a/g}, ${b/g})
+      </div>
+      두 수: <b style="${Y}">${a}</b>${g>1?` (${g}×${a/g})`:''}과 <b style="${Y}">${b}</b>${g>1?` (${g}×${b/g})`:''}<br>
+      합: <b style="${Y}">${a+b}</b>`;
+  } else if(subtype==='div_eq'){
+    const {a,b,target}=data;
+    exp=`<b style="${B}">약수 개수 공식: (각 지수+1)의 곱</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.84rem">
+        2ᵃ × 3${_sup(b)}의 약수 개수 = (a+1) × (${b}+1) = ${target}
+      </div>
+      <b style="${B}">② a+1 구하기</b><br>
+      a+1 = ${target} ÷ ${b+1} = <b style="${Y}">${target/(b+1)}</b><br><br>
+      <b style="${B}">③ a = </b><b style="${Y}">${a}</b>`;
+  } else if(subtype==='rem_gcd'){
+    const {a,ra,b,rb,ans}=data;
+    exp=`<b style="${B}">① 나머지를 빼면 공약수</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.84rem">
+        ${a} − ${ra} = <b>${a-ra}</b><br>
+        ${b} − ${rb} = <b>${b-rb}</b>
+      </div>
+      구하는 수는 두 값의 공약수이고 나머지(${ra})보다 커야 해요.<br><br>
+      <b style="${B}">② GCD(${a-ra}, ${b-rb}) = </b><b style="${Y}">${ans}</b>`;
+  } else if(subtype==='tree_plant'){
+    const {w,h,G,count,peri}=data;
+    exp=`<b style="${B}">① 간격 = GCD(${w}, ${h})</b><br>
+      <div style="background:rgba(99,102,241,.1);border-radius:6px;padding:6px 10px;margin:4px 0;font-size:.84rem">
+        네 모퉁이에 반드시 오려면 간격이 두 변 모두의 약수여야 해요<br>
+        GCD(${w}, ${h}) = <b style="${Y}">${G}</b>m
+      </div>
+      <b style="${B}">② 둘레 = 2 × (${w} + ${h}) = ${peri}m</b><br><br>
+      <b style="${B}">③ 그루 수 = ${peri} ÷ ${G} = </b><b style="${Y}">${count}그루</b>`;
   } else {
     exp=`정답: <b style="${Y}">${answer}</b>`;
   }
