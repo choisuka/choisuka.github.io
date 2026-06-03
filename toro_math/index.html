@@ -6651,7 +6651,7 @@ A=6a, B=6b, ab=12, gcd(a,b)=1<br>
   { tag:'🧮 2/9 — 약수 개수 공식 (2ᵃ × 3ᵇ)', tagColor:'#fde68a',
     bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
     body:`<div style="font-size:.84rem;color:#e2e8f0;line-height:1.85">
-<b style="color:#fde68a;font-size:.92rem">2ᵃ × 3ᵇ 형태(a≥1, b≥1)에서 약수가 12개인 수를 모두 구하여라.</b><br><br>
+<b style="color:#fde68a;font-size:.92rem">2<sup>a</sup> × 3<sup>b</sup> 형태(a≥1, b≥1)에서 약수가 12개인 수를 모두 구하여라.</b><br><br>
 <b style="color:#86efac">🇫🇮 핀란드식 — 약수 개수 원리</b><br>
 <span style="font-size:.78rem;color:#aaa">"지수만 올려서 경우를 센다."</span><br>
 약수 개수 = (a+1)(b+1) = 12<br><br>
@@ -6661,7 +6661,7 @@ A=6a, B=6b, ab=12, gcd(a,b)=1<br>
 → 2¹×3⁵=486, 2²×3³=108, 2³×3²=72, 2⁵×3¹=96
 </div>
 <b style="color:#c4b5fd">💬 현우가 물었다:</b> "왜 (a+1)인가요? 2⁰도 약수 아닌가요?"<br>
-<span style="font-size:.79rem;color:#aaa">2ᵃ의 약수는 2⁰, 2¹, ..., 2ᵃ → a+1가지. 0도 지수가 될 수 있어서!</span><br><br>
+<span style="font-size:.79rem;color:#aaa">2<sup>a</sup>의 약수는 2⁰, 2¹, ..., 2<sup>a</sup> → a+1가지. 0도 지수가 될 수 있어서!</span><br><br>
 <div style="background:rgba(253,230,138,.08);border:1px dashed rgba(253,230,138,.4);border-radius:8px;padding:10px;margin-top:4px">
 <b style="color:#fde68a">➕ 추가 문제</b><br>
 약수의 개수가 정확히 6개인 수 중 가장 작은 두 자리 자연수는?<br>
@@ -10729,8 +10729,8 @@ function genDivisorEq(){
   ];
   const {b,target,a}=rnd(cases);
   const stories=[
-    ()=>`🇸🇬 2ᵃ × 3${_sup(b)}의 약수의 개수가 ${target}개일 때, 자연수 a의 값은?\n(약수 개수 = (a+1) × (${b}+1))`,
-    ()=>`🇸🇬 어떤 수를 소인수분해하면 2ᵃ × 3${_sup(b)}이에요. 이 수의 약수가 ${target}개라면, a는 얼마일까요?`,
+    ()=>`🇸🇬 2<sup>a</sup> × 3${_sup(b)}의 약수의 개수가 ${target}개일 때, 자연수 a의 값은?<br>(약수 개수 = (a+1) × (${b}+1))`,
+    ()=>`🇸🇬 어떤 수를 소인수분해하면 2<sup>a</sup> × 3${_sup(b)}이에요. 이 수의 약수가 ${target}개라면, a는 얼마일까요?`,
   ];
   const choices=[String(a)];
   [String(a-1),String(a+1),String(target/(b+1)),String(a+2)].filter(v=>Number(v)>0).forEach(w=>{if(!choices.includes(w))choices.push(w);});
