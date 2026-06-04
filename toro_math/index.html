@@ -1548,10 +1548,69 @@ const CARD_DATA = {
 
 /* ── 3개국 개념 가이드 (3장) ──────────────────── */
 'eq-guide': [
-  { tag:'🇫🇮 핀란드식 — 현실 연결', tagColor:'#86efac',
+  { tag:'🇫🇮 핀란드식 1/3 — 이미 쓰고 있었어', tagColor:'#86efac',
     bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
-    body:`<div style="font-size:.82rem;color:#e2e8f0;line-height:1.8">방정식을 <b style="color:#86efac">'시소'나 '양팔 저울'</b>로 이해합니다.<br><br>왼쪽과 오른쪽의 무게가 같아야 평형을 이룬다는 직관을 통해, 양변에 같은 수를 더하거나 빼도 등식이 성립함을 배웁니다.<br><br><span style="color:#fde68a">핵심 질문:</span> "이 시소의 양쪽을 동시에 평형으로 만드는 수는 무엇일까?"</div>`,
-    ans: null },
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#86efac;font-size:.95rem">"방정식이 처음이라고? 이미 쓰고 있었는걸."</b><br><br>
+편의점에서 5,000원으로 음료(1,500원)를 한 개 샀어요.<br>
+남은 돈: 5,000 − 1,500 = 3,500원<br><br>
+이번엔 500원짜리 과자를 <b>여러 개</b> 사고 싶은데, 남은 돈도 똑같이 3,500원이어야 해요.<br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.5rem 0;font-size:.9rem;line-height:2.2;text-align:center">
+5,000 − 500 × <b style="color:#fde68a;font-size:1.05rem">□</b> = 3,500
+</div>
+<b style="color:#86efac">□에 들어갈 수를 찾는 것 — 이게 방정식이에요.</b><br><br>
+<span style="font-size:.8rem;color:#aaa">계산하지 않아도 머릿속에서 이미 하고 있던 것, 방정식은 그 과정을 식으로 쓴 것뿐이에요.</span>
+</div>`,
+    ans:`<b style="color:#86efac">□ = 3</b> (과자 3개)<br><br>
+5,000 − 500 × 3 = 5,000 − 1,500 = 3,500 ✓<br><br>
+<b style="color:#fde68a">변수 x로 쓰면:</b><br>
+5,000 − 500x = 3,500<br>
+500x = 1,500<br>
+x = 3` },
+
+  { tag:'🇫🇮 핀란드식 2/3 — 이항의 비밀', tagColor:'#86efac',
+    bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#86efac;font-size:.95rem">"넘기면 왜 부호가 바뀔까?"</b><br><br>
+x + 5 = 12를 풀 때 대부분 이렇게 해요:<br>
+"5를 오른쪽으로 넘기면 x = 12 − 5 = 7"<br><br>
+<b style="color:#fde68a">토로의 질문:</b> "왜 + 5가 − 5가 됐어? 그냥 약속이야?"<br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.5rem 0;font-size:.83rem;line-height:2.1">
+저울: 왼쪽 x+5 ⚖️ 오른쪽 12<br>
+→ <b style="color:#86efac">양쪽에서 5를 동시에 꺼내요</b><br>
+→ 왼쪽: x &nbsp;&nbsp; 오른쪽: 12 − 5 = 7
+</div>
+<b style="color:#86efac">이항은 "넘기기"가 아니라 "양변에 같은 수 빼기"의 결과예요.</b><br>
+부호가 바뀌는 건 <b>등식 유지</b>의 흔적입니다.
+</div>`,
+    ans:`<b style="color:#86efac">이항 규칙의 진짜 이유</b><br><br>
+x + 5 = 12<br>
+양변에 −5: x + 5 − 5 = 12 − 5<br>
+x = 7<br><br>
+<b style="color:#fde68a">핵심:</b> "이항"이라는 단어가 생략한 것 — 양변에서 빼는 과정.<br>
+부호가 바뀌는 건 약속이 아니라 <b>등식의 성질</b>입니다.` },
+
+  { tag:'🇫🇮 핀란드식 3/3 — 일상 속 방정식', tagColor:'#86efac',
+    bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#86efac;font-size:.95rem">"오늘 학교 오는 길에 방정식이 있었나요?"</b><br><br>
+핀란드 선생님은 이 질문으로 수업을 시작해요.<br>
+학생들이 찾아낸 것들:<br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.5rem 0;font-size:.83rem;line-height:2.2">
+🚌 버스가 3분 후 출발, 정류장까지 뛰면 2분<br>
+&nbsp;&nbsp;&nbsp;&nbsp;→ 지금 출발하면 탈 수 있을까?<br>
+🧃 1,000원 넣고 400원짜리 음료 → 거스름돈?<br>
+👓 반 32명 중 안경 쓴 학생이 절반보다 3명 많다면?
+</div>
+<b style="color:#fde68a">질문:</b> 이 중 하나를 골라 □가 있는 식으로 써보세요.<br><br>
+<span style="font-size:.8rem;color:#aaa">방정식의 출발은 교과서가 아니라 내 주변이에요.</span>
+</div>`,
+    ans:`<b style="color:#86efac">예시 풀이</b><br><br>
+🧃 1,000 − 400 = <b style="color:#fde68a">600원</b><br><br>
+👓 반 학생 중 안경 쓴 학생 수 = x<br>
+x = 16 + 3 = <b style="color:#fde68a">19명</b><br><br>
+🚌 뛰는 데 2분, 버스 출발까지 3분<br>
+→ 1분 여유 → <b style="color:#fde68a">탈 수 있음</b> (방정식: 2 ≤ 3)` },
   { tag:'🇸🇬 싱가포르식 — 막대 모델링', tagColor:'#7dd3fc',
     bg:'rgba(125,211,252,.07)', bd:'rgba(125,211,252,.3)',
     body:`<div style="font-size:.82rem;color:#e2e8f0;line-height:1.8">모르는 수(x)를 <b style="color:#7dd3fc">'빈 칸의 막대기'</b>로 그립니다.<br><br>전체 길이는 알고 있는데 일부분을 모를 때, 그 빈 조각을 찾아가는 과정을 시각화합니다.<br><br><span style="color:#fde68a">핵심 질문:</span> "막대의 빈 부분이 얼마일 때 전체 길이가 맞아떨어질까?"</div>`,
