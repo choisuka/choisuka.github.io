@@ -3307,15 +3307,107 @@ y = 3 × 5 = 15
   { tag:'🇫🇮 핀란드식 — 마법의 상자', tagColor:'#86efac',
     bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
     body:`<div style="font-size:.78rem;color:#34d399;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:10px;padding:8px 12px;margin-bottom:10px;line-height:1.6">📌 이 가이드는 총 16장입니다.<br>1~3장: 3개국 핵심 요약 · 4~6장: 상세 설명 · 7장~: 실전 미션</div><div style="font-size:.84rem;color:#e2e8f0;line-height:1.8;font-weight:600;margin-bottom:10px">🇫🇮 핀란드식 (직관): 함수를 '마법의 상자'나 '자판기'로 이해합니다.</div><div style="font-size:.78rem;color:#e2e8f0;line-height:1.8">100원을 넣으면 콜라가 나오듯, x가 변할 때 y가 어떻게 규칙적으로 변하는지 실생활의 흐름으로 체득합니다.<br><br>예시: 양초가 타는 길이, 택시 요금, 핸드폰 배터리<br><b style="color:#86efac">핵심:</b> 함수는 '입력→출력'의 약속이다!`,
-    ans:null },
+    extra:`<div style="font-size:.82rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#86efac">자판기로 이해하는 함수</b><br><br>
+자판기에 500원을 넣으면 → 항상 콜라 1개<br>
+자판기에 1,000원을 넣으면 → 항상 콜라 2개<br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.7rem 1rem;margin:.4rem 0;font-size:.83rem;line-height:2">
+  입력 x → <b style="color:#86efac">[ 함수 상자 ]</b> → 출력 y<br>
+  x = 1분 → y = 남은 양초 18cm (20−2×1)<br>
+  x = 3분 → y = 남은 양초 14cm (20−2×3)
+</div>
+<b style="color:#fde68a">함수가 되는 조건:</b> 같은 x를 넣으면 항상 같은 y가 나와야 해요.<br><br>
+<b style="color:#f87171">함수가 아닌 예:</b> 같은 500원을 넣었는데 어떨 때는 콜라, 어떨 때는 사이다 → 함수 아님!<br><br>
+<b style="color:#86efac">실생활 함수들:</b><br>
+• 🕯️ 양초: y = 20 − 2x (타는 시간 x분, 남은 길이 y cm)<br>
+• 🚕 택시: y = 3000 + 500x (km 수 x, 요금 y원)<br>
+• 🔋 배터리: y = 100 − 5x (사용 시간 x, 잔량 y%)
+</div>` },
+
   { tag:'🇸🇬 싱가포르식 — 기울기 계단', tagColor:'#7dd3fc',
     bg:'rgba(125,211,252,.07)', bd:'rgba(125,211,252,.3)',
     body:`<div style="font-size:.84rem;color:#e2e8f0;line-height:1.8;font-weight:600;margin-bottom:10px">🇸🇬 싱가포르식 (시각화): '기울기 계단(Slope Stairs)' 모델을 사용합니다.</div><div style="font-size:.78rem;color:#e2e8f0;line-height:1.8">x가 한 칸 갈 때 y가 몇 칸 올라가는지 계단을 그리며, 기울기(a)와 y절편(b)이 그래프의 '모양'과 '시작점'을 어떻게 결정하는지 시각화합니다.<br><br><b style="color:#7dd3fc">핵심:</b> a = 계단의 가파름 / b = 시작 위치</div>`,
-    ans:null },
+    extra:`<div style="font-size:.82rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#7dd3fc">기울기 = 오른쪽 1칸 갈 때 위로 몇 칸?</b><br><br>
+<svg viewBox="0 0 200 155" style="display:block;margin:6px auto;max-width:210px">
+  <rect width="200" height="155" fill="#0d1a28" rx="8"/>
+  <g stroke="#1e293b" stroke-width="1">
+    <line x1="30" y1="15" x2="30" y2="130"/><line x1="50" y1="15" x2="50" y2="130"/>
+    <line x1="70" y1="15" x2="70" y2="130"/><line x1="90" y1="15" x2="90" y2="130"/>
+    <line x1="110" y1="15" x2="110" y2="130"/><line x1="130" y1="15" x2="130" y2="130"/>
+    <line x1="150" y1="15" x2="150" y2="130"/><line x1="170" y1="15" x2="170" y2="130"/>
+    <line x1="25" y1="130" x2="175" y2="130"/><line x1="25" y1="110" x2="175" y2="110"/>
+    <line x1="25" y1="90" x2="175" y2="90"/><line x1="25" y1="70" x2="175" y2="70"/>
+    <line x1="25" y1="50" x2="175" y2="50"/><line x1="25" y1="30" x2="175" y2="30"/>
+  </g>
+  <line x1="25" y1="130" x2="175" y2="130" stroke="#475569" stroke-width="2"/>
+  <line x1="30" y1="15" x2="30" y2="135" stroke="#475569" stroke-width="2"/>
+  <text x="178" y="134" fill="#64748b" font-size="9" font-family="sans-serif">x</text>
+  <text x="26" y="13" fill="#64748b" font-size="9" font-family="sans-serif">y</text>
+  <text x="46" y="142" fill="#64748b" font-size="8">1</text>
+  <text x="66" y="142" fill="#64748b" font-size="8">2</text>
+  <text x="86" y="142" fill="#64748b" font-size="8">3</text>
+  <text x="106" y="142" fill="#64748b" font-size="8">4</text>
+  <text x="21" y="132" fill="#64748b" font-size="8">0</text>
+  <text x="21" y="112" fill="#64748b" font-size="8">1</text>
+  <text x="21" y="92" fill="#64748b" font-size="8">2</text>
+  <text x="21" y="72" fill="#64748b" font-size="8">3</text>
+  <text x="21" y="52" fill="#64748b" font-size="8">4</text>
+  <g stroke="#5eead4" stroke-width="1.5" stroke-dasharray="4,2" opacity=".8">
+    <line x1="30" y1="110" x2="50" y2="110"/>
+    <line x1="50" y1="110" x2="50" y2="90"/>
+    <line x1="50" y1="90" x2="70" y2="90"/>
+    <line x1="70" y1="90" x2="70" y2="70"/>
+    <line x1="70" y1="70" x2="90" y2="70"/>
+    <line x1="90" y1="70" x2="90" y2="50"/>
+  </g>
+  <line x1="30" y1="110" x2="130" y2="10" stroke="#7dd3fc" stroke-width="2.5"/>
+  <circle cx="30" cy="110" r="3.5" fill="#7dd3fc"/>
+  <circle cx="50" cy="90" r="3.5" fill="#7dd3fc"/>
+  <circle cx="70" cy="70" r="3.5" fill="#7dd3fc"/>
+  <circle cx="90" cy="50" r="3.5" fill="#7dd3fc"/>
+  <text x="34" y="124" fill="#5eead4" font-size="8">+1→</text>
+  <text x="52" y="102" fill="#fde68a" font-size="8">↑+1</text>
+  <text x="145" y="28" fill="#7dd3fc" font-size="9" font-family="Jua,sans-serif">기울기=1</text>
+  <g stroke="#f97316" stroke-width="1.5" stroke-dasharray="4,2" opacity=".7">
+    <line x1="110" y1="130" x2="130" y2="130"/>
+    <line x1="130" y1="130" x2="130" y2="90"/>
+  </g>
+  <line x1="110" y1="130" x2="160" y2="30" stroke="#f97316" stroke-width="2" stroke-dasharray="5,2"/>
+  <circle cx="110" cy="130" r="3" fill="#f97316"/>
+  <circle cx="130" cy="90" r="3" fill="#f97316"/>
+  <text x="114" y="144" fill="#f97316" font-size="8">+1→</text>
+  <text x="132" y="112" fill="#fde68a" font-size="8">↑+2</text>
+  <text x="155" y="52" fill="#f97316" font-size="9" font-family="Jua,sans-serif">기울기=2</text>
+</svg>
+<div style="display:flex;gap:12px;margin-top:4px;font-size:.78rem">
+  <div><span style="color:#7dd3fc">━</span> 기울기 1: 오른쪽 1, 위로 1</div>
+  <div><span style="color:#f97316">━</span> 기울기 2: 오른쪽 1, 위로 2</div>
+</div>
+<br><b style="color:#fde68a">b (y절편)</b> = 직선이 y축을 만나는 점<br>
+같은 기울기라도 b가 다르면 직선이 위아래로 이동해요.
+</div>` },
+
   { tag:'✡️ 유대인식 — 세상의 모든 변화는 직선일까?', tagColor:'#fde68a',
     bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.25)',
     body:`<div style="font-size:.84rem;color:#e2e8f0;line-height:1.8;font-weight:600;margin-bottom:10px">✡️ 유대인식 (논리): "세상의 모든 변화는 직선일까?"라는 질문을 던집니다.</div><div style="font-size:.78rem;color:#e2e8f0;line-height:1.8">일정한 속도로 변하는 것(일차함수)과 그렇지 않은 것의 차이를 토론하며, 함수의 본질인 '대응'과 '변화'의 철학을 배웁니다.<br><br><b style="color:#fde68a">핵심:</b> 직선은 예측 가능한 세계. 우리 삶은 직선인가, 곡선인가?</div>`,
-    ans:null },
+    extra:`<div style="font-size:.82rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#fde68a">직선인 것 vs 직선이 아닌 것</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.4rem 0;font-size:.81rem;line-height:2.1">
+  <b style="color:#86efac">직선 (일차함수):</b><br>
+  🚶 일정한 속도로 걷기 → 거리 = 속력 × 시간<br>
+  🕯️ 일정하게 타는 양초 → 길이 = 20 − 2x<br><br>
+  <b style="color:#f87171">곡선 (일차함수 아님):</b><br>
+  💰 복리 이자 → 갈수록 빠르게 증가<br>
+  📱 SNS 퍼짐 → 처음엔 느리다가 폭발적으로<br>
+  🏋️ 운동 효과 → 처음엔 빠르게, 나중엔 천천히
+</div>
+<b style="color:#c4b5fd">토론 질문:</b><br>
+"내 성적 향상 그래프는 직선일까 곡선일까?"<br>
+"직선이 되려면 어떤 조건이 필요할까?"<br><br>
+<b style="color:#fde68a">핵심:</b> 일차함수(직선)는 자연에서 드문 특별한 경우예요.<br>
+<span style="font-size:.78rem;color:#aaa">→ 그래서 더 강력한 도구: 복잡한 현상도 짧은 구간에선 직선으로 근사할 수 있어요.</span>
+</div>` },
 
   { tag:'🇫🇮 핀란드식 — 마법의 자판기 규칙 (상세판)', tagColor:'#86efac',
     bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
@@ -10246,6 +10338,9 @@ function renderCard() {
   if (d.choices) {
     ansBtn.style.display = 'none';
     iDiv.style.display = ''; iDiv.innerHTML = cvITeaseHTML(d);
+  } else if (d.extra) {
+    ansBtn.style.display = ''; ansBtn.textContent = '💡 더 알아보기';
+    iDiv.style.display = 'none'; iDiv.innerHTML = '';
   } else if (d.ans) {
     ansBtn.style.display = ''; ansBtn.textContent = '💡 정답/풀이 보기';
     iDiv.style.display = 'none'; iDiv.innerHTML = '';
@@ -10302,10 +10397,15 @@ function toggleCVAnswer() {
   const btn  = document.getElementById('cv-ans-btn');
   CS.showAns = !CS.showAns;
   if (CS.showAns) {
+    const content = d.extra || d.ans;
     const khanHtml = CS.set==='ineq-word' ? khanIneqCheck(d) : '';
-    area.innerHTML = d.ans + khanHtml;
-    area.style.display=''; btn.textContent='🙈 정답 숨기기';
-  } else { area.style.display='none'; btn.textContent='💡 정답/풀이 보기'; }
+    area.innerHTML = content + khanHtml;
+    area.style.display='';
+    btn.textContent = d.extra ? '🙈 숨기기' : '🙈 정답 숨기기';
+  } else {
+    area.style.display='none';
+    btn.textContent = d.extra ? '💡 더 알아보기' : '💡 정답/풀이 보기';
+  }
 }
 
 function cvNav(dir) {
