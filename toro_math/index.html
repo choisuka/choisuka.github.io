@@ -10717,33 +10717,21 @@ C=69−44=25, A=69−56=13, B=69−38=31<br>
 /* ── 제곱근의 정의 수업 (핀란드×하브루타, 45분) ── */
 'sqrt-def-lesson': [
 
-  { tag:'✡️ 핵심 — 두 표현 구분', tagColor:'#fde68a',
-    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+  { tag:'📐 설계 원리 — 왜 이 순서인가', tagColor:'#2dd4bf',
+    bg:'rgba(45,212,191,.07)', bd:'rgba(45,212,191,.3)',
     body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
-<b style="color:#fde68a;font-size:.95rem">학생이 100% 헷갈리는 두 표현</b><br><br>
-<div style="background:rgba(0,0,0,.25);border-radius:8px;overflow:hidden;font-size:.82rem">
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:rgba(255,255,255,.05)">
-  <div style="padding:7px 8px;color:#94a3b8;font-weight:700">표현</div>
-  <div style="padding:7px 8px;color:#94a3b8;font-weight:700">뜻</div>
-  <div style="padding:7px 8px;color:#94a3b8;font-weight:700">a=9 예시</div>
+<b style="color:#2dd4bf;font-size:.95rem">SFH 프레임 · 45분</b><br>
+<span style="font-size:.78rem;color:#aaa">F 탐구 10분 → S 시각화 12분 → 정의·근호 8분 → H 하브루타 10분 → 점검 5분</span><br><br>
+<b style="color:#fde68a">이 차시의 핵심:</b> 근호(√)를 <b>'필요'</b>로 만들기<br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.4rem 0;font-size:.83rem;line-height:1.9">
+넓이 4·9 → 한 변이 딱 떨어져 새 기호 불필요<br>
+넓이 2·대각선 → 길이는 분명 존재하는데 아는 수로 못 씀 → <b style="color:#f87171">막힘</b>
 </div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #1e293b">
-  <div style="padding:7px 8px;color:#7dd3fc">a의 제곱근</div>
-  <div style="padding:7px 8px;color:#e2e8f0;font-size:.78rem">x²=a인 모든 x</div>
-  <div style="padding:7px 8px;color:#fde68a">+3, −3 (두 개)</div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #1e293b">
-  <div style="padding:7px 8px;color:#7dd3fc">제곱근 a</div>
-  <div style="padding:7px 8px;color:#e2e8f0;font-size:.78rem">그중 양수만</div>
-  <div style="padding:7px 8px;color:#fde68a">3 (한 개)</div>
-</div>
-</div><br>
-<b style="color:#f87171">함정 핵심:</b> √(a²) = |a|<br>
-&nbsp;(-4)² = 16 → √16 = <b style="color:#fde68a">4</b> &nbsp;(−4가 아님)<br>
-<span style="font-size:.81rem;color:#aaa">√((-4)²) = 4 이지 −4가 아니다.</span>
+이 답답함이 정점에 올랐을 때 √를 <b>"그 길이를 적는 약속된 기호"</b>로 도입한다.<br><br>
+<b style="color:#f87171">핵심 규칙:</b> 도입 단계 그림에는 √를 절대 쓰지 않는다 → <b>?</b>로 둔다.
 </div>`, ans:null },
 
-  { tag:'🇫🇮 1단계 — 도입: 현상 제시 (10분)', tagColor:'#86efac',
+  { tag:'🇫🇮 F · 탐구 (10분) — 현상 제시', tagColor:'#86efac',
     bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
     body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
 <b style="color:#86efac">정의를 먼저 주지 않는다. 상황만 던진다.</b><br><br>
@@ -10752,71 +10740,113 @@ C=69−44=25, A=69−56=13, B=69−38=31<br>
 </div>
 학생이 6×6=36을 떠올린다. 교사가 한 번 더 민다:<br><br>
 <div style="background:rgba(253,230,138,.07);border:1px solid rgba(253,230,138,.25);border-radius:8px;padding:.7rem 1rem;margin:.4rem 0;font-size:.83rem">
-<b style="color:#fde68a">"그럼 한 변이 −6일 수도 있을까? 길이는 안 되지만, x²=36의 답은 몇 개일까?"</b>
+<b style="color:#fde68a">"넓이 36인데 한 변이 −6일 수도 있을까? 수학적으로 x²=36의 답은 몇 개?"</b>
 </div>
-<span style="font-size:.81rem;color:#aaa">→ "+6도, −6도 되네"를 학생이 스스로 발견하게 둔다.<br>
-정의는 학생 입에서 나온 말을 교사가 정리하는 형태로.</span>
+→ "+6도, −6도 되네"를 학생이 스스로 발견하게 둔다.<br>
+넓이 4→2, 넓이 9→3. 넓이 2→한 변은 <b>"제곱해서 2가 되는 양수"</b>.<br><br>
+<span style="font-size:.81rem;color:#f87171">이 시점엔 √없이 <b>?</b>로만. 학생이 "1.4쯤?""1.41…?" 하며 못 적는 경험이 핵심.</span>
 </div>`, ans:null },
 
-  { tag:'✡️ 2단계 — 하브루타 짝 질문 (15분)', tagColor:'#fde68a',
-    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+  { tag:'🇸🇬 S · 시각화 (12분) — 넓이 모델 + 대각선', tagColor:'#7dd3fc',
+    bg:'rgba(125,211,252,.07)', bd:'rgba(125,211,252,.3)',
     body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
-<b style="color:#fde68a">2인 1조. 질문자 ↔ 설명자. 중간에 역할 교체.</b><br><br>
-<b style="color:#c4b5fd">도발 질문 카드 (정답 일부러 안 줌)</b><br><br>
-<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.4rem 0;font-size:.83rem;line-height:2.2">
-① "'9의 제곱근'과 '제곱근 9'는 같은 말이야, 다른 말이야? 왜?"<br>
-② "−16의 제곱근은 −4다 — 이거 맞아? 친구를 설득하거나 반박해봐."<br>
-③ "√((-5)²)는 −5야 5야? 근거를 대봐."
+<b style="color:#7dd3fc">넓이↔한 변 관계를 그림으로 고정한다.</b><br><br>
+<div style="display:flex;gap:8px;justify-content:center;align-items:flex-end;padding:6px 0;flex-wrap:wrap">
+  <div style="text-align:center">
+    <div style="width:30px;height:30px;background:rgba(134,239,172,.15);border:1.5px solid #86efac;border-radius:2px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#86efac">4</div>
+    <div style="font-size:.8rem;color:#fde68a;margin-top:3px">→ 2</div>
+  </div>
+  <div style="text-align:center">
+    <div style="width:42px;height:42px;background:rgba(134,239,172,.15);border:1.5px solid #86efac;border-radius:2px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#86efac">9</div>
+    <div style="font-size:.8rem;color:#fde68a;margin-top:3px">→ 3</div>
+  </div>
+  <div style="text-align:center">
+    <div style="width:36px;height:36px;background:rgba(125,211,252,.1);border:2px dashed #7dd3fc;border-radius:2px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#7dd3fc">2</div>
+    <div style="font-size:1.1rem;color:#f87171;font-weight:700;margin-top:2px">→ ?</div>
+  </div>
 </div>
-<b style="color:#86efac">하브루타 규칙 3가지</b><br>
-① 친구 말 끝까지 듣기<br>
-② "왜?"로 되묻기<br>
-③ 동의하지 말고 한 번은 반드시 반박해보기
-</div>`,
-    extra:`<b style="color:#fde68a">도발 질문 정답</b><br><br>
-① 다른 말: "9의 제곱근" = ±3 (두 개), "제곱근 9" = 3 (양수만)<br><br>
-② 틀렸다! −16은 음수 → 실수 범위에서 제곱근 없음<br><br>
-③ 5. √((-5)²) = √25 = 5. (√(a²) = |a|)` },
+<br><b style="color:#7dd3fc">대각선:</b> 피타고라스로 1²+1²=2 <b>까지만</b> 가고 멈춘다.<br>
+대각선 자체 길이 = <b style="color:#f87171">?</b> (이것이 무리수 √2)<br><br>
+<div style="background:rgba(253,230,138,.07);border:1px solid rgba(253,230,138,.2);border-radius:8px;padding:.6rem 1rem;font-size:.79rem;color:#fde68a">
+⚠️ 대각선 그림은 피타고라스 정리를 배운 뒤라야 성립.<br>
+미선행이면 넓이 모델(넓이 2)만 쓰고 대각선은 무리수 차시로 미룰 것.
+</div>
+</div>`, ans:null },
 
-  { tag:'🇫🇮 3단계 — 발표·정리 (10분)', tagColor:'#86efac',
-    bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
+  { tag:'📖 정의·근호 (8분) — 이름과 기호 약속', tagColor:'#c4b5fd',
+    bg:'rgba(196,181,253,.07)', bd:'rgba(196,181,253,.3)',
     body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
-<b style="color:#86efac">짝마다 "우리가 합의한 정의 한 문장"을 발표.</b><br><br>
-충돌하는 답이 나오면 교사가 정리하지 않는다.<br>
-→ <b style="color:#fde68a">다른 조에게 판정을 넘긴다.</b><br><br>
-마지막에 두 표현 구분표로 봉합:<br><br>
+<b style="color:#c4b5fd">갈증이 정점에 올랐을 때 기호를 준다.</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;overflow:hidden;font-size:.82rem">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:rgba(255,255,255,.05)">
+  <div style="padding:6px 8px;color:#94a3b8;font-weight:700">표현</div>
+  <div style="padding:6px 8px;color:#94a3b8;font-weight:700">뜻</div>
+  <div style="padding:6px 8px;color:#94a3b8;font-weight:700">a=9 예시</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #1e293b">
+  <div style="padding:6px 8px;color:#7dd3fc">a의 제곱근</div>
+  <div style="padding:6px 8px;color:#e2e8f0;font-size:.78rem">x²=a인 모든 x</div>
+  <div style="padding:6px 8px;color:#fde68a">+3, −3 (둘)</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #1e293b">
+  <div style="padding:6px 8px;color:#7dd3fc">제곱근 a</div>
+  <div style="padding:6px 8px;color:#e2e8f0;font-size:.78rem">양수만 (= √a)</div>
+  <div style="padding:6px 8px;color:#fde68a">3 (하나)</div>
+</div>
+</div><br>
 <div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.7rem 1rem;font-size:.83rem;line-height:2.2">
 a > 0 → 제곱근 두 개: +√a, −√a<br>
 a = 0 → 제곱근 하나: 0<br>
-a &lt; 0 → 제곱근 없음 (실수 범위)
-</div>
+a &lt; 0 → 제곱근 없다 (실수 범위)
+</div><br>
+<b style="color:#f87171">함정:</b> √(a²) = |a|<br>
+(-4)² = 16 → √16 = <b style="color:#fde68a">4</b> (−4가 아님)
 </div>`, ans:null },
 
-  { tag:'✡️ 4단계 — 확인 문제 (10분)', tagColor:'#fde68a',
+  { tag:'✡️ H · 하브루타 (10분) — 도발 질문', tagColor:'#fde68a',
     bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
     body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
-<b style="color:#fde68a">기초</b><br>
+<b style="color:#fde68a">2인 1조. 질문자 ↔ 설명자. 중간에 역할 교체.</b><br>
+교사는 정답을 바로 주지 않는다. 충돌 → 다른 조에게 판정 넘기기.<br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.4rem 0;font-size:.83rem;line-height:2.3">
+① "'9의 제곱근'과 '제곱근 9'는 같은 말이야, 다른 말이야? 왜?"<br>
+② "−16의 제곱근은 −4다 — 맞아? 설득하거나 반박해봐."<br>
+③ "√((-5)²)는 −5야 5야? 근거를 대봐."
+</div>
+<b style="color:#86efac">하브루타 규칙 3가지</b><br>
+① 친구 말 끝까지 듣기 &nbsp;② "왜?"로 되묻기 &nbsp;③ 한 번은 반드시 반박
+</div>`,
+    extra:`<b style="color:#fde68a">도발 질문 정답 (교사용)</b><br><br>
+① <b style="color:#86efac">다르다.</b> "9의 제곱근" = ±3 (두 개), "제곱근 9 = √9" = 3 (양수 하나)<br><br>
+② <b style="color:#f87171">틀렸다.</b> −16은 음수 → 실수에서 제곱근 없음 (제곱하면 음수 불가)<br><br>
+③ <b style="color:#86efac">5.</b> √((-5)²) = √25 = 5 &nbsp;(√(a²) = |a|)` },
+
+  { tag:'✡️ 점검 (5분) — 개별 확인 문제', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#86efac">기초</b><br>
 1. 49의 제곱근을 구하시오.<br>
 2. 제곱근 49를 구하시오.<br>
-3. 0.04의 제곱근을 구하시오.<br>
-4. 16의 양·음의 제곱근을 각각 쓰시오.<br><br>
+3. 16의 양의 제곱근과 음의 제곱근을 각각 쓰시오.<br>
+4. −9의 제곱근을 구하시오.<br><br>
 <b style="color:#f87171">개념 구분 (함정)</b><br>
-5. 제곱근이 없는 것은? ① 25 ② 0 ③ −9<br>
-6. (−5)²의 제곱근을 구하시오.<br>
-7. √(3²) = ?<br>
-8. √((-4)²) = ?<br>
-9. x²=7일 때 x의 값은?<br><br>
+5. (−5)²의 제곱근을 구하시오.<br>
+6. √(3²) = ?<br>
+7. √((-4)²) = ?<br>
+8. x²=7일 때 x의 값은?<br><br>
 <b style="color:#c4b5fd">서술 (하브루타용)</b><br>
 10. "a의 제곱근은 항상 두 개다"가 틀린 이유를 예를 들어 설명하시오.
 </div>`,
     extra:`<b style="color:#fde68a">정답</b><br><br>
-1. ±7 &nbsp; 2. 7 &nbsp; 3. ±0.2 &nbsp; 4. 양 4, 음 −4<br><br>
-5. ③ (−9는 음수, 실수 제곱근 없음)<br>
-6. (−5)²=25의 제곱근 → ±5<br>
-7. √(3²) = √9 = 3<br>
-8. √((-4)²) = √16 = 4 &nbsp;(−4 아님!)<br>
-9. x = ±√7<br><br>
-10. a=0이면 0 하나뿐, a&lt;0이면 없음 → 항상 두 개가 아님.` }
+1. ±7<br>
+2. 7 &nbsp;<span style="color:#aaa;font-size:.8rem">(제곱근 49 = √49 는 양수)</span><br>
+3. 양의 제곱근 4, 음의 제곱근 −4<br>
+4. 없다 &nbsp;<span style="color:#aaa;font-size:.8rem">(음수는 실수 제곱근 없음)</span><br><br>
+5. (−5)²=25의 제곱근 → ±5<br>
+6. √(3²) = √9 = 3<br>
+7. √((-4)²) = √16 = 4 &nbsp;<span style="color:#f87171">(−4 아님!)</span><br>
+8. x = ±√7<br><br>
+10. a=0이면 0 하나, a&lt;0이면 없음 → 항상 두 개가 아님.` }
 ],
 
 }; // end CARD_DATA
@@ -10873,6 +10903,9 @@ function fixRadicals(html) {
     .replace(/√\(([a-zA-Z]+)\)/g, (_, v) => K('\\sqrt{' + v + '}'))
     // √정수
     .replace(/√(\d+)/g, (_, n) => K('\\sqrt{' + n + '}'))
+    // −√변수, +√변수
+    .replace(/[−-]√([a-zA-Z])\b/g, (_, v) => K('-\\sqrt{' + v + '}'))
+    .replace(/\+√([a-zA-Z])\b/g, (_, v) => K('+\\sqrt{' + v + '}'))
     // √변수 — 단일 영문자
     .replace(/√([a-zA-Z])\b/g, (_, v) => K('\\sqrt{' + v + '}'));
 }
