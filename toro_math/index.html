@@ -253,6 +253,10 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
 .khan-self-no{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.28);color:#f87171}
 .khan-self-no:hover{background:rgba(248,113,113,.22)}
 .khan-self-msg{text-align:center;font-size:.78rem;padding:7px 0;min-height:22px;transition:.3s}
+.rad{display:inline-flex;align-items:flex-end;white-space:nowrap;line-height:1.2}
+.rad b{border-top:1.5px solid currentColor;padding:0 2px;margin-left:-2px;display:inline-block}
+.rad-lg{display:inline-flex;align-items:flex-end;white-space:nowrap;font-size:1.6rem}
+.rad-lg b{border-top:2px solid currentColor;padding:2px 4px;margin-left:-3px;display:inline-block}
 </style>
 </head>
 <body>
@@ -10665,6 +10669,12 @@ function buildFMRooms(){
   });
 }
 
+function fixRadicals(html) {
+  // √숫자 → 근호 가로선이 숫자 위까지 덮이는 표기로 변환
+  return html.replace(/√(\d+)/g,
+    '<span class="rad"><span>√</span><b>$1</b></span>');
+}
+
 function startCards(set, from) {
   CS.set = set; CS.cards = CARD_DATA[set];
   CS.cur = 0; CS.from = from; CS.showAns = false;
@@ -10678,10 +10688,10 @@ function renderCard() {
   document.getElementById('cv-title').textContent = d.tag;
   document.getElementById('cv-num').textContent = (CS.cur+1) + ' / ' + tot;
   document.getElementById('cv-prog-fill').style.width = ((CS.cur+1)/tot*100) + '%';
-  document.getElementById('cv-inner').innerHTML =
+  document.getElementById('cv-inner').innerHTML = fixRadicals(
     '<div style="background:'+d.bg+';border:1px solid '+d.bd+';border-radius:12px;padding:16px;min-height:170px">'
     +'<div style="font-family:Jua,sans-serif;color:'+d.tagColor+';font-size:.72rem;margin-bottom:10px">'+d.tag+'</div>'
-    +d.body+'</div>';
+    +d.body+'</div>');
   const ansArea = document.getElementById('cv-ans-area');
   const ansBtn  = document.getElementById('cv-ans-btn');
   const iDiv    = document.getElementById('cv-interactive');
@@ -10751,7 +10761,7 @@ function toggleCVAnswer() {
   if (CS.showAns) {
     const content = d.extra || d.ans;
     const khanHtml = CS.set==='ineq-word' ? khanIneqCheck(d) : '';
-    area.innerHTML = content + khanHtml;
+    area.innerHTML = fixRadicals(content + khanHtml);
     area.style.display='';
     btn.textContent = d.extra ? '🙈 숨기기' : '🙈 정답 숨기기';
   } else {
