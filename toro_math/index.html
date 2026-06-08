@@ -10528,17 +10528,51 @@ C=69−44=25, A=69−56=13, B=69−38=31<br>
 /* ── 제곱근과 실수 — 핀란드식 수업 완성본 (중3) ─── */
 'sqrt-fi-guide': [
 
-  { tag:'🇫🇮 1차시 — 도입: 막힘이 수업의 시작', tagColor:'#86efac',
+  { tag:'🇫🇮 1차시 — 도입 ① 정사각형: 패턴 → 막힘', tagColor:'#86efac',
     bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
     body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
-<b style="color:#86efac;font-size:.95rem">"넓이가 9인 정사각형의 한 변은?"</b><br>
-학생: 3<br><br>
-<b style="color:#86efac">"넓이가 2인 정사각형의 한 변은?"</b><br>
-학생이 멈춘다.<br><br>
-<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.5rem 0;font-size:.88rem;line-height:1.9;font-style:italic;color:#c4b5fd">
-"1보다 크고 1.5보다 작은데... 정확히 모르겠어요."
+<b style="color:#86efac;font-size:.95rem">"넓이를 알면 한 변도 알 수 있어."</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.4rem 0;font-size:.88rem">
+<svg viewBox="0 0 260 80" style="display:block;width:100%;max-width:280px;margin:0 auto">
+  <rect x="10" y="10" width="28" height="28" fill="rgba(134,239,172,.15)" stroke="#86efac" stroke-width="1.5" rx="2"/>
+  <text x="24" y="30" text-anchor="middle" fill="#86efac" font-size="9" font-family="Noto Sans KR,sans-serif">넓이4</text>
+  <text x="24" y="50" text-anchor="middle" fill="#fde68a" font-size="11" font-family="Jua,sans-serif">→ 2</text>
+  <rect x="60" y="10" width="40" height="40" fill="rgba(134,239,172,.15)" stroke="#86efac" stroke-width="1.5" rx="2"/>
+  <text x="80" y="33" text-anchor="middle" fill="#86efac" font-size="9" font-family="Noto Sans KR,sans-serif">넓이9</text>
+  <text x="80" y="60" text-anchor="middle" fill="#fde68a" font-size="11" font-family="Jua,sans-serif">→ 3</text>
+  <rect x="120" y="10" width="50" height="50" fill="rgba(134,239,172,.15)" stroke="#86efac" stroke-width="1.5" rx="2"/>
+  <text x="145" y="37" text-anchor="middle" fill="#86efac" font-size="9" font-family="Noto Sans KR,sans-serif">넓이25</text>
+  <text x="145" y="70" text-anchor="middle" fill="#fde68a" font-size="11" font-family="Jua,sans-serif">→ 5</text>
+  <rect x="190" y="18" width="36" height="36" fill="rgba(125,211,252,.1)" stroke="#7dd3fc" stroke-width="1.5" rx="2" stroke-dasharray="4,2"/>
+  <text x="208" y="38" text-anchor="middle" fill="#7dd3fc" font-size="9" font-family="Noto Sans KR,sans-serif">넓이2</text>
+  <text x="208" y="65" text-anchor="middle" fill="#f87171" font-size="14" font-family="Jua,sans-serif">→ ?</text>
+</svg>
 </div>
-<span style="font-size:.82rem;color:#aaa">→ 교사는 설명하지 않는다.<br>막힘이 수업의 시작이다.</span>
+학생: <i style="color:#c4b5fd">"분명히 있는데... 이름을 못 쓰겠어요."</i><br><br>
+<span style="font-size:.82rem;color:#aaa">→ 교사는 설명하지 않는다. 이 막힘이 수업의 시작이다.<br>
+이 단계에서 √ 기호는 절대 나오지 않는다.</span>
+</div>`, ans:null },
+
+  { tag:'🇫🇮 1차시 — 도입 ② 대각선: 두 번째 막힘', tagColor:'#86efac',
+    bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#86efac">"한 변이 1인 정사각형의 대각선 길이는?"</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.4rem 0;font-size:.84rem">
+<svg viewBox="0 0 160 120" style="display:block;width:160px;margin:0 auto">
+  <rect x="30" y="10" width="70" height="70" fill="rgba(125,211,252,.08)" stroke="#7dd3fc" stroke-width="1.5" rx="2"/>
+  <text x="65" y="52" text-anchor="middle" fill="#7dd3fc" font-size="9" font-family="Noto Sans KR,sans-serif">넓이 1</text>
+  <text x="17" y="52" text-anchor="middle" fill="#86efac" font-size="10" font-family="Jua,sans-serif">1</text>
+  <text x="65" y="95" text-anchor="middle" fill="#86efac" font-size="10" font-family="Jua,sans-serif">1</text>
+  <line x1="30" y1="10" x2="100" y2="80" stroke="#fde68a" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="118" y="52" text-anchor="middle" fill="#f87171" font-size="13" font-family="Jua,sans-serif">?</text>
+</svg>
+<div style="text-align:center;font-size:.83rem;margin-top:4px;line-height:2">
+피타고라스: 대각선² = 1² + 1² = 2<br>
+그럼 대각선 = <b style="color:#f87171;font-size:1.1rem">?</b>
+</div>
+</div>
+학생: <i style="color:#c4b5fd">"제곱하면 2가 되는 수인데 쓸 방법이 없어요."</i><br><br>
+<span style="font-size:.82rem;color:#aaa">→ 두 번째 막힘. 갈증이 정점에 오를 때까지 기다린다.</span>
 </div>`, ans:null },
 
   { tag:'🇫🇮 1차시 — 탐색: 끝이 안 나요', tagColor:'#86efac',
