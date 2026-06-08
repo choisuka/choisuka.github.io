@@ -782,6 +782,9 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
     <button onclick="startCards('eq-guide','equation-hub')" style="width:100%;margin-bottom:8px;background:rgba(134,239,172,.1);border:1px solid rgba(134,239,172,.3);color:#86efac;border-radius:12px;padding:13px;font-family:'Jua',sans-serif;font-size:.88rem;cursor:pointer;text-align:left">
       📖 3개국 개념 가이드 <span style="font-size:.72rem;opacity:.7">(3장)</span> →
     </button>
+    <button onclick="startCards('eq-havruta-lesson','equation-hub')" style="width:100%;margin-bottom:8px;background:rgba(253,230,138,.1);border:1px solid rgba(253,230,138,.4);color:#fde68a;border-radius:12px;padding:13px;font-family:'Jua',sans-serif;font-size:.88rem;cursor:pointer;text-align:left">
+      ✡️ 하브루타 수업안 <span style="font-size:.72rem;opacity:.7">(8장)</span> →
+    </button>
     <button onclick="startCards('eq-basic','equation-hub')" style="width:100%;margin-bottom:8px;background:rgba(125,211,252,.1);border:1px solid rgba(125,211,252,.3);color:#7dd3fc;border-radius:12px;padding:13px;font-family:'Jua',sans-serif;font-size:.88rem;cursor:pointer;text-align:left">
       📚 기본 문제 ★ <span style="font-size:.72rem;opacity:.7">(10문항)</span> →
     </button>
@@ -1680,6 +1683,130 @@ x + a = b 에서<br>
 • 만드는 것 → 원하는 x가 되는 관계를 설계하기<br><br>
 <b style="color:#86efac">핵심:</b> 방정식을 만들 줄 알면 문장제(활용 문제)도 겁나지 않아요.<br>
 현실 상황을 식으로 <b>'번역'</b>하는 능력이 바로 이것이에요.` }
+],
+
+/* ── 하브루타 수업안 (8장) ──────────────────────── */
+'eq-havruta-lesson': [
+
+  { tag:'✡️ 교사 4원칙 — 하브루타 수업 전 확인', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.9">
+<b style="color:#fde68a;font-size:.95rem">교사가 지켜야 할 4가지</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.9rem 1.1rem;margin:.4rem 0;font-size:.83rem;line-height:2.3">
+1. <b style="color:#86efac">답을 주지 않는다.</b> 학생이 답하면 곧바로 "왜?"로 되묻는다.<br>
+2. <b style="color:#86efac">먼저 짝과, 그다음 전체.</b> 모든 질문은 짝 토론 → 공유 순서.<br>
+3. <b style="color:#86efac">틀린 답을 환영한다.</b> 오답은 개념이 자라는 토양. 고쳐주지 말고 다시 질문으로 흔든다.<br>
+4. <b style="color:#86efac">충돌을 일부러 설계한다.</b> "어? 이상한데?" 하는 순간을 만든다.
+</div>
+<span style="font-size:.81rem;color:#aaa">핵심: 학생이 정의·규칙을 외우는 게 아니라 <b style="color:#fde68a">스스로 만들어내게</b> 하는 것.</span>
+</div>`, ans:null },
+
+  { tag:'✡️ 0. 도입 — 양팔저울 이야기 (5분)', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#fde68a">"양팔저울이 평형이야. 왼쪽엔 사과 3개, 오른쪽엔 추 1개랑 사과 1개. 사과 하나 무게는?"</b><br><br>
+답이 나오면:<br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.5rem 0;font-size:.84rem;line-height:2.1">
+→ <b style="color:#c4b5fd">"어떻게 알았어?"</b><br>
+→ <b style="color:#c4b5fd">"양쪽에서 사과를 1개씩 동시에 덜어내도 저울은 그대로일까? 왜?"</b><br>
+→ <b style="color:#c4b5fd">"한쪽만 덜어내면?"</b>
+</div>
+<span style="font-size:.81rem;color:#aaa">→ 등식의 성질을 숫자가 아니라 <b style="color:#fde68a">몸의 직관</b>으로 먼저 만나게 하는 장치.<br>아직 'x'라는 말을 꺼내지 않습니다.</span>
+</div>`, ans:null },
+
+  { tag:'✡️ 1. 탐구 — 등식이란 무엇인가 (8분)', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#fde68a">짝 토론: "2+3=5 와 x+3=5 는 뭐가 다를까?"</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.4rem 0;font-size:.83rem;line-height:2.1">
+"x가 있다" → <b style="color:#c4b5fd">"x가 있으면 뭐가 달라져? 아래 식도 항상 참이야?"</b><br>
+→ <b style="color:#c4b5fd">"x에 0을 넣으면? 2를 넣으면? 어떤 건 참이고 어떤 건 거짓이야?"</b>
+</div>
+<div style="background:rgba(253,230,138,.07);border:1px solid rgba(253,230,138,.25);border-radius:8px;padding:.7rem 1rem;margin:.4rem 0;font-size:.82rem">
+<b style="color:#fde68a">⚡ 충돌 장치</b><br>
+<i>"x+3 = x+3 은 어때? 어떤 x를 넣어도 참이야. 이건 x+3=5 랑 같은 종류일까, 다른 종류일까?"</i>
+</div>
+<span style="font-size:.81rem;color:#aaa">→ 방정식 vs 항등식의 차이를 <b style="color:#fde68a">학생 입으로</b> 끌어냅니다.</span>
+</div>`, ans:null },
+
+  { tag:'✡️ 2. 탐구 — "푼다"는 무슨 뜻 (5분)', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#fde68a">"x+3=5 를 참으로 만드는 x는 몇 개일까?"</b><br>
+<b style="color:#fde68a">"x를 '푼다'는 건 결국 무엇을 찾는 일이야?"</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.5rem 0;font-size:.84rem;line-height:1.9;font-style:italic;color:#c4b5fd">
+학생: "식을 참으로 만드는 값을 찾는 거요."
+</div>
+<span style="font-size:.81rem;color:#aaa">→ '해(근)'라는 단어를 교사가 정의해주기 <b style="color:#fde68a">전에</b>,<br>학생이 "식을 참으로 만드는 값"이라고 말하게 합니다.<br>그다음에 이름표(해·근)를 붙여줍니다.</span>
+</div>`, ans:null },
+
+  { tag:'✡️ 3. 탐구 — 등식의 성질 (10분)', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#fde68a">"x+3=5. 양변에서 3을 빼도 될까? 왜 돼? 아까 저울이랑 무슨 상관이야?"</b><br>
+<b style="color:#fde68a">"양변에 2를 곱하면 평형이 깨질까?"</b><br><br>
+<div style="background:rgba(253,230,138,.07);border:1px solid rgba(253,230,138,.25);border-radius:8px;padding:.7rem 1rem;margin:.4rem 0;font-size:.82rem">
+<b style="color:#fde68a">⚡ 충돌 장치</b><br>
+<i>"양변을 0으로 나누면 어떻게 될까?"</i><br><br>
+학생이 직접 0÷0, 5÷0 같은 걸 만나며 막히게 둡니다.<br>
+<b style="color:#c4b5fd">"왜 0만 안 될까? 다른 수는 다 되는데?"</b>
+</div>
+<span style="font-size:.81rem;color:#aaa">→ "0으로 나누기 금지"를 규칙으로 받지 않고<br><b style="color:#fde68a">스스로 부딪혀 발견</b>하게 합니다.</span>
+</div>`, ans:null },
+
+  { tag:'✡️ 4. 탐구 — 이항의 정체 (7분)', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#fde68a">"x+3=5 에서 양변에 3을 빼서 x=5-3 이 됐어.<br>그런데 옆 반 친구는 '+3을 반대편으로 넘기면 -3이 된다'고 외웠대.<br>이 둘은 같은 거야, 다른 거야?"</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.5rem 0;font-size:.84rem;line-height:1.9">
+<b style="color:#c4b5fd">"'넘긴다'는 건 사실 뭘 한 거지? 마법이야, 아니면 아까 그 성질이야?"</b>
+</div>
+<span style="font-size:.81rem;color:#aaa">→ <b style="color:#fde68a">이항 = 등식의 성질을 줄여 부르는 말</b>임을 발견.<br>암기 규칙이 아니라 이해의 결과임을 못 박습니다.<br>(외운 학생일수록 여기서 흔들어주는 게 효과적)</span>
+</div>`, ans:null },
+
+  { tag:'✡️ 5–6. 탐구 — 정의 만들기 + 적용 (12분)', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#fde68a">칠판에 모아 적기: x+3=5, 2x=8, 3x-1=5</b><br>
+<b style="color:#fde68a">"이것들의 공통점은? 한 문장으로 정의해봐."</b><br><br>
+<div style="background:rgba(253,230,138,.07);border:1px solid rgba(253,230,138,.25);border-radius:8px;padding:.7rem 1rem;margin:.4rem 0;font-size:.82rem">
+<b style="color:#fde68a">⚡ 충돌 장치</b><br>
+<i>"x²+1=5 는 같은 무리야? 3=5 는? 0·x=8 은?"</i>
+</div>
+→ 반례를 걸러내며 정의를 직접 다듬습니다.<br><br>
+<b style="color:#86efac">적용 (짝이 서로 검사)</b><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.7rem 1rem;margin:.4rem 0;font-size:.83rem;line-height:2">
+보통: 3(x-2) = 2x+1<br>
+<b style="color:#f87171">함정 ①</b> 0·x = 5 → 해가 없음<br>
+<b style="color:#f87171">함정 ②</b> 0·x = 0 → 해가 무수히 많음
+</div>
+<span style="font-size:.81rem;color:#aaa">"이것도 일차방정식일까? 아까 만든 정의에 비춰보면?"</span>
+</div>`, ans:null },
+
+  { tag:'✡️ 마무리 + 되물음 은행 (3분)', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#fde68a">"오늘 배운 걸 짝에게 '선생님처럼' 설명해봐.<br>듣는 짝은 계속 '왜?'라고만 물어봐."</b><br><br>
+<span style="font-size:.81rem;color:#aaa">가장 잘 배우는 방법은 가르치는 것.<br>설명하다 막히는 지점이 그 학생이 아직 모르는 지점입니다.</span>
+</div>`,
+    extra:`<div style="font-size:.82rem;color:#e2e8f0;line-height:1.9">
+<b style="color:#fde68a">되물음 은행 — 어떤 답에도 쓸 수 있는 질문</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;font-size:.82rem;line-height:2.2">
+• "왜 그렇게 생각해?"<br>
+• "어떻게 확인할 수 있어?"<br>
+• "반대로 틀린 경우는 없을까?"<br>
+• "짝은 다르게 풀었던데, 누가 맞아? 왜?"<br>
+• "한 단어만 바꾸면 답이 달라지는 부분이 있어?"<br>
+• "이걸 모르는 동생한테는 어떻게 설명할래?"<br>
+• "이 규칙이 안 통하는 경우를 만들 수 있어?"
+</div>
+<br><b style="color:#86efac">평가 관점 (정답률이 아니라)</b><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.4rem 0;font-size:.82rem;line-height:2.1">
+• 자기 풀이의 <b style="color:#fde68a">근거</b>를 말로 댈 수 있는가<br>
+• 짝의 오답을 <b style="color:#fde68a">질문으로</b> 짚어낼 수 있는가<br>
+• 이항을 '넘기기'가 아니라 <b style="color:#fde68a">등식의 성질</b>로 설명하는가
+</div>
+</div>` }
 ],
 
 /* ── 기본 문제 (10문항) ───────────────────────── */
