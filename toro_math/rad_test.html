@@ -4,21 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>√ 비교</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Noto+Sans+Math&display=swap" rel="stylesheet">
 <style>
 body{background:#0f172a;color:#e2e8f0;font-family:'Noto Sans KR',sans-serif;padding:24px;max-width:500px;margin:0 auto}
-h3{color:#86efac;margin:0 0 20px;font-family:'Jua',sans-serif}
-.box{background:#1e293b;border-radius:12px;padding:20px 24px;margin-bottom:16px}
-.title{color:#94a3b8;font-size:.75rem;margin-bottom:14px}
-.row{margin-bottom:10px;font-size:1rem}
-.big{font-size:2.2rem;display:block;margin-bottom:4px}
+h3{color:#86efac;margin:0 0 20px;font-size:1rem}
+.box{background:#1e293b;border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.title{color:#94a3b8;font-size:.75rem;margin-bottom:12px}
+.row{margin-bottom:8px}
+.big{font-size:2.2rem}
 
-/* 수정A: border-top */
-.ra{display:inline-flex;align-items:flex-end;white-space:nowrap}
-.ra span{border-top:1.5px solid currentColor;padding:0 3px;margin-left:-3px;display:inline-block;line-height:1.6}
-
-/* 수정B: scaleX */
-.rb{display:inline-block;transform:scaleX(1.8);transform-origin:right center}
+/* MathML 기본 스타일 */
+math { font-size: 1em; }
 </style>
 </head>
 <body>
@@ -26,32 +22,33 @@ h3{color:#86efac;margin:0 0 20px;font-family:'Jua',sans-serif}
 <h3>√ 표기 비교</h3>
 
 <div class="box">
-  <div class="title">① 현재 (수정 전) — 가로선이 짧음</div>
-  <span class="big">√2</span>
-  <div class="row">√2 = p/q 가정</div>
-  <div class="row">√2 , √3 , √36</div>
+  <div class="title">① 현재 (수정 전)</div>
+  <div class="big row">√2</div>
+  <div class="row">√2 = p/q 가정, √3, √36</div>
 </div>
 
 <div class="box">
-  <div class="title">② 수정A — 가로선 CSS로 연장</div>
-  <span class="big"><span class="ra">√<span>2</span></span></span>
-  <div class="row"><span class="ra">√<span>2</span></span> = p/q 가정</div>
+  <div class="title">② MathML (브라우저 내장 수식)</div>
+  <div class="big row">
+    <math display="inline"><msqrt><mn>2</mn></msqrt></math>
+  </div>
   <div class="row">
-    <span class="ra">√<span>2</span></span> ,
-    <span class="ra">√<span>3</span></span> ,
-    <span class="ra">√<span>36</span></span>
+    <math display="inline"><msqrt><mn>2</mn></msqrt></math> = p/q 가정,
+    <math display="inline"><msqrt><mn>3</mn></msqrt></math>,
+    <math display="inline"><msqrt><mn>36</mn></msqrt></math>
   </div>
 </div>
 
 <div class="box">
-  <div class="title">③ 수정B — √ 문자 자체를 가로로 늘리기</div>
-  <span class="big"><span class="rb">√</span>2</span>
-  <div class="row"><span class="rb">√</span>2 = p/q 가정</div>
-  <div class="row">
-    <span class="rb">√</span>2 ,
-    <span class="rb">√</span>3 ,
-    <span style="display:inline-block;transform:scaleX(2.2);transform-origin:right center">√</span>36
-  </div>
+  <div class="title">③ Noto Sans Math 폰트</div>
+  <div class="big row" style="font-family:'Noto Sans Math',sans-serif">√2</div>
+  <div class="row" style="font-family:'Noto Sans Math',sans-serif">√2 = p/q 가정, √3, √36</div>
+</div>
+
+<div class="box">
+  <div class="title">④ Times New Roman (수학 폰트)</div>
+  <div class="big row" style="font-family:'Times New Roman',serif">√2</div>
+  <div class="row" style="font-family:'Times New Roman',serif">√2 = p/q 가정, √3, √36</div>
 </div>
 
 </body>
