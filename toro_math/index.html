@@ -3870,7 +3870,11 @@ y = 2x + 1 과 y = 2x + 5 는 기울기가 같다.<br>
     ans:`<b style="color:#86efac">풀이:</b><br>넓이 36 → 한 변 = √36 = <b style="color:#fde68a">6</b><br>넓이 7 → 한 변 = √7<br><br>√7 ≈ 2.6457... 로 끝없이 이어지며 분수로 쓸 수 없습니다.<br>→ <b style="color:#2dd4bf">무리수</b>` },
   { tag:'🇸🇬 기본 2/9 — 수 분류', tagColor:'#7dd3fc', bg:'rgba(125,211,252,.07)', bd:'rgba(125,211,252,.25)',
     body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">다음 수를 유리수와 무리수로 분류하라.<br>√4,　√5,　0.333...,　π,　-√9,　√(1/4)</div>`,
-    ans:`<b style="color:#7dd3fc">분류:</b><br><b style="color:#86efac">유리수:</b> √4=2, 0.333...=1/3, -√9=-3, √(1/4)=1/2<br><b style="color:#2dd4bf">무리수:</b> √5, π<br><br>포인트: √4, -√9, √(1/4) 처럼 결과가 정수·분수면 유리수!` },
+    ans:`<b style="color:#7dd3fc">분류:</b><br>
+<b style="color:#86efac">유리수:</b><br>
+√4 = 2, &nbsp; 0.333... = 1/3, &nbsp; -√9 = -3, &nbsp; √(1/4) = 1/2<br><br>
+<b style="color:#2dd4bf">무리수:</b> √5, π<br><br>
+포인트: √4, -√9, √(1/4)처럼 계산 결과가 정수·분수면 유리수!` },
   { tag:'✡️ 기본 3/9 — 개념 토론', tagColor:'#fde68a', bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.25)',
     body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">−√9 과 √(−9) 은 같은가, 다른가?<br>각각 계산이 가능한가? 이유를 설명하라.</div>`,
     ans:`<b style="color:#fde68a">답: 전혀 다르다!</b><br><br>
@@ -10686,10 +10690,20 @@ function buildFMRooms(){
 }
 
 function fixRadicals(html) {
-  return html.replace(/√(\d+)/g, function(_, n) {
-    return katex.renderToString('\\sqrt{' + n + '}',
-      {throwOnError:false, displayMode:false});
-  });
+  const K = s => katex.renderToString(s, {throwOnError:false, displayMode:false});
+  return html
+    // -√숫자 / −√숫자 (음의 제곱근)
+    .replace(/[−-]√(\d+)/g, (_, n) => K('-\\sqrt{' + n + '}'))
+    // +√숫자
+    .replace(/\+√(\d+)/g, (_, n) => K('+\\sqrt{' + n + '}'))
+    // √(정수/정수) — 분수 근호
+    .replace(/√\((\d+)\/(\d+)\)/g, (_, a, b) => K('\\sqrt{\\dfrac{' + a + '}{' + b + '}}'))
+    // √(−정수) 또는 √(-정수) — 음수 근호
+    .replace(/√\([−-](\d+)\)/g, (_, n) => K('\\sqrt{-' + n + '}'))
+    // √(정수) — 괄호 있는 단순 근호
+    .replace(/√\((\d+)\)/g, (_, n) => K('\\sqrt{' + n + '}'))
+    // √정수
+    .replace(/√(\d+)/g, (_, n) => K('\\sqrt{' + n + '}'));
 }
 
 function startCards(set, from) {
