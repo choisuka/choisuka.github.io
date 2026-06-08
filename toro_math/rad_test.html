@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>√ 비교</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Noto+Sans+Math&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <style>
 body{background:#0f172a;color:#e2e8f0;font-family:'Noto Sans KR',sans-serif;padding:24px;max-width:500px;margin:0 auto}
 h3{color:#86efac;margin:0 0 20px;font-size:1rem}
 .box{background:#1e293b;border-radius:12px;padding:18px 22px;margin-bottom:14px}
 .title{color:#94a3b8;font-size:.75rem;margin-bottom:12px}
-.row{margin-bottom:8px}
-.big{font-size:2.2rem}
-
-/* MathML 기본 스타일 */
-math { font-size: 1em; }
+.row{margin-bottom:10px;font-size:1.1rem;line-height:2}
+.big{font-size:2rem;display:block;margin-bottom:8px}
+.katex { color: #e2e8f0; }
 </style>
 </head>
 <body>
@@ -23,33 +23,34 @@ math { font-size: 1em; }
 
 <div class="box">
   <div class="title">① 현재 (수정 전)</div>
-  <div class="big row">√2</div>
+  <span class="big">√2</span>
   <div class="row">√2 = p/q 가정, √3, √36</div>
+  <div class="row">양의 제곱근: +√2 = 1.414...</div>
 </div>
 
 <div class="box">
-  <div class="title">② MathML (브라우저 내장 수식)</div>
-  <div class="big row">
-    <math display="inline"><msqrt><mn>2</mn></msqrt></math>
-  </div>
-  <div class="row">
-    <math display="inline"><msqrt><mn>2</mn></msqrt></math> = p/q 가정,
-    <math display="inline"><msqrt><mn>3</mn></msqrt></math>,
-    <math display="inline"><msqrt><mn>36</mn></msqrt></math>
-  </div>
+  <div class="title">② KaTeX 수식 렌더링</div>
+  <span class="big" id="big1"></span>
+  <div class="row" id="row1"></div>
+  <div class="row" id="row2"></div>
 </div>
 
-<div class="box">
-  <div class="title">③ Noto Sans Math 폰트</div>
-  <div class="big row" style="font-family:'Noto Sans Math',sans-serif">√2</div>
-  <div class="row" style="font-family:'Noto Sans Math',sans-serif">√2 = p/q 가정, √3, √36</div>
-</div>
+<script>
+const K = katex.renderToString.bind(katex);
+const opts = { throwOnError:false, displayMode:false };
 
-<div class="box">
-  <div class="title">④ Times New Roman (수학 폰트)</div>
-  <div class="big row" style="font-family:'Times New Roman',serif">√2</div>
-  <div class="row" style="font-family:'Times New Roman',serif">√2 = p/q 가정, √3, √36</div>
-</div>
+document.getElementById('big1').innerHTML =
+  K('\\sqrt{2}', {...opts, displayMode:false});
+
+document.getElementById('row1').innerHTML =
+  K('\\sqrt{2}', opts) + ' = p/q 가정,  ' +
+  K('\\sqrt{3}', opts) + ',  ' +
+  K('\\sqrt{36}', opts);
+
+document.getElementById('row2').innerHTML =
+  '양의 제곱근: ' + K('+\\sqrt{2}', opts) + ' = 1.414...,  ' +
+  K('-\\sqrt{2}', opts);
+</script>
 
 </body>
 </html>
