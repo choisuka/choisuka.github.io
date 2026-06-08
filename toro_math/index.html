@@ -3884,7 +3884,12 @@ y = 2x + 1 과 y = 2x + 5 는 기울기가 같다.<br>
 a &lt; 0이면 √a 는 실수가 아니다.` },
   { tag:'🇫🇮 기본 4/9 — 곱셈 법칙', tagColor:'#86efac', bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.25)',
     body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">√3 × √3 = ?<br>√2 × √8 = ?<br>√(4×9) = ?　와　√4 × √9 = ?<br><span style="font-size:.76rem;color:#86efac;font-weight:400">(세 번째와 네 번째는 같은가요?)</span></div>`,
-    ans:`<b style="color:#86efac">풀이:</b><br>√3 × √3 = (√3)² = <b style="color:#fde68a">3</b><br>√2 × √8 = √(2×8) = √16 = <b style="color:#fde68a">4</b><br>√(4×9) = √36 = 6<br>√4 × √9 = 2 × 3 = 6 → <b style="color:#2dd4bf">같다!</b><br><br>법칙: √a × √b = √(ab) (a≥0, b≥0)` },
+    ans:`<b style="color:#86efac">풀이:</b><br>
+√3 × √3 = (√3)² = <b style="color:#fde68a">3</b><br>
+√2 × √8 = √(2×8) = √16 = <b style="color:#fde68a">4</b><br>
+√(4×9) = √36 = 6<br>
+√4 × √9 = 2 × 3 = 6 → <b style="color:#2dd4bf">같다!</b><br><br>
+<b style="color:#86efac">법칙:</b> √a × √b = √(ab) &nbsp;(a≥0, b≥0)` },
   { tag:'🇸🇬 기본 5/9 — 근호 변환', tagColor:'#7dd3fc', bg:'rgba(125,211,252,.07)', bd:'rgba(125,211,252,.25)',
     body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">√8 = a√b (a, b는 자연수, b는 가장 작게)로 나타내라.<br><span style="font-size:.76rem;color:#7dd3fc;font-weight:400">(√8을 작은 제곱수로 쪼개보세요.)</span></div>`,
     ans:`<b style="color:#7dd3fc">풀이:</b><br>
@@ -10706,8 +10711,12 @@ function fixRadicals(html) {
     .replace(/√\((\d+)\s*([+\-])\s*(\d+)\)/g, (_, a, op, b) => K('\\sqrt{' + a + op + b + '}'))
     // √(정수) — 괄호 있는 단순 근호
     .replace(/√\((\d+)\)/g, (_, n) => K('\\sqrt{' + n + '}'))
+    // √(변수들) — 괄호 안에 영문자
+    .replace(/√\(([a-zA-Z]+)\)/g, (_, v) => K('\\sqrt{' + v + '}'))
     // √정수
-    .replace(/√(\d+)/g, (_, n) => K('\\sqrt{' + n + '}'));
+    .replace(/√(\d+)/g, (_, n) => K('\\sqrt{' + n + '}'))
+    // √변수 — 단일 영문자
+    .replace(/√([a-zA-Z])\b/g, (_, v) => K('\\sqrt{' + v + '}'));
 }
 
 function startCards(set, from) {
