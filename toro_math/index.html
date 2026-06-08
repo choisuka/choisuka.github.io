@@ -3872,20 +3872,37 @@ y = 2x + 1 과 y = 2x + 5 는 기울기가 같다.<br>
     body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">다음 수를 유리수와 무리수로 분류하라.<br>√4,　√5,　0.333...,　π,　-√9,　√(1/4)</div>`,
     ans:`<b style="color:#7dd3fc">분류:</b><br><b style="color:#86efac">유리수:</b> √4=2, 0.333...=1/3, -√9=-3, √(1/4)=1/2<br><b style="color:#2dd4bf">무리수:</b> √5, π<br><br>포인트: √4, -√9, √(1/4) 처럼 결과가 정수·분수면 유리수!` },
   { tag:'✡️ 기본 3/9 — 개념 토론', tagColor:'#fde68a', bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.25)',
-    body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">-√9 과 √(-9) 은 같은가, 다른가?<br>각각 계산이 가능한가? 이유를 설명하라.</div>`,
-    ans:`<b style="color:#fde68a">답: 전혀 다르다!</b><br><br>-√9 = -(√9) = -3 → <b style="color:#86efac">계산 가능</b> (실수)<br>√(-9) = ? → 음수의 제곱근 → <b style="color:#f87171">실수 범위에서 불가</b><br><br>핵심: √ 기호 안에 음수를 넣으면 실수에서 답이 없다.<br>(나중에 복소수에서 √(-1) = i 로 정의됩니다)` },
+    body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">−√9 과 √(−9) 은 같은가, 다른가?<br>각각 계산이 가능한가? 이유를 설명하라.</div>`,
+    ans:`<b style="color:#fde68a">답: 전혀 다르다!</b><br><br>
+<b style="color:#86efac">−√9</b> = −(√9) = −3 &nbsp;→ <b style="color:#86efac">계산 가능</b> (음의 제곱근)<br>
+<b style="color:#f87171">√(−9)</b> = ? &nbsp;→ 음수의 제곱근 → <b style="color:#f87171">실수 범위에서 정의되지 않음</b><br><br>
+핵심: <b>√ 기호 안(근호 안)에 음수를 넣으면 실수에서 답이 없다.</b><br>
+a &lt; 0이면 √a 는 실수가 아니다.` },
   { tag:'🇫🇮 기본 4/9 — 곱셈 법칙', tagColor:'#86efac', bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.25)',
     body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">√3 × √3 = ?<br>√2 × √8 = ?<br>√(4×9) = ?　와　√4 × √9 = ?<br><span style="font-size:.76rem;color:#86efac;font-weight:400">(세 번째와 네 번째는 같은가요?)</span></div>`,
     ans:`<b style="color:#86efac">풀이:</b><br>√3 × √3 = (√3)² = <b style="color:#fde68a">3</b><br>√2 × √8 = √(2×8) = √16 = <b style="color:#fde68a">4</b><br>√(4×9) = √36 = 6<br>√4 × √9 = 2 × 3 = 6 → <b style="color:#2dd4bf">같다!</b><br><br>법칙: √a × √b = √(ab) (a≥0, b≥0)` },
   { tag:'🇸🇬 기본 5/9 — 근호 변환', tagColor:'#7dd3fc', bg:'rgba(125,211,252,.07)', bd:'rgba(125,211,252,.25)',
     body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">√8 = a√b (a, b는 자연수, b는 가장 작게)로 나타내라.<br><span style="font-size:.76rem;color:#7dd3fc;font-weight:400">(√8을 작은 제곱수로 쪼개보세요.)</span></div>`,
-    ans:`<b style="color:#7dd3fc">풀이:</b><br>8 = 4 × 2<br>√8 = √(4×2) = √4 × √2 = 2 × √2<br><br>∴ <b style="color:#fde68a">√8 = 2√2</b><br><br>같은 방법: √12 = 2√3, √18 = 3√2, √50 = 5√2` },
+    ans:`<b style="color:#7dd3fc">풀이:</b><br>
+8 = 4 × 2 이므로<br>
+√8 = √4 × √2 = 2 × √2<br><br>
+∴ <b style="color:#fde68a">√8 = 2√2</b><br><br>
+같은 방법:<br>
+√12 = √4 × √3 = 2√3<br>
+√18 = √9 × √2 = 3√2<br>
+√50 = √25 × √2 = 5√2` },
   { tag:'✡️ 기본 6/9 — 함정 토론', tagColor:'#fde68a', bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.25)',
     body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">√2 + √8 = √10 인가?<br>맞으면 이유를, 틀리면 올바른 답을 구하라.</div>`,
     ans:`<b style="color:#fde68a">틀렸다!</b><br><br>√2 + √8 ≠ √10<br><br>√8 = 2√2 이므로<br>√2 + √8 = √2 + 2√2 = <b style="color:#fde68a">3√2</b><br><br>핵심: 근호 안을 더하면 안 된다. 근호 밖 계수를 맞춰서 더해야 한다.<br>(마치 2x + 3x = 5x 처럼!)` },
   { tag:'🇫🇮 기본 7/9 — 현실 적용', tagColor:'#86efac', bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.25)',
     body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">직각을 낀 두 변이 각각 3cm, 4cm인 직각삼각형의 빗변은?<br>넓이가 20cm²인 정사각형의 한 변은?</div>`,
-    ans:`<b style="color:#86efac">풀이 1:</b> 빗변 = √(3²+4²) = √(9+16) = √25 = <b style="color:#fde68a">5cm</b><br><br><b style="color:#86efac">풀이 2:</b> 한 변 = √20 = √(4×5) = 2√5 cm<br>≈ 2 × 2.236 ≈ <b style="color:#fde68a">4.47cm</b>` },
+    ans:`<b style="color:#86efac">풀이 1:</b><br>
+빗변² = 3² + 4² = 9 + 16 = 25<br>
+빗변 = √25 = <b style="color:#fde68a">5cm</b><br><br>
+<b style="color:#86efac">풀이 2:</b><br>
+한 변² = 20 &nbsp;→ 한 변 = √20<br>
+√20 = √4 × √5 = 2√5<br>
+≈ 2 × 2.236 ≈ <b style="color:#fde68a">4.47cm</b>` },
   { tag:'🇸🇬 기본 8/9 — 대소 비교', tagColor:'#7dd3fc', bg:'rgba(125,211,252,.07)', bd:'rgba(125,211,252,.25)',
     body:`<div style="font-size:.88rem;color:#e2e8f0;line-height:1.8;font-weight:600">다음 수를 수직선 위에 순서대로 배열하라.<br>0, 1, √2, √3, 2, √5, √6<br><span style="font-size:.76rem;color:#7dd3fc;font-weight:400">(제곱해서 비교하면 쉬워요.)</span></div>`,
     ans:`<b style="color:#7dd3fc">제곱 비교:</b><br>0 &lt; 1 &lt; √2 &lt; √3 &lt; 2 &lt; √5 &lt; √6<br>(각각 0, 1, 2, 3, 4, 5, 6 의 제곱근)<br><br>수직선: <b style="color:#fde68a">0 — 1 — √2 — √3 — 2 — √5 — √6</b><br><br>유리수(0,1,2) 사이에 무리수(√2,√3,√5,√6)가 촘촘히 존재!` },
