@@ -10739,7 +10739,8 @@ C=69−44=25, A=69−56=13, B=69−38=31<br>
 </div>
 </div><br>
 <b style="color:#f87171">함정 핵심:</b> √(a²) = |a|<br>
-즉 √((-4)²) = 4 이지 −4가 아니다.
+&nbsp;(-4)² = 16 → √16 = <b style="color:#fde68a">4</b> &nbsp;(−4가 아님)<br>
+<span style="font-size:.81rem;color:#aaa">√((-4)²) = 4 이지 −4가 아니다.</span>
 </div>`, ans:null },
 
   { tag:'🇫🇮 1단계 — 도입: 현상 제시 (10분)', tagColor:'#86efac',
@@ -10862,6 +10863,10 @@ function fixRadicals(html) {
     .replace(/√\((\d+)\s*([+\-])\s*(\d+)\)/g, (_, a, op, b) => K('\\sqrt{' + a + op + b + '}'))
     // √(정수) — 괄호 있는 단순 근호
     .replace(/√\((\d+)\)/g, (_, n) => K('\\sqrt{' + n + '}'))
+    // √(변수²) — 변수에 제곱 기호
+    .replace(/√\(([a-zA-Z])²\)/g, (_, v) => K('\\sqrt{' + v + '^2}'))
+    // √((-정수)²) — 음수 제곱
+    .replace(/√\(\([−-](\d+)\)²\)/g, (_, n) => K('\\sqrt{(-' + n + ')^2}'))
     // √(변수들) — 괄호 안에 영문자
     .replace(/√\(([a-zA-Z]+)\)/g, (_, v) => K('\\sqrt{' + v + '}'))
     // √정수
