@@ -1342,7 +1342,10 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
       🇫🇮 핀란드식 수업 (3차시) <span style="font-size:.72rem;opacity:.7">(10장)</span> →
     </button>
     <button onclick="startCards('sqrt-def-lesson','sqrt-hub')" style="width:100%;margin-bottom:8px;background:rgba(253,230,138,.1);border:1px solid rgba(253,230,138,.3);color:#fde68a;border-radius:12px;padding:13px;font-family:'Jua',sans-serif;font-size:.88rem;cursor:pointer;text-align:left">
-      ✡️ 제곱근의 정의 수업 <span style="font-size:.72rem;opacity:.7">(핀란드×하브루타)</span> →
+      📐 제곱근 정의 수업 — SFH 6단계 <span style="font-size:.72rem;opacity:.7">(PDF판)</span> →
+    </button>
+    <button onclick="startCards('sqrt-fh-lesson','sqrt-hub')" style="width:100%;margin-bottom:8px;background:rgba(253,230,138,.08);border:1px solid rgba(253,230,138,.25);color:#fde68a;border-radius:12px;padding:13px;font-family:'Jua',sans-serif;font-size:.88rem;cursor:pointer;text-align:left">
+      🇫🇮✡️ 제곱근 정의 수업 — 핀란드×하브루타 5단계 <span style="font-size:.72rem;opacity:.7">(원본판)</span> →
     </button>
     <button onclick="startCards('sqrt-basic','sqrt-hub')" style="width:100%;margin-bottom:8px;background:rgba(134,239,172,.08);border:1px solid rgba(134,239,172,.25);color:#86efac;border-radius:12px;padding:13px;font-family:'Jua',sans-serif;font-size:.88rem;cursor:pointer;text-align:left">
       📝 기본 문제 <span style="font-size:.72rem;opacity:.7">(9문항)</span> →
@@ -10765,8 +10768,21 @@ C=69−44=25, A=69−56=13, B=69−38=31<br>
     <div style="font-size:1.1rem;color:#f87171;font-weight:700;margin-top:2px">→ ?</div>
   </div>
 </div>
-<br><b style="color:#7dd3fc">대각선:</b> 피타고라스로 1²+1²=2 <b>까지만</b> 가고 멈춘다.<br>
-대각선 자체 길이 = <b style="color:#f87171">?</b> (이것이 무리수 √2)<br><br>
+<br><b style="color:#7dd3fc">대각선:</b> 피타고라스로 1²+1²=2 까지만 가고 멈춘다.<br><br>
+<div style="display:flex;align-items:center;gap:16px;padding:8px 0">
+  <div style="position:relative;width:70px;height:70px;flex-shrink:0">
+    <div style="position:absolute;inset:0;border:2px solid #7dd3fc;background:rgba(125,211,252,.08);border-radius:2px"></div>
+    <div style="position:absolute;top:50%;left:-14px;transform:translateY(-50%);color:#86efac;font-size:.85rem">1</div>
+    <div style="position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);color:#86efac;font-size:.85rem">1</div>
+    <div style="position:absolute;top:0;left:0;width:99px;height:2px;background:#fde68a;transform:rotate(45deg);transform-origin:0 0"></div>
+    <div style="position:absolute;top:28%;right:-22px;color:#f87171;font-size:1.2rem;font-weight:700">?</div>
+  </div>
+  <div style="font-size:.82rem;line-height:2;color:#e2e8f0">
+    대각선² = 1² + 1² = 2<br>
+    대각선 = <b style="color:#f87171;font-size:1rem">?</b> (아는 수로 못 씀)
+  </div>
+</div>
+<br>
 <div style="background:rgba(253,230,138,.07);border:1px solid rgba(253,230,138,.2);border-radius:8px;padding:.6rem 1rem;font-size:.79rem;color:#fde68a">
 ⚠️ 대각선 그림은 피타고라스 정리를 배운 뒤라야 성립.<br>
 미선행이면 넓이 모델(넓이 2)만 쓰고 대각선은 무리수 차시로 미룰 것.
@@ -10847,6 +10863,116 @@ a &lt; 0 → 제곱근 없다 (실수 범위)
 7. √((-4)²) = √16 = 4 &nbsp;<span style="color:#f87171">(−4 아님!)</span><br>
 8. x = ±√7<br><br>
 10. a=0이면 0 하나, a&lt;0이면 없음 → 항상 두 개가 아님.` }
+],
+
+/* ── 제곱근 정의 — 핀란드×하브루타 5단계 (원본판) ── */
+'sqrt-fh-lesson': [
+
+  { tag:'✡️ 핵심 — 두 표현 구분', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#fde68a;font-size:.95rem">학생이 100% 헷갈리는 두 표현</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;overflow:hidden;font-size:.82rem">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:rgba(255,255,255,.05)">
+  <div style="padding:7px 8px;color:#94a3b8;font-weight:700">표현</div>
+  <div style="padding:7px 8px;color:#94a3b8;font-weight:700">뜻</div>
+  <div style="padding:7px 8px;color:#94a3b8;font-weight:700">a=9 예시</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #1e293b">
+  <div style="padding:7px 8px;color:#7dd3fc">a의 제곱근</div>
+  <div style="padding:7px 8px;color:#e2e8f0;font-size:.78rem">x²=a인 모든 x</div>
+  <div style="padding:7px 8px;color:#fde68a">+3, −3 (두 개)</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #1e293b">
+  <div style="padding:7px 8px;color:#7dd3fc">제곱근 a</div>
+  <div style="padding:7px 8px;color:#e2e8f0;font-size:.78rem">그중 양수만 (= √a)</div>
+  <div style="padding:7px 8px;color:#fde68a">3 (한 개)</div>
+</div>
+</div><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.7rem 1rem;font-size:.83rem;line-height:2.2">
+a > 0 → 제곱근 두 개: +√a, −√a<br>
+a = 0 → 제곱근 하나: 0<br>
+a &lt; 0 → 제곱근 없다 (실수 범위)
+</div><br>
+<b style="color:#f87171">함정 핵심:</b> √(a²) = |a|<br>
+즉 √((-4)²) = 4 이지 −4가 아니다.
+</div>`, ans:null },
+
+  { tag:'🇫🇮 1단계 — 핀란드식 도입 (10분)', tagColor:'#86efac',
+    bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#86efac">정의를 먼저 주지 않는다. 상황만 던진다.</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.4rem 0;font-size:.84rem;line-height:1.9;font-style:italic;color:#c4b5fd">
+"넓이가 36m²인 정사각형 화단을 만들려고 한다. 한 변의 길이는?"
+</div>
+학생들은 6×6=36을 떠올린다. 교사가 한 번 더 민다:<br><br>
+<div style="background:rgba(253,230,138,.07);border:1px solid rgba(253,230,138,.25);border-radius:8px;padding:.7rem 1rem;margin:.4rem 0;font-size:.83rem">
+<b style="color:#fde68a">"그럼 넓이가 36인데 한 변이 −6일 수도 있을까? 길이는 안 되지만, 수학적으로 x²=36의 답은 몇 개일까?"</b>
+</div>
+이 순간 학생이 스스로 "+6도, −6도 되네"를 발견하게 둔다.<br>
+정의는 그다음에 학생 입에서 나온 말을 교사가 정리해주는 형태로.<br><br>
+<span style="font-size:.81rem;color:#aaa">(핀란드식: 답을 빨리 주지 않고 헤매는 시간을 허용)</span>
+</div>`, ans:null },
+
+  { tag:'✡️ 2단계 — 하브루타 짝 질문 (15분)', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#fde68a">2인 1조. 질문자 ↔ 설명자. 중간에 역할 교체.</b><br><br>
+<b style="color:#c4b5fd">도발 질문 카드 (정답 일부러 안 줌, 짝끼리 결론 내게)</b><br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.8rem 1rem;margin:.4rem 0;font-size:.83rem;line-height:2.3">
+① "'9의 제곱근'과 '제곱근 9'는 같은 말이야, 다른 말이야? 왜?"<br>
+② "−16의 제곱근은 −4다 — 이거 맞아? 친구를 설득하거나 반박해봐."<br>
+③ "√((-5)²)는 −5야 5야? 근거를 대봐."
+</div>
+<b style="color:#86efac">하브루타 핵심 규칙 3가지</b><br>
+① 친구 말 끝까지 듣기<br>
+② "왜?"로 되묻기<br>
+③ 동의하지 말고 한 번은 반드시 반박해보기
+</div>`,
+    extra:`<b style="color:#fde68a">도발 질문 정답</b><br><br>
+① 다르다. "9의 제곱근" = ±3 (두 개), "제곱근 9 = √9" = 3 (양수 하나)<br><br>
+② 틀렸다. −16은 음수 → 실수 범위에서 제곱근 없음<br><br>
+③ 5. √((-5)²) = √25 = 5. (√(a²) = |a|)` },
+
+  { tag:'🇫🇮 3단계 — 발표·정리 (10분)', tagColor:'#86efac',
+    bg:'rgba(134,239,172,.07)', bd:'rgba(134,239,172,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#86efac">짝마다 "우리가 합의한 정의 한 문장"을 발표.</b><br><br>
+충돌하는 답이 나오면 교사가 정리하지 말고<br>
+→ <b style="color:#fde68a">다른 조에게 판정을 넘긴다.</b><br><br>
+마지막에 위 표(두 표현 구분)로 봉합.<br><br>
+<div style="background:rgba(0,0,0,.25);border-radius:8px;padding:.7rem 1rem;font-size:.83rem;line-height:2.2">
+a > 0 → 제곱근 두 개: +√a, −√a<br>
+a = 0 → 제곱근 하나: 0<br>
+a &lt; 0 → 제곱근 없다 (실수 범위)
+</div>
+</div>`, ans:null },
+
+  { tag:'✡️ 4단계 — 개별 확인 문제 (10분)', tagColor:'#fde68a',
+    bg:'rgba(253,230,138,.07)', bd:'rgba(253,230,138,.3)',
+    body:`<div style="font-size:.85rem;color:#e2e8f0;line-height:1.85">
+<b style="color:#86efac">기초</b><br>
+1. 49의 제곱근을 구하시오.<br>
+2. 제곱근 49를 구하시오.<br>
+3. 0.04의 제곱근을 구하시오.<br>
+4. 16의 양의 제곱근과 음의 제곱근을 각각 쓰시오.<br><br>
+<b style="color:#f87171">개념 구분 (함정)</b><br>
+5. 제곱근이 없는 것은? ① 25 ② 0 ③ −9<br>
+6. (−5)²의 제곱근을 구하시오.<br>
+7. √(3²) = ?<br>
+8. √((-4)²) = ?<br>
+9. x²=7일 때 x의 값을 구하시오.<br><br>
+<b style="color:#c4b5fd">서술 (하브루타용)</b><br>
+10. "a의 제곱근은 항상 두 개다"라는 주장이 틀린 이유를 예를 들어 설명하시오.
+</div>`,
+    extra:`<b style="color:#fde68a">정답</b><br><br>
+1. ±7 &nbsp; 2. 7 &nbsp; 3. ±0.2 &nbsp; 4. 양 4, 음 −4<br><br>
+5. ③ (−9는 음수, 실수 제곱근 없음)<br>
+6. (−5)²=25의 제곱근 → ±5<br>
+7. √(3²) = √9 = 3<br>
+8. √((-4)²) = √16 = 4 &nbsp;(−4 아님!)<br>
+9. x = ±√7<br><br>
+10. a=0이면 0 하나뿐, a&lt;0이면 없음 → 항상 두 개가 아님.` }
 ],
 
 }; // end CARD_DATA
