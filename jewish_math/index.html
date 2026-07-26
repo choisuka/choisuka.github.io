@@ -91,16 +91,8 @@ body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',sans-serif;min-heig
 .result-msg{font-size:1rem;color:#c9d1d9;margin-bottom:16px}
 .result-detail{font-size:.82rem;color:#8b949e}
 
-/* ── 카드뷰(한 장씩 넘기기) ── */
-.cv-wrap{margin:0}
-.cv-topbar{display:flex;justify-content:flex-end;margin-bottom:6px}
-.cv-num{font-size:.75rem;color:#8b949e;font-weight:700}
-.cv-progress{height:5px;background:rgba(255,255,255,.08);border-radius:3px;margin-bottom:14px;overflow:hidden}
-.cv-progress-fill{height:5px;background:linear-gradient(90deg,#f0c040,#bc8cff);transition:.3s}
-.cv-btns{display:flex;gap:8px;margin-top:16px}
-.cv-btn{flex:1;background:rgba(255,255,255,.06);border:1px solid #30363d;color:#c9d1d9;border-radius:10px;padding:11px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit}
-.cv-btn:disabled{opacity:.35;cursor:default}
-.cv-btn-next{background:linear-gradient(135deg,#8a5a00,#f0c040);color:#1a1000;border:none}
+/* ── 카드뷰(전체 스크롤) ── */
+.cv-wrap{margin:0;display:flex;flex-direction:column;gap:14px}
 .havruta-opts{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .havruta-opt{text-align:left;background:#161b22;border:2px solid #30363d;color:#c9d1d9;border-radius:10px;padding:10px 14px;font-size:.83rem;cursor:pointer;font-family:inherit;box-shadow:0 3px 0 rgba(0,0,0,.3);transition:transform .08s,box-shadow .08s}
 .havruta-opt::before{content:"👉 "}
@@ -316,13 +308,7 @@ body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',sans-serif;min-heig
     </div>
     <div class="unit-body">
       <div class="cv-wrap" id="cv-e3div">
-        <div class="cv-topbar"><span class="cv-num" id="cv-e3div-num">1 / 5</span></div>
-        <div class="cv-progress"><div class="cv-progress-fill" id="cv-e3div-fill" style="width:20%"></div></div>
         <div id="cv-e3div-body"></div>
-        <div class="cv-btns">
-          <button class="cv-btn" id="cv-e3div-prev" onclick="cvNav('e3div',-1)">← 이전</button>
-          <button class="cv-btn cv-btn-next" id="cv-e3div-next" onclick="cvNav('e3div',1)">다음 →</button>
-        </div>
       </div>
     </div>
   </div>
@@ -450,33 +436,8 @@ body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',sans-serif;min-heig
       <span class="unit-arrow">▼</span>
     </div>
     <div class="unit-body">
-      <div class="section why"><div class="section-title">🌟 왜 배우는가?</div>
-        <p>12명을 팀으로 나눌 때 몇 명씩 나눌 수 있을까? 두 버스가 각각 4분, 6분마다 오면 언제 동시에 올까? 약수와 배수는 "조직"과 "시간"을 계획하는 수학이다.</p>
-      </div>
-      <div class="section concept"><div class="section-title">📖 개념 설명</div>
-        <ul>
-          <li>약수: 어떤 수를 나누어 떨어지게 하는 수 → 12의 약수: 1,2,3,4,6,12</li>
-          <li>배수: 어떤 수의 정수배 → 4의 배수: 4,8,12,16…</li>
-          <li>최대공약수(GCD): 두 수의 공통 약수 중 가장 큰 것</li>
-          <li>최소공배수(LCM): 두 수의 공통 배수 중 가장 작은 것</li>
-          <li>소인수분해로 GCD/LCM 구하기: 공통 소인수 활용</li>
-        </ul>
-      </div>
-      <div class="section havruta"><div class="section-title">💬 하브루타 질문</div>
-        <div class="q-item"><strong>Q1.</strong> 소수(Prime)의 약수는 항상 2개입니다. 왜 그럴까요? 1은 소수인가요?</div>
-        <div class="q-item"><strong>Q2.</strong> 최대공약수와 최소공배수의 관계: GCD(a,b) × LCM(a,b) = a×b. 왜 이런 관계가 성립할까요?</div>
-        <div class="q-item"><strong>Q3.</strong> GCD는 "최대 공평 분배", LCM은 "최초 동시 만남"이라고 할 수 있습니다. 이 표현이 맞나요?</div>
-      </div>
-      <div class="section problems"><div class="section-title">✏️ 예제 문제 & 다양한 풀이</div>
-        <div class="prob-box">
-          <div class="prob-q">문제: 사과 24개와 귤 36개를 최대한 많은 사람에게 똑같이 나누려 합니다. 몇 명에게 나눌 수 있나요?</div>
-          <div class="sol"><strong>풀이①(공약수 나열):</strong> 24의 약수: 1,2,3,4,6,8,12,24 / 36의 약수: 1,2,3,4,6,9,12,18,36 → 공약수: 1,2,3,4,6,12 → 최대=12명</div>
-          <div class="sol"><strong>풀이②(소인수분해):</strong> 24=2³×3, 36=2²×3² → GCD=2²×3=12명</div>
-          <div class="sol"><strong>풀이③(유클리드 호제법):</strong> 36=24×1+12 / 24=12×2+0 → GCD=12</div>
-        </div>
-      </div>
-      <div class="section debate"><div class="section-title">🔥 심화 토론</div>
-        <div class="debate-item">소수(Prime number)는 무한히 많다는 것이 증명되어 있습니다. 유클리드의 증명을 찾아보세요. "증명"이란 무엇이고, 수학에서 증명이 왜 중요한가요?</div>
+      <div class="cv-wrap" id="cv-e5gcd">
+        <div id="cv-e5gcd-body"></div>
       </div>
     </div>
   </div>
@@ -1142,6 +1103,154 @@ const CV_DATA = {
       </div>
       <div class="story-takeaway"><strong>정리:</strong> 나눗셈은 "몫"과 "나머지"를 정확하게 계산해 주지만, 그 나머지를 어떻게 다룰지는 상황에 맞게 우리가 판단해야 해요. 버스처럼 <strong>부족하면 올리고</strong>, 사탕처럼 <strong>더는 못 나누면 그대로 남기고</strong>, 하은이 아이디어처럼 <strong>계속 쪼개서 나눌</strong> 수도 있어요. 수학은 도구이고, 그 도구를 어떻게 쓸지는 우리의 몫이에요.</div>
     `}
+  ],
+  'e5gcd': [
+    { title:'🌟 왜 배우는가?', cls:'why', html:`
+      <p>친구들과 12명이서 팀을 나눠 게임을 하고 싶은데, 몇 명씩 나눠야 딱 맞을까 고민해본 적 있나요? 4명씩 3팀? 3명씩 4팀? 이렇게 남는 사람 없이 딱 맞아떨어지게 나누는 방법을 아는 게 바로 <strong>약수</strong>예요.</p>
+      <p style="margin-top:10px">그리고 버스 A는 4분마다, 버스 B는 6분마다 온다면, 두 버스가 언제 동시에 도착할지 알 수 있을까요? 그걸 알려주는 게 바로 <strong>배수</strong>예요. 약수와 배수를 알면 "어떻게 나누면 딱 맞을까?", "언제 다시 만날까?" 같은 질문에 답할 수 있어요.</p>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:14px;margin-top:14px">
+        <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin-bottom:8px;text-align:center">12명을 팀으로 나누는 여러 방법</div>
+        <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-size:.78rem;text-align:center">
+          <div>4팀×3명<br>🧑🧑🧑&nbsp; 🧑🧑🧑&nbsp; 🧑🧑🧑&nbsp; 🧑🧑🧑</div>
+          <div>3팀×4명<br>🧑🧑🧑🧑&nbsp; 🧑🧑🧑🧑&nbsp; 🧑🧑🧑🧑</div>
+          <div>2팀×6명<br>🧑🧑🧑🧑🧑🧑&nbsp; 🧑🧑🧑🧑🧑🧑</div>
+        </div>
+        <div style="text-align:center;font-size:.7rem;color:#8b949e;margin-top:8px">12를 남김없이 나눌 수 있는 수(1,2,3,4,6,12) — 이게 바로 "약수"예요</div>
+      </div>
+    `},
+    { title:'📖 개념 설명', cls:'concept', html:`
+      <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin-bottom:6px">개념1 — 약수: 나누어떨어지게 하는 수</div>
+      <ul><li>12를 나머지 없이 나눌 수 있는 수 → 12의 약수: 1,2,3,4,6,12</li></ul>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:12px;margin:10px 0">
+        <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin-bottom:8px;text-align:center">12를 직사각형으로 딱 맞게 배열하면?</div>
+        <div style="display:flex;flex-direction:column;gap:6px;align-items:center;font-size:.82rem;font-family:monospace">
+          <div>1×12: ⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛</div>
+          <div>2×6: ⬛⬛⬛⬛⬛⬛<br>&nbsp;&nbsp;&nbsp;&nbsp;⬛⬛⬛⬛⬛⬛</div>
+          <div>3×4: ⬛⬛⬛⬛<br>&nbsp;&nbsp;&nbsp;&nbsp;⬛⬛⬛⬛<br>&nbsp;&nbsp;&nbsp;&nbsp;⬛⬛⬛⬛</div>
+        </div>
+        <div style="text-align:center;font-size:.7rem;color:#8b949e;margin-top:8px">빈틈없이 직사각형이 되는 가로·세로 수(1,2,3,4,6,12)가 12의 약수예요</div>
+      </div>
+      <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin:14px 0 6px">개념2 — 배수: 곱해서 나오는 수</div>
+      <ul><li>어떤 수를 1배, 2배, 3배… 한 수 → 4의 배수: 4,8,12,16…</li></ul>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:12px;margin:10px 0">
+        <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin-bottom:8px;text-align:center">4의 배수 — 4개씩 늘어나요</div>
+        <div style="text-align:center;font-size:1.05rem;line-height:2.1">
+          <span class="bundle">🍬🍬🍬🍬</span> → 4×1=4<br>
+          <span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span> → 4×2=8<br>
+          <span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span> → 4×3=12
+        </div>
+        <div style="text-align:center;font-size:.7rem;color:#8b949e;margin-top:8px">4를 계속 더한(또는 곱한) 수들이 4의 배수예요</div>
+      </div>
+      <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin:14px 0 6px">개념3 — 최대공약수: 공통 약수 중 가장 큰 수</div>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:12px;margin:10px 0">
+        <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin-bottom:8px;text-align:center">24와 36의 공통 약수 찾기</div>
+        <div style="display:flex;justify-content:center;gap:8px;font-size:.72rem;text-align:center">
+          <div style="flex:1">24의 약수<br>1,2,3,4,6,8,12,24</div>
+          <div style="flex:1;background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.3);border-radius:6px;padding:4px">공통 약수<br><strong style="color:#3fb950">1,2,3,4,6,12</strong></div>
+          <div style="flex:1">36의 약수<br>1,2,3,4,6,9,12,18,36</div>
+        </div>
+        <div style="text-align:center;font-size:.7rem;color:#8b949e;margin-top:8px">공통 약수 중 가장 큰 수 12가 최대공약수예요</div>
+      </div>
+      <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin:14px 0 6px">개념4 — 최소공배수: 공통 배수 중 가장 작은 수</div>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:12px;margin:10px 0">
+        <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin-bottom:8px;text-align:center">4분·6분마다 오는 버스, 언제 같이 올까?</div>
+        <div style="font-size:.78rem;text-align:center;line-height:1.9">
+          A버스(4분): 4, 8, <strong style="color:#3fb950">12</strong>, 16, 20, 24…<br>
+          B버스(6분): 6, <strong style="color:#3fb950">12</strong>, 18, 24…
+        </div>
+        <div style="text-align:center;font-size:.7rem;color:#8b949e;margin-top:8px">두 버스가 처음 같이 오는 시각 12분 — 최소공배수예요</div>
+      </div>
+    `},
+    { title:'💬 하브루타 질문', cls:'havruta', html:`
+      <div class="q-item"><strong>Q1.</strong> 소수(素數)는 약수가 항상 정확히 2개(1과 자기 자신)입니다. 그런데 1은 소수일까요?
+        <button class="havruta-show-btn" onclick="havrutaReveal('e5gcd-h1',this)">💬 친구들은 이렇게 답했어요</button>
+        <div class="havruta-reveal" id="rv-e5gcd-h1">
+          <div class="havruta-opts">
+            <button class="havruta-opt" onclick="havrutaPick('e5gcd-h1',0,this)">1은 약수가 1개(자기 자신)뿐이라 소수가 아니에요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e5gcd-h1',1,this)">1도 소수예요, 약수가 있긴 하니까요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e5gcd-h1',2,this)">소수는 약수가 적을수록, 아무튼 적으면 다 소수예요</button>
+          </div>
+          <div class="havruta-fb" id="fb-e5gcd-h1"></div>
+        </div>
+      </div>
+      <div class="q-item"><strong>Q2.</strong> 최대공약수×최소공배수는 항상 두 수를 곱한 것과 같습니다. 왜 그럴까요?
+        <button class="havruta-show-btn" onclick="havrutaReveal('e5gcd-h2',this)">💬 친구들은 이렇게 답했어요</button>
+        <div class="havruta-reveal" id="rv-e5gcd-h2">
+          <div class="havruta-opts">
+            <button class="havruta-opt" onclick="havrutaPick('e5gcd-h2',0,this)">실제 숫자로 넣어보면 항상 성립해요 — 여러 쌍으로 확인해볼 수 있어요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e5gcd-h2',1,this)">우연히 몇 번 맞은 거고, 외워야 하는 공식일 뿐이에요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e5gcd-h2',2,this)">최대공약수가 크면 최소공배수도 항상 더 커요</button>
+          </div>
+          <div class="havruta-fb" id="fb-e5gcd-h2"></div>
+        </div>
+      </div>
+      <div class="q-item"><strong>Q3.</strong> "최대공약수는 최대 공평 분배, 최소공배수는 최초 동시 만남"이라는 표현, 맞는 비유일까요?
+        <button class="havruta-show-btn" onclick="havrutaReveal('e5gcd-h3',this)">💬 친구들은 이렇게 답했어요</button>
+        <div class="havruta-reveal" id="rv-e5gcd-h3">
+          <div class="havruta-opts">
+            <button class="havruta-opt" onclick="havrutaPick('e5gcd-h3',0,this)">맞아요! 최대공약수는 남김없이 똑같이 나눌 수 있는 가장 큰 묶음, 최소공배수는 두 주기가 처음 겹치는 시점이니까요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e5gcd-h3',1,this)">최대공약수 비유만 맞고 최소공배수 비유는 틀렸어요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e5gcd-h3',2,this)">둘 다 틀린 비유예요, 공식으로만 외워야 해요</button>
+          </div>
+          <div class="havruta-fb" id="fb-e5gcd-h3"></div>
+        </div>
+      </div>
+    `},
+    { title:'✏️ 예제 문제 & 다양한 풀이', cls:'problems', html:`
+      <div class="prob-box">
+        <div class="prob-q">문제: 사과 24개와 귤 36개를 최대한 많은 사람에게 똑같이 나누려 합니다. 몇 명에게 나눌 수 있나요?</div>
+        <button class="havruta-show-btn" onclick="havrutaReveal('e5gcd-p1',this)">💡 풀이 보기</button>
+        <div class="havruta-reveal" id="rv-e5gcd-p1">
+          <div class="fb-diagram" style="text-align:left">
+            <div style="display:flex;justify-content:center;gap:8px;font-size:.72rem;text-align:center;margin-bottom:6px">
+              <div style="flex:1">24의 약수<br>1,2,3,4,6,8,12,24</div>
+              <div style="flex:1;background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.3);border-radius:6px;padding:4px">공통 약수<br><strong style="color:#3fb950">1,2,3,4,6,12</strong></div>
+              <div style="flex:1">36의 약수<br>1,2,3,4,6,9,12,18,36</div>
+            </div>
+            <span class="cap">최대공약수 12 → 12명에게 나눌 수 있어요 (사과 2개씩, 귤 3개씩)</span>
+          </div>
+          <div class="sol"><strong>풀이①(공약수 나열):</strong> 24의 약수: 1,2,3,4,6,8,12,24 / 36의 약수: 1,2,3,4,6,9,12,18,36 → 공약수: 1,2,3,4,6,12 → 최대=12명</div>
+          <div class="sol"><strong>풀이②(소인수분해):</strong> 24=2³×3, 36=2²×3² → 최대공약수=2²×3=12명</div>
+          <div class="sol"><strong>풀이③(유클리드 호제법):</strong> 36=24×1+12 / 24=12×2+0 → 최대공약수=12</div>
+        </div>
+      </div>
+    `},
+    { title:'🔥 심화 토론', cls:'debate', html:`
+      <div class="story-line">
+        <div class="story-avatar">🧒</div>
+        <div class="story-bubble"><span class="story-name">민준</span>선생님, 소수가 무한히 많다는 걸 어떻게 알아요? 끝까지 다 세어본 것도 아니잖아요.</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">👧</div>
+        <div class="story-bubble"><span class="story-name">서연</span>맞아요, 아무리 큰 수까지 가도 그 뒤에 또 소수가 있다는 걸 어떻게 확신해요?</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">🧒</div>
+        <div class="story-bubble"><span class="story-name">지호</span>선생님, 그런데 "증명"이 뭐예요? 그냥 선생님 말을 믿어야 하는 거예요?</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">👧</div>
+        <div class="story-bubble"><span class="story-name">하은</span>혹시... 어떤 수를 새로 만들어서, 그 수가 꼭 새로운 소수를 갖고 있다는 걸 보여주는 거 아니에요?</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">🧑‍🏫</div>
+        <div class="story-bubble teacher"><span class="story-name">선생님</span>하은이가 핵심에 아주 가까이 갔어요! "증명"은 예를 몇 개 확인하고 믿는 게 아니라, 절대 반박할 수 없는 논리로 보여주는 거예요. 소수가 유한하다고 한번 가정해보고, 그게 왜 틀렸는지 볼까요?</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">🧑‍🏫</div>
+        <div class="story-bubble teacher"><span class="story-name">선생님</span>예를 들어 소수가 딱 2, 3, 5 세 개뿐이라고 가정해봐요. 이 셋을 모두 곱하고 1을 더한 수를 만들면? 2×3×5+1=31이에요.</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">🧑‍🏫</div>
+        <div class="story-bubble teacher"><span class="story-name">선생님</span>31을 2로 나누면 나머지 1, 3으로 나눠도 나머지 1, 5로 나눠도 나머지 1이 남아요. 곱한 수에 1을 더했으니 당연하죠. 그런데 31은 소수예요! 처음에 "소수는 2,3,5뿐"이라고 했는데 새로운 소수 31이 나와버린 거죠 — 가정이 틀렸다는 증거예요.</div>
+      </div>
+      <div class="fb-diagram">2×3×5+1 = 31<span class="cap">31은 2, 3, 5 중 어느 것으로 나눠도 나머지가 1 → 31은 새로운 소수!</span></div>
+      <div class="story-line">
+        <div class="story-avatar">🧑‍🏫</div>
+        <div class="story-bubble teacher"><span class="story-name">선생님</span>이 방법은 소수가 몇 개든 똑같이 통해요. 아무리 많은 소수를 다 모아서 곱하고 1을 더해도, 그 수는 항상 기존 소수들로는 나누어떨어지지 않아서 새로운 소수를 품고 있어요. 그래서 소수는 "유한하다"고 가정하면 항상 모순이 생기고, 결국 소수는 무한히 많다는 게 증명돼요. 이게 2000년도 더 전에 유클리드가 보여준 방법이에요.</div>
+      </div>
+      <div class="story-takeaway"><strong>정리:</strong> 증명이란 몇 개의 예로 확인하는 게 아니라, "만약 틀렸다면 모순이 생긴다"는 걸 논리로 보여주는 것이에요. 유클리드는 "소수가 유한하다"고 가정했을 때 항상 새로운 소수가 튀어나온다는 걸 보여줘서, 소수가 무한히 많다는 걸 확실하게 증명했어요.</div>
+    `}
   ]
 };
 const FB_DIAGRAM_H1A = '<div class="fb-diagram"><div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">'
@@ -1170,6 +1279,15 @@ const FB_DIAGRAM_H3_ZERO = '<div class="fb-diagram">(사탕 없음) <span class=
   + '<span class="cap" style="margin-top:6px;color:#f0c040">"몫이 0"이 되는 건 <strong style="color:#f0c040">나눠지는 수(맨 앞의 수)가 0</strong>일 때예요. 지금 질문은 반대로 <strong style="color:#f0c040">나누는 수가 0</strong>인 경우라 달라요!</span></div>';
 const FB_DIAGRAM_H3_INF = '<div class="fb-diagram">🍬🍬🍬🍬🍬 (5개)<div style="margin:6px 0">5−0=5 <span class="arrow">➜</span> 5−0=5 <span class="arrow">➜</span> 5−0=5 <span class="arrow">➜</span> … <span style="color:#f85149">(영원히 안 끝남)</span></div>'
   + '<span class="cap">나눗셈은 "같은 수를 몇 번 빼야 0이 되는지" 세는 거예요. 그런데 0을 아무리 빼도 5는 그대로라서, 컴퓨터도 세다가 끝을 못 찾고 "오류(Error)"를 내는 거예요 — "무한대"가 아니라 "셀 수 없음"이 맞아요</span></div>';
+const FB_DIAGRAM_GCD1_OK = '<div class="fb-diagram">7의 약수: 1, 7 (2개) <span class="arrow">|</span> 1의 약수: 1 (1개뿐)<span class="cap">소수는 약수가 정확히 2개(1과 자기 자신)인 수예요. 1은 약수가 1개뿐이라 소수가 아니에요</span></div>';
+const FB_DIAGRAM_GCD1_W1 = '<div class="fb-diagram">1의 약수: 1 (딱 1개)<span class="cap">소수가 되려면 약수가 "정확히 2개"여야 해요. 1은 약수가 1개뿐이라 조건에 맞지 않아요</span></div>';
+const FB_DIAGRAM_GCD1_W2 = '<div class="fb-diagram">12의 약수: 1,2,3,4,6,12 (6개, 소수 아님) <span class="arrow">|</span> 7의 약수: 1,7 (2개, 소수)<span class="cap">소수는 약수가 "많고 적음"이 아니라 "정확히 2개인가"로 정해져요</span></div>';
+const FB_DIAGRAM_GCD2_OK = '<div class="fb-diagram">12와 18의 최대공약수=6, 최소공배수=36<br>6×36=216 = 12×18=216<span class="cap">최대공약수×최소공배수 = 두 수를 곱한 것과 항상 같아요</span></div>';
+const FB_DIAGRAM_GCD2_W1 = '<div class="fb-diagram">8과 12의 최대공약수=4, 최소공배수=24<br>4×24=96 = 8×12=96<span class="cap">다른 숫자 쌍으로 확인해도 똑같이 성립해요. 하지만 이것도 "몇 개 확인"일 뿐, 모든 경우를 증명한 건 아니에요</span></div>';
+const FB_DIAGRAM_GCD2_W2 = '<div class="fb-diagram">6과 6: 최대공약수=6, 최소공배수=6 (최대공약수 큼 → 최소공배수 작음)<br>2와 3: 최대공약수=1, 최소공배수=6 (최대공약수 작음 → 최소공배수는 위와 같음)<span class="cap">최대공약수가 크다고 최소공배수도 항상 큰 건 아니에요 — 두 수가 무엇인지에 따라 달라요</span></div>';
+const FB_DIAGRAM_GCD3_OK = '<div class="fb-diagram">24와 36의 최대공약수=12 → 12명에게 "공평 분배" 가능<br>4와 6의 최소공배수=12 → 두 버스가 12분에 "동시 만남"<span class="cap">최대공약수는 남김없이 나누는 가장 큰 묶음, 최소공배수는 두 주기가 처음 겹치는 시점 — 둘 다 딱 맞는 비유예요</span></div>';
+const FB_DIAGRAM_GCD3_W1 = '<div class="fb-diagram">A버스(4분): 4,8,<strong style="color:#3fb950">12</strong>,16… <span class="arrow">|</span> B버스(6분): 6,<strong style="color:#3fb950">12</strong>,18…<span class="cap">두 버스가 처음 함께 오는 시각 12분이 최소공배수 — "최초 동시 만남"도 딱 맞는 비유예요</span></div>';
+const FB_DIAGRAM_GCD3_W2 = '<div class="fb-diagram">24와 36의 최대공약수=12 → "공평 분배"　|　4와 6의 최소공배수=12 → "동시 만남"<span class="cap">두 비유 모두 실제 뜻을 잘 담고 있어요 — 공식만 외우는 것보다 이렇게 이해하면 오래 기억돼요</span></div>';
 const HAVRUTA_FB = {
   'e3div-h1': [
     {ok:true, text:'맞아요! "몇 명에게 나눠줄까?"처럼 사람 수를 아는 상황에서는 나눠주기가 자연스러워요.', diagram:FB_DIAGRAM_H1A},
@@ -1186,29 +1304,28 @@ const HAVRUTA_FB = {
     {ok:true, text:'맞아요! 나눗셈은 "몇 명에게 나누는가"인데, 0명에게 나눈다는 건 애초에 뜻이 성립하지 않아요. 그래서 수학에서는 "0으로 나누는 것은 정의되지 않는다"고 말해요.', diagram:FB_DIAGRAM_H3},
     {ok:false, text:'"무한대"라는 생각도 흥미로운데, 사실 수학에서는 0으로 나누는 걸 아예 "정의하지 않음(undefined)"이라고 해요 — 무한대라는 답조차 정할 수 없다는 뜻이에요. 왜 그런지 뺄셈으로 확인해볼까요?', diagram:FB_DIAGRAM_H3_INF},
     {ok:false, text:'0이 나오는 경우도 실제로 있어요! 다만 그건 "0을 어떤 수로 나눈" 경우(예: 0÷5=0)와 헷갈린 거예요. 지금 질문은 반대로 "어떤 수를 0으로" 나누는 경우라 달라요 — 두 상황을 비교해볼까요?', diagram:FB_DIAGRAM_H3_ZERO}
+  ],
+  'e5gcd-h1': [
+    {ok:true, text:'맞아요! 소수는 약수가 정확히 2개(1과 자기 자신)여야 해요. 1은 약수가 자기 자신 하나뿐이라 이 조건에 맞지 않아서 소수가 아니에요.', diagram:FB_DIAGRAM_GCD1_OK},
+    {ok:false, text:'1도 약수를 가지긴 하지만, 소수의 조건은 "약수가 정확히 2개"예요. 1은 약수가 1개뿐이라 조건을 만족하지 못해요.', diagram:FB_DIAGRAM_GCD1_W1},
+    {ok:false, text:'소수는 약수 개수가 적고 많음이 아니라 "정확히 2개인가"로 정해져요. 약수가 3개, 4개인 수는 아무리 적어도 소수가 아니에요.', diagram:FB_DIAGRAM_GCD1_W2}
+  ],
+  'e5gcd-h2': [
+    {ok:true, text:'좋은 출발이에요! 그런데 숫자 몇 개를 넣어서 맞았다고 해도, 그게 "우연히 맞은 것"인지 "항상 참인 것"인지는 확인만으로는 알 수 없어요. 그래서 수학자들은 모든 경우에 왜 성립하는지 논리로 보여주는 "증명"을 해요.', diagram:FB_DIAGRAM_GCD2_OK},
+    {ok:false, text:'"우연"이라고 단정할 수도 없어요! 숫자 몇 개를 확인해봐도 그게 우연인지 항상 참인지는 알 수 없거든요. 우연이라고 믿는 것도, 항상 맞다고 믿는 것도 둘 다 증거가 부족해요 — 그래서 증명이 필요해요.', diagram:FB_DIAGRAM_GCD2_W1},
+    {ok:false, text:'꼭 그렇지는 않아요. 두 수가 무엇이냐에 따라 최대공약수가 커도 최소공배수는 작을 수 있어요. 이렇게 반례를 하나만 찾아도 "항상 그렇다"는 주장은 틀렸다는 게 확실해져요 (반대로 "항상 참"이라는 건 예 몇 개로는 확신할 수 없어요 — 모든 경우를 다 보여줘야 하거든요).', diagram:FB_DIAGRAM_GCD2_W2}
+  ],
+  'e5gcd-h3': [
+    {ok:true, text:'맞아요! 최대공약수는 "남는 것 없이 똑같이 나눌 수 있는 가장 큰 단위", 최소공배수는 "서로 다른 주기가 처음으로 겹치는 순간"이라는 뜻을 정확히 담고 있는 비유예요.', diagram:FB_DIAGRAM_GCD3_OK},
+    {ok:false, text:'최소공배수 비유도 맞아요! "최초 동시 만남"은 두 주기가 처음 겹치는 시점을 정확히 표현하고 있어요.', diagram:FB_DIAGRAM_GCD3_W1},
+    {ok:false, text:'두 비유 모두 실제 개념의 의미를 잘 담고 있어요. 공식만 기계적으로 외우는 것보다 이런 비유로 이해하면 훨씬 오래 기억에 남아요.', diagram:FB_DIAGRAM_GCD3_W2}
   ]
 };
-const cvState = {};
 function cvInit(id){
-  if(!(id in cvState)){ cvState[id]=0; }
-  cvRender(id);
-}
-function cvRender(id){
   const cards = CV_DATA[id];
-  const i = cvState[id];
-  const d = cards[i];
-  document.getElementById('cv-'+id+'-num').textContent = (i+1)+' / '+cards.length;
-  document.getElementById('cv-'+id+'-fill').style.width = ((i+1)/cards.length*100)+'%';
-  document.getElementById('cv-'+id+'-body').innerHTML =
-    '<div class="section '+d.cls+'"><div class="section-title">'+d.title+'</div>'+d.html+'</div>';
-  const prevBtn = document.getElementById('cv-'+id+'-prev');
-  prevBtn.disabled = i===0;
-  document.getElementById('cv-'+id+'-next').textContent = i===cards.length-1 ? '완료 ✓' : '다음 →';
-}
-function cvNav(id, dir){
-  const cards = CV_DATA[id];
-  cvState[id] = Math.max(0, Math.min(cards.length-1, cvState[id]+dir));
-  cvRender(id);
+  document.getElementById('cv-'+id+'-body').innerHTML = cards.map(function(d){
+    return '<div class="section '+d.cls+'"><div class="section-title">'+d.title+'</div>'+d.html+'</div>';
+  }).join('');
 }
 function havrutaPick(qid, idx, btn){
   const box = document.getElementById('fb-'+qid);
