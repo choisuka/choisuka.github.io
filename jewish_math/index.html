@@ -120,6 +120,10 @@ body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',sans-serif;min-heig
 .fb-diagram .single{display:inline-block;border:1px solid #f85149;border-radius:6px;padding:3px 6px;margin:2px}
 .fb-diagram .arrow{color:#8b949e;margin:0 6px}
 .fb-diagram .cap{display:block;font-size:.72rem;color:#8b949e;margin-top:4px}
+.expr-item{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:.82rem;color:#c9d1d9;line-height:1.6}
+.expr-num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:rgba(240,192,64,.15);color:#f0c040;border-radius:50%;font-size:.72rem;font-weight:700;margin-right:6px;flex:0 0 auto}
+.expr-item strong{color:#bc8cff}
+.expr-ans{color:#3fb950;font-weight:700}
 </style>
 </head>
 <body>
@@ -1042,6 +1046,23 @@ const CV_DATA = {
         <li>나눗셈 = 곱셈의 역연산: 12÷4=3 ↔ 3×4=12</li>
       </ul>
     `},
+    { title:'📖 다양한 표현 익히기', cls:'concept', html:`
+      <p>지금까지는 사탕 12개를 4명이 나누는 예로 나눗셈을 배웠죠? 사실 하나의 나눗셈도 물어보는 말에 따라 아주 다양하게 표현할 수 있어요. 이번엔 초콜릿 12개를 3명이 나누는 상황(12÷3=4)으로, 같은 계산이 몇 가지나 다른 질문이 될 수 있는지 함께 볼까요?</p>
+      <div class="expr-item"><span class="expr-num">1</span><strong>나눠주기 표현</strong><br>"12개의 사탕을 3명에게 똑같이 나누어 주면 한 사람이 몇 개씩 가지게 되나요?" → <span class="expr-ans">4개</span></div>
+      <div class="expr-item"><span class="expr-num">2</span><strong>묶어보기 표현 (몇 묶음인지 구하기)</strong><br>"12개의 쿠키를 한 명당 3개씩 나눠주려고 합니다. 몇 명에게 줄 수 있나요?" → <span class="expr-ans">4명</span></div>
+      <div class="expr-item"><span class="expr-num">3</span><strong>상자 표현</strong><br>"12개의 초콜릿을 상자 3개에 똑같이 나누어 담으려고 합니다. 한 상자에 몇 개씩 들어가나요?" → <span class="expr-ans">4개</span>
+        <div class="fb-diagram"><span class="bundle">🍫🍫🍫🍫</span><span class="bundle">🍫🍫🍫🍫</span><span class="bundle">🍫🍫🍫🍫</span><span class="cap">상자 3개에 초콜릿 12개를 똑같이 나누어 담으면 → 한 상자에 4개씩</span></div>
+      </div>
+      <div class="expr-item"><span class="expr-num">4</span><strong>한 명이 가진 양 구하기 표현</strong><br>"3명이서 똑같이 나누어 가져서 총 12개가 되었을 때, 한 명이 가진 양은 얼마인가요?" → <span class="expr-ans">4개</span></div>
+      <div class="expr-item"><span class="expr-num">5</span><strong>묶음 크기 구하기 표현</strong><br>"12를 3으로 똑같이 쪼갤 때, 한 묶음의 크기는 얼마인가요?" → <span class="expr-ans">4</span></div>
+      <div class="expr-item"><span class="expr-num">6</span><strong>몫을 묻는 표현</strong><br>"12 나누기 3의 몫은 얼마인가요?" → <span class="expr-ans">4</span></div>
+      <div class="expr-item"><span class="expr-num">7</span><strong>빼기(덜어내기)로 보는 표현</strong><br>"12에서 3을 몇 번 빼면 0이 되나요?" → <span class="expr-ans">4번</span></div>
+      <div class="expr-item"><span class="expr-num">8</span><strong>몇 배인지 묻는 표현</strong><br>"12는 3의 몇 배인가요?" → <span class="expr-ans">4배</span></div>
+      <div class="expr-item"><span class="expr-num">9</span><strong>몇 배인지 거꾸로 확인하는 표현</strong><br>"3의 4배가 12일 때, 12를 3으로 나눈 값은 얼마인가요?" → <span class="expr-ans">4</span></div>
+      <div class="expr-item"><span class="expr-num">10</span><strong>식 읽고 뜻 말하기 표현</strong><br>"12 나누기 3은 4와 같다를 식으로 쓰고 그 의미를 말해보세요." → <span class="expr-ans">12÷3=4</span></div>
+      <div class="expr-item"><span class="expr-num">11</span><strong>곱셈으로 거꾸로 구하는 표현</strong><br>"어떤 수에 3을 곱했더니 12가 되었습니다. 이때의 어떤 수를 구하시오." (3×□=12) → <span class="expr-ans">4</span></div>
+      <p style="margin-top:10px">이렇게 11가지나 되는 표현이 전부 <strong>같은 계산(12÷3=4)</strong>을 묻고 있어요. 그래서 문제를 풀 때는 말이 달라도 "결국 나눗셈이구나!"를 알아채는 게 제일 중요해요.</p>
+    `},
     { title:'💬 하브루타 질문', cls:'havruta', html:`
       <div class="q-item"><strong>Q1.</strong> 나눠주기와 묶어보기, 두 방식의 차이를 실생활 예를 들어 설명해보세요. 언제 어떤 방식을 쓰나요?
         <button class="havruta-show-btn" onclick="havrutaReveal('e3div-h1',this)">💬 친구들은 이렇게 답했어요</button>
@@ -1144,6 +1165,11 @@ const FB_DIAGRAM_H1_SAME = '<div class="fb-diagram"><div style="display:flex;gap
   + '<span class="cap">서로 다른 질문 A, B인데 계산식은 똑같이 15÷5=3 — 그래서 "답(몫)이 같다"고 하는 거예요</span></div>';
 const FB_DIAGRAM_H2 = '<div class="fb-diagram"><span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span><span class="single">🍬</span><span class="cap">13개를 4개씩 묶으면 3묶음 + 나머지 1개 (나머지 1 &lt; 나누는 수 4)</span></div>';
 const FB_DIAGRAM_H3 = '<div class="fb-diagram">🍬🍬🍬🍬🍬 <span class="arrow">➜</span> 0명 <span class="arrow">=</span> ❌<span class="cap">나눠줄 사람이 0명이면 "몇 개씩"이라는 질문 자체가 성립하지 않아요</span></div>';
+const FB_DIAGRAM_H3_ZERO = '<div class="fb-diagram">(사탕 없음) <span class="arrow">➜</span> 5명에게 나눠주면? <span class="arrow">➜</span> 각자 0개<span class="cap">0÷5=0 — 사탕 0개를 5명에게 나누면 한 명당 0개예요</span>'
+  + '<div style="margin-top:6px">(사탕 없음) <span class="arrow">➜</span> 3개씩 묶으면? <span class="arrow">➜</span> 0묶음</div><span class="cap">0÷3=0 — 사탕이 아예 없으면 3개씩 묶음도 하나도 못 만들어요</span>'
+  + '<span class="cap" style="margin-top:6px;color:#f0c040">"몫이 0"이 되는 건 <strong style="color:#f0c040">나눠지는 수(맨 앞의 수)가 0</strong>일 때예요. 지금 질문은 반대로 <strong style="color:#f0c040">나누는 수가 0</strong>인 경우라 달라요!</span></div>';
+const FB_DIAGRAM_H3_INF = '<div class="fb-diagram">🍬🍬🍬🍬🍬 (5개)<div style="margin:6px 0">5−0=5 <span class="arrow">➜</span> 5−0=5 <span class="arrow">➜</span> 5−0=5 <span class="arrow">➜</span> … <span style="color:#f85149">(영원히 안 끝남)</span></div>'
+  + '<span class="cap">나눗셈은 "같은 수를 몇 번 빼야 0이 되는지" 세는 거예요. 그런데 0을 아무리 빼도 5는 그대로라서, 컴퓨터도 세다가 끝을 못 찾고 "오류(Error)"를 내는 거예요 — "무한대"가 아니라 "셀 수 없음"이 맞아요</span></div>';
 const HAVRUTA_FB = {
   'e3div-h1': [
     {ok:true, text:'맞아요! "몇 명에게 나눠줄까?"처럼 사람 수를 아는 상황에서는 나눠주기가 자연스러워요.', diagram:FB_DIAGRAM_H1A},
@@ -1158,8 +1184,8 @@ const HAVRUTA_FB = {
   ],
   'e3div-h3': [
     {ok:true, text:'맞아요! 나눗셈은 "몇 명에게 나누는가"인데, 0명에게 나눈다는 건 애초에 뜻이 성립하지 않아요. 그래서 수학에서는 "0으로 나누는 것은 정의되지 않는다"고 말해요.', diagram:FB_DIAGRAM_H3},
-    {ok:false, text:'"무한대"라는 생각도 흥미로운데, 사실 수학에서는 0으로 나누는 걸 아예 "정의하지 않음(undefined)"이라고 해요 — 무한대라는 답조차 정할 수 없다는 뜻이에요.', diagram:FB_DIAGRAM_H3},
-    {ok:false, text:'0이 나온다면 그건 "0을 어떤 수로 나눈" 경우(0÷4=0)와 헷갈린 거예요. 지금 질문은 반대로 "어떤 수를 0으로" 나누는 경우예요 — 다시 생각해볼까요?', diagram:FB_DIAGRAM_H3}
+    {ok:false, text:'"무한대"라는 생각도 흥미로운데, 사실 수학에서는 0으로 나누는 걸 아예 "정의하지 않음(undefined)"이라고 해요 — 무한대라는 답조차 정할 수 없다는 뜻이에요. 왜 그런지 뺄셈으로 확인해볼까요?', diagram:FB_DIAGRAM_H3_INF},
+    {ok:false, text:'0이 나오는 경우도 실제로 있어요! 다만 그건 "0을 어떤 수로 나눈" 경우(예: 0÷5=0)와 헷갈린 거예요. 지금 질문은 반대로 "어떤 수를 0으로" 나누는 경우라 달라요 — 두 상황을 비교해볼까요?', diagram:FB_DIAGRAM_H3_ZERO}
   ]
 };
 const cvState = {};
@@ -1185,8 +1211,14 @@ function cvNav(id, dir){
   cvRender(id);
 }
 function havrutaPick(qid, idx, btn){
-  const fb = HAVRUTA_FB[qid][idx];
   const box = document.getElementById('fb-'+qid);
+  if(btn.classList.contains('selected')){
+    box.className = 'havruta-fb';
+    box.innerHTML = '';
+    btn.classList.remove('selected');
+    return;
+  }
+  const fb = HAVRUTA_FB[qid][idx];
   box.innerHTML = '<div class="story-line"><div class="story-avatar">🧑‍🏫</div><div class="story-bubble teacher"><span class="story-name">선생님</span>' + fb.text + '</div></div>' + (fb.diagram||'');
   box.className = 'havruta-fb show';
   const opts = btn.parentElement.querySelectorAll('.havruta-opt');
@@ -1195,8 +1227,15 @@ function havrutaPick(qid, idx, btn){
 }
 function havrutaReveal(qid, btn){
   const box = document.getElementById('rv-'+qid);
-  box.classList.add('show');
-  btn.style.display = 'none';
+  const opening = !box.classList.contains('show');
+  box.classList.toggle('show', opening);
+  if(!opening){
+    const fb = document.getElementById('fb-'+qid);
+    if(fb){ fb.className = 'havruta-fb'; fb.innerHTML = ''; }
+    box.querySelectorAll('.havruta-opt.selected').forEach(b=>b.classList.remove('selected'));
+  }
+  if(!btn.dataset.openLabel){ btn.dataset.openLabel = btn.textContent; }
+  btn.textContent = opening ? '👆 접어두기' : btn.dataset.openLabel;
 }
 document.addEventListener('DOMContentLoaded', function(){
   Object.keys(CV_DATA).forEach(cvInit);
