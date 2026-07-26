@@ -44,6 +44,14 @@ body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',sans-serif;min-heig
 .sol strong{color:#bc8cff}
 .debate-item{background:#1a0d0d;border:1px solid rgba(248,81,73,.3);border-radius:10px;padding:12px 14px;margin-bottom:8px;font-size:.85rem;color:#c9d1d9}
 .debate-item::before{content:"🔥 ";font-size:.9rem}
+.story-line{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+.story-avatar{flex:0 0 auto;font-size:1.3rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:#161b22;border:1px solid #30363d;border-radius:50%}
+.story-bubble{background:#1a0d0d;border:1px solid rgba(248,81,73,.25);border-radius:10px;padding:10px 14px;font-size:.85rem;color:#c9d1d9;flex:1}
+.story-bubble .story-name{font-weight:700;color:#f85149;margin-right:6px}
+.story-bubble.teacher{background:#0d1117;border-color:rgba(240,192,64,.3)}
+.story-bubble.teacher .story-name{color:#f0c040}
+.story-takeaway{margin-top:12px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.3);border-radius:10px;padding:12px 14px;font-size:.85rem;color:#c9d1d9}
+.story-takeaway strong{color:#3fb950}
 .badge{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(240,192,64,.2);color:#f0c040;border:1px solid rgba(240,192,64,.4);margin-left:8px;vertical-align:middle}
 
 /* ── 시험 ── */
@@ -82,6 +90,36 @@ body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',sans-serif;min-heig
 .result-score{font-size:2.5rem;font-weight:900;color:#f0c040;margin-bottom:8px}
 .result-msg{font-size:1rem;color:#c9d1d9;margin-bottom:16px}
 .result-detail{font-size:.82rem;color:#8b949e}
+
+/* ── 카드뷰(한 장씩 넘기기) ── */
+.cv-wrap{margin:0}
+.cv-topbar{display:flex;justify-content:flex-end;margin-bottom:6px}
+.cv-num{font-size:.75rem;color:#8b949e;font-weight:700}
+.cv-progress{height:5px;background:rgba(255,255,255,.08);border-radius:3px;margin-bottom:14px;overflow:hidden}
+.cv-progress-fill{height:5px;background:linear-gradient(90deg,#f0c040,#bc8cff);transition:.3s}
+.cv-btns{display:flex;gap:8px;margin-top:16px}
+.cv-btn{flex:1;background:rgba(255,255,255,.06);border:1px solid #30363d;color:#c9d1d9;border-radius:10px;padding:11px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit}
+.cv-btn:disabled{opacity:.35;cursor:default}
+.cv-btn-next{background:linear-gradient(135deg,#8a5a00,#f0c040);color:#1a1000;border:none}
+.havruta-opts{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.havruta-opt{text-align:left;background:#161b22;border:2px solid #30363d;color:#c9d1d9;border-radius:10px;padding:10px 14px;font-size:.83rem;cursor:pointer;font-family:inherit;box-shadow:0 3px 0 rgba(0,0,0,.3);transition:transform .08s,box-shadow .08s}
+.havruta-opt::before{content:"👉 "}
+.havruta-opt:hover{border-color:#3fb950;transform:translateY(-1px);box-shadow:0 4px 0 rgba(0,0,0,.3)}
+.havruta-opt:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.havruta-opt.selected{border-color:#3fb950;background:rgba(63,185,80,.1);box-shadow:0 1px 0 rgba(0,0,0,.3);transform:translateY(2px)}
+.havruta-fb{display:none;margin-top:8px;padding:10px 12px;border-radius:8px;font-size:.83rem;line-height:1.7}
+.havruta-fb.show{display:block}
+.havruta-fb.ok{background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.3);color:#c9d1d9}
+.havruta-fb.think{background:rgba(240,192,64,.08);border:1px solid rgba(240,192,64,.3);color:#c9d1d9}
+.havruta-reveal{display:none;margin-top:4px}
+.havruta-reveal.show{display:block}
+.havruta-show-btn{margin-top:8px;background:rgba(240,192,64,.1);border:1px solid rgba(240,192,64,.35);color:#f0c040;border-radius:8px;padding:8px 14px;font-size:.82rem;cursor:pointer;font-family:inherit}
+.havruta-show-btn:hover{background:rgba(240,192,64,.18)}
+.fb-diagram{margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px;font-size:.95rem;text-align:center;line-height:1.7}
+.fb-diagram .bundle{display:inline-block;border:1px dashed #58a6ff;border-radius:6px;padding:3px 6px;margin:2px}
+.fb-diagram .single{display:inline-block;border:1px solid #f85149;border-radius:6px;padding:3px 6px;margin:2px}
+.fb-diagram .arrow{color:#8b949e;margin:0 6px}
+.fb-diagram .cap{display:block;font-size:.72rem;color:#8b949e;margin-top:4px}
 </style>
 </head>
 <body>
@@ -273,32 +311,14 @@ body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',sans-serif;min-heig
       <span class="unit-arrow">▼</span>
     </div>
     <div class="unit-body">
-      <div class="section why"><div class="section-title">🌟 왜 배우는가?</div>
-        <p>나눗셈은 "공평하게 나누는 것"이다. 탈무드는 공평한 분배를 정의(正義)의 근본으로 보았다. 12개의 빵을 4명이 공평하게 나누면? 나눗셈이 없으면 분쟁이 생긴다.</p>
-      </div>
-      <div class="section concept"><div class="section-title">📖 개념 설명</div>
-        <ul>
-          <li>등분제: 12÷4=3 (12개를 4명에게 똑같이 나누면 1인당 3개)</li>
-          <li>포함제: 12÷4=3 (12개를 4개씩 묶으면 3묶음)</li>
-          <li>나머지: 13÷4=3…1 (4개씩 3묶음 후 1개 남음)</li>
-          <li>나눗셈 = 곱셈의 역연산: 12÷4=3 ↔ 3×4=12</li>
-        </ul>
-      </div>
-      <div class="section havruta"><div class="section-title">💬 하브루타 질문</div>
-        <div class="q-item"><strong>Q1.</strong> 등분제와 포함제의 차이를 실생활 예를 들어 설명해보세요. 언제 어떤 방식을 쓰나요?</div>
-        <div class="q-item"><strong>Q2.</strong> 나머지가 나누는 수보다 항상 작아야 하는 이유는?</div>
-        <div class="q-item"><strong>Q3.</strong> 0으로 나누면 어떻게 될까요? 왜 계산기는 "오류"를 표시할까요?</div>
-      </div>
-      <div class="section problems"><div class="section-title">✏️ 예제 문제 & 다양한 풀이</div>
-        <div class="prob-box">
-          <div class="prob-q">문제: 사탕 25개를 4명이 똑같이 나누면 1인당 몇 개이고 몇 개가 남나요?</div>
-          <div class="sol"><strong>풀이①(나눗셈):</strong> 25÷4=6…1 → 1인당 6개, 나머지 1개</div>
-          <div class="sol"><strong>풀이②(곱셈으로 확인):</strong> 4×6=24, 25−24=1 → 맞음</div>
-          <div class="sol"><strong>풀이③(직접 배분):</strong> 4명에게 1개씩×6번=24개 나눔, 1개 남음</div>
+      <div class="cv-wrap" id="cv-e3div">
+        <div class="cv-topbar"><span class="cv-num" id="cv-e3div-num">1 / 5</span></div>
+        <div class="cv-progress"><div class="cv-progress-fill" id="cv-e3div-fill" style="width:20%"></div></div>
+        <div id="cv-e3div-body"></div>
+        <div class="cv-btns">
+          <button class="cv-btn" id="cv-e3div-prev" onclick="cvNav('e3div',-1)">← 이전</button>
+          <button class="cv-btn cv-btn-next" id="cv-e3div-next" onclick="cvNav('e3div',1)">다음 →</button>
         </div>
-      </div>
-      <div class="section debate"><div class="section-title">🔥 심화 토론</div>
-        <div class="debate-item">나머지 1개의 사탕은 누가 가져야 공평할까요? 가장 어린 사람? 랜덤 뽑기? 반으로 쪼개기? 수학적으로 "공평함"을 어떻게 정의할 수 있을까요?</div>
       </div>
     </div>
   </div>
@@ -962,6 +982,226 @@ body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',sans-serif;min-heig
 </div><!-- /content -->
 
 <script>
+// ── 카드뷰(한 장씩 넘기기) ──
+const CV_DATA = {
+  'e3div': [
+    { title:'🌟 왜 배우는가?', cls:'why', html:`
+      <p>친구들이랑 과자를 나눠 먹을 때, 누구는 많이 받고 누구는 적게 받으면 속상하죠? "공평하게 나누기"가 바로 나눗셈이 하는 일이에요.</p>
+      <p style="margin-top:10px">옛날부터 지혜로운 사람들(탈무드)도 "공평하게 나누는 것"을 세상에서 가장 중요한 일 중 하나라고 생각했어요.</p>
+      <p style="margin-top:10px">빵 12개를 친구 4명이서 공평하게 나누면 한 명당 몇 개일까요? 나눗셈이 없다면, 서로 "내가 더 가질래!" 하고 다투게 될지도 몰라요. 나눗셈은 이런 다툼을 막아주는 도구예요.</p>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:14px;margin-top:14px">
+        <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin-bottom:8px;text-align:center">빵 12개를 친구 4명이 공평하게 나누면?</div>
+        <div style="display:flex;justify-content:space-around;font-size:1.15rem;text-align:center">
+          <div>🧒<br>🍞🍞🍞<br><span style="font-size:.68rem;color:#8b949e">😊 3개</span></div>
+          <div>🧒<br>🍞🍞🍞<br><span style="font-size:.68rem;color:#8b949e">😊 3개</span></div>
+          <div>🧒<br>🍞🍞🍞<br><span style="font-size:.68rem;color:#8b949e">😊 3개</span></div>
+          <div>🧒<br>🍞🍞🍞<br><span style="font-size:.68rem;color:#8b949e">😊 3개</span></div>
+        </div>
+        <div style="text-align:center;font-size:.7rem;color:#8b949e;margin-top:8px">모두 3개씩 — 아무도 속상하지 않아요!</div>
+      </div>
+    `},
+    { title:'📖 개념 설명', cls:'concept', html:`
+      <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin-bottom:6px">개념1 — 딱 나누어떨어질 때 (12÷4=3)</div>
+      <ul>
+        <li><strong>나눠주기</strong>: 12개를 4명에게 똑같이 나누면 1인당 3개</li>
+        <li><strong>묶어보기</strong>: 12개를 4개씩 묶으면 3묶음. 4개씩 나눠주면 3명에게 나눠줄 수 있어요</li>
+      </ul>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin:14px 0">
+        <div style="flex:1;min-width:220px;background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:12px">
+          <div style="font-size:.78rem;color:#f0c040;font-weight:700;margin-bottom:8px;text-align:center">나눠주기 — 4명에게 똑같이</div>
+          <div style="display:flex;justify-content:space-around;font-size:1.15rem">
+            <div style="text-align:center">🧑<br>🍬🍬🍬</div>
+            <div style="text-align:center">🧑<br>🍬🍬🍬</div>
+            <div style="text-align:center">🧑<br>🍬🍬🍬</div>
+            <div style="text-align:center">🧑<br>🍬🍬🍬</div>
+          </div>
+          <div style="text-align:center;font-size:.75rem;color:#8b949e;margin-top:8px">1인당 3개</div>
+        </div>
+        <div style="flex:1;min-width:220px;background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:12px">
+          <div style="font-size:.78rem;color:#58a6ff;font-weight:700;margin-bottom:8px;text-align:center">묶어보기 — 4개씩 묶으면?</div>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:center;font-size:1.05rem">
+            <div style="display:flex;align-items:center;gap:8px"><div style="border:2px dashed #58a6ff;border-radius:8px;padding:4px 8px;background:rgba(88,166,255,.06)">🍬🍬🍬🍬</div><span>→ 🧑</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="border:2px dashed #58a6ff;border-radius:8px;padding:4px 8px;background:rgba(88,166,255,.06)">🍬🍬🍬🍬</div><span>→ 🧑</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="border:2px dashed #58a6ff;border-radius:8px;padding:4px 8px;background:rgba(88,166,255,.06)">🍬🍬🍬🍬</div><span>→ 🧑</span></div>
+          </div>
+          <div style="text-align:center;font-size:.75rem;color:#8b949e;margin-top:8px">한 묶음(점선 상자)=4개, 3묶음 = 3명에게 나눠줄 수 있음</div>
+        </div>
+      </div>
+      <div style="font-size:.78rem;color:#bc8cff;font-weight:700;margin:16px 0 6px">개념2 — 나머지가 있을 때 (13÷4)</div>
+      <p style="font-size:.87rem;line-height:1.85;color:#c9d1d9;margin-bottom:8px">사탕이 13개면? 4개씩 3묶음(12개)까지만 묶이고 1개가 남아요.</p>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:12px;margin-bottom:10px">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:1.05rem">
+          <div style="border:2px dashed #58a6ff;border-radius:8px;padding:4px 8px;background:rgba(88,166,255,.06)">🍬🍬🍬🍬</div>
+          <div style="border:2px dashed #58a6ff;border-radius:8px;padding:4px 8px;background:rgba(88,166,255,.06)">🍬🍬🍬🍬</div>
+          <div style="border:2px dashed #58a6ff;border-radius:8px;padding:4px 8px;background:rgba(88,166,255,.06)">🍬🍬🍬🍬</div>
+          <div style="border:2px solid #f85149;border-radius:8px;padding:4px 8px;background:rgba(248,81,73,.08);color:#f85149;font-weight:700">🍬</div>
+        </div>
+        <div style="text-align:center;font-size:.75rem;color:#8b949e;margin-top:8px">점선 상자(4개)×3묶음(12개) + 남은 1개(빨간 상자) → 13÷4=3…1</div>
+      </div>
+      <ul>
+        <li>나눗셈 = 곱셈의 역연산: 12÷4=3 ↔ 3×4=12</li>
+      </ul>
+    `},
+    { title:'💬 하브루타 질문', cls:'havruta', html:`
+      <div class="q-item"><strong>Q1.</strong> 나눠주기와 묶어보기, 두 방식의 차이를 실생활 예를 들어 설명해보세요. 언제 어떤 방식을 쓰나요?
+        <button class="havruta-show-btn" onclick="havrutaReveal('e3div-h1',this)">💬 친구들은 이렇게 답했어요</button>
+        <div class="havruta-reveal" id="rv-e3div-h1">
+          <div class="havruta-opts">
+            <button class="havruta-opt" onclick="havrutaPick('e3div-h1',0,this)">몇 명에게 나눠줄지 알 때는 나눠주기를 써요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e3div-h1',1,this)">한 묶음의 크기를 알 때는 묶어보기를 써요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e3div-h1',2,this)">둘이 똑같아서 아무거나 써도 돼요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e3div-h1',3,this)">나눠주기가 더 쉬우니까 항상 나눠주기만 써요</button>
+          </div>
+          <div class="havruta-fb" id="fb-e3div-h1"></div>
+        </div>
+      </div>
+      <div class="q-item"><strong>Q2.</strong> 나머지가 나누는 수보다 항상 작아야 하는 이유는?
+        <button class="havruta-show-btn" onclick="havrutaReveal('e3div-h2',this)">💬 친구들은 이렇게 답했어요</button>
+        <div class="havruta-reveal" id="rv-e3div-h2">
+          <div class="havruta-opts">
+            <button class="havruta-opt" onclick="havrutaPick('e3div-h2',0,this)">나머지가 나누는 수보다 크거나 같으면, 그만큼 한 번 더 나눠줄 수 있으니까요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e3div-h2',1,this)">그냥 정해진 규칙이라 외워야 해요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e3div-h2',2,this)">나머지는 항상 0이어야 맞는 답이에요</button>
+          </div>
+          <div class="havruta-fb" id="fb-e3div-h2"></div>
+        </div>
+      </div>
+      <div class="q-item"><strong>Q3.</strong> 0으로 나누면 어떻게 될까요? 왜 계산기는 "오류"를 표시할까요?
+        <button class="havruta-show-btn" onclick="havrutaReveal('e3div-h3',this)">💬 친구들은 이렇게 답했어요</button>
+        <div class="havruta-reveal" id="rv-e3div-h3">
+          <div class="havruta-opts">
+            <button class="havruta-opt" onclick="havrutaPick('e3div-h3',0,this)">몇 명에게 나눠줄지 정할 수 없으니까요 — "0명에게 나눈다"는 게 말이 안 돼요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e3div-h3',1,this)">답이 무한대로 커져요</button>
+            <button class="havruta-opt" onclick="havrutaPick('e3div-h3',2,this)">그냥 0이 나와요</button>
+          </div>
+          <div class="havruta-fb" id="fb-e3div-h3"></div>
+        </div>
+      </div>
+    `},
+    { title:'✏️ 예제 문제 & 다양한 풀이', cls:'problems', html:`
+      <div class="prob-box">
+        <div class="prob-q">문제: 사탕 25개를 4명이 똑같이 나누면 1인당 몇 개이고 몇 개가 남나요?</div>
+        <button class="havruta-show-btn" onclick="havrutaReveal('e3div-p1',this)">💡 풀이 보기</button>
+        <div class="havruta-reveal" id="rv-e3div-p1">
+          <div class="fb-diagram"><span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span><span class="single">🍬</span><span class="cap">25개를 4개씩 묶으면 6묶음(24개) + 나머지 1개</span></div>
+          <div class="sol"><strong>풀이①(나눗셈):</strong> 25÷4=6…1 → 1인당 6개, 나머지 1개</div>
+          <div class="sol"><strong>풀이②(곱셈으로 확인):</strong> 4×6=24, 25−24=1 → 맞음</div>
+          <div class="sol"><strong>풀이③(직접 배분):</strong> 4명에게 1개씩×6번=24개 나눔, 1개 남음</div>
+        </div>
+      </div>
+    `},
+    { title:'🔥 심화 토론', cls:'debate', html:`
+      <div class="story-line">
+        <div class="story-avatar">🧒</div>
+        <div class="story-bubble"><span class="story-name">민준</span>선생님, 사탕 25개를 4명이 나누니까 6개씩이고 1개가 남았어요. 근데 그 1개는 누가 가져요?</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">👧</div>
+        <div class="story-bubble"><span class="story-name">서연</span>제일 어린 하은이가 가지면 안 돼요? 동생이니까 하나 더 줘도 되잖아요.</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">🧒</div>
+        <div class="story-bubble"><span class="story-name">지호</span>에이, 그럼 불공평하죠! 그럴 땐 사다리 타기나 가위바위보로 정해야 공평해요.</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">👧</div>
+        <div class="story-bubble"><span class="story-name">하은</span>저는 그냥 사탕 1개를 4조각으로 쪼개서 다 같이 나눠 먹으면 된다고 생각해요! 그럼 진짜 똑같아지잖아요.</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">🧑‍🏫</div>
+        <div class="story-bubble teacher"><span class="story-name">선생님</span>넷 다 훌륭한 생각이에요! 사실 수학은 "몫은 6, 나머지는 1"이라는 계산까지만 정확히 알려줘요. 그 나머지 1개를 어떻게 할지는 상황에 따라 사람이 직접 정해야 하는 부분이랍니다.</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">🧑‍🏫</div>
+        <div class="story-bubble teacher"><span class="story-name">선생님</span>예를 들어볼까요? 학생 22명이 소풍을 가는데 버스 한 대에 5명씩 탈 수 있어요. 22÷5=4…2 인데, 버스가 4대뿐이면 2명은 못 타겠죠? 그래서 이럴 땐 나머지를 "올려서" 버스 5대가 필요해요.</div>
+      </div>
+      <div class="story-line">
+        <div class="story-avatar">🧑‍🏫</div>
+        <div class="story-bubble teacher"><span class="story-name">선생님</span>반대로 사탕 22개를 5명에게 나눠줄 땐 22÷5=4…2, 이번엔 나머지 2개를 "그냥 남겨두는" 게 맞아요. 억지로 5번째 사람에게 몰아줄 순 없으니까요. 그리고 하은이 말처럼 나머지를 계속 쪼개 나누는 방법도 있어요 — 그게 바로 나중에 배울 분수랑 소수의 시작이에요!</div>
+      </div>
+      <div class="story-takeaway"><strong>정리:</strong> 나눗셈은 "몫"과 "나머지"를 정확하게 계산해 주지만, 그 나머지를 어떻게 다룰지는 상황에 맞게 우리가 판단해야 해요. 버스처럼 <strong>부족하면 올리고</strong>, 사탕처럼 <strong>더는 못 나누면 그대로 남기고</strong>, 하은이 아이디어처럼 <strong>계속 쪼개서 나눌</strong> 수도 있어요. 수학은 도구이고, 그 도구를 어떻게 쓸지는 우리의 몫이에요.</div>
+    `}
+  ]
+};
+const FB_DIAGRAM_H1A = '<div class="fb-diagram"><div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">'
+  + '<div>🧑<br>🍬🍬🍬</div><div>🧑<br>🍬🍬🍬</div><div>🧑<br>🍬🍬🍬</div><div>🧑<br>🍬🍬🍬</div><div>🧑<br>🍬🍬🍬</div>'
+  + '</div><span class="cap">사탕 15개를 5명에게 나눠주면 → 15÷5=3, 1인당 3개 (사람 수 5를 아니까 나눠주기)</span></div>';
+const FB_DIAGRAM_H1B = '<div class="fb-diagram"><span class="bundle">🍬🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬🍬</span>'
+  + '<span class="cap">사탕 15개를 5개씩 묶으면 → 15÷5=3, 3묶음(봉지 3개) (묶음 크기 5를 아니까 묶어보기)</span></div>';
+const FB_DIAGRAM_H1_SAME = '<div class="fb-diagram"><div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;text-align:left">'
+  + '<div style="flex:1;min-width:150px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px">'
+  + '<div style="font-size:.7rem;color:#58a6ff;font-weight:700">문제 A (나눠주기로 물으면)</div>'
+  + '<div style="font-size:.75rem;margin:4px 0">사탕 15개를 5명에게 나눠주면 1인당 몇 개?</div>'
+  + '<div style="text-align:center">🧑<br>🍬🍬🍬</div>'
+  + '<div style="font-size:.72rem;color:#8b949e;text-align:center;margin-top:4px">15÷5=3 → 1인당 3개</div>'
+  + '</div>'
+  + '<div style="flex:1;min-width:150px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px">'
+  + '<div style="font-size:.7rem;color:#58a6ff;font-weight:700">문제 B (묶어보기로 물으면)</div>'
+  + '<div style="font-size:.75rem;margin:4px 0">사탕 15개를 5개씩 묶으면 몇 묶음?</div>'
+  + '<div style="text-align:center"><span class="bundle">🍬🍬🍬🍬🍬</span></div>'
+  + '<div style="font-size:.72rem;color:#8b949e;text-align:center;margin-top:4px">15÷5=3 → 3묶음</div>'
+  + '</div></div>'
+  + '<span class="cap">서로 다른 질문 A, B인데 계산식은 똑같이 15÷5=3 — 그래서 "답(몫)이 같다"고 하는 거예요</span></div>';
+const FB_DIAGRAM_H2 = '<div class="fb-diagram"><span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span><span class="bundle">🍬🍬🍬🍬</span><span class="single">🍬</span><span class="cap">13개를 4개씩 묶으면 3묶음 + 나머지 1개 (나머지 1 &lt; 나누는 수 4)</span></div>';
+const FB_DIAGRAM_H3 = '<div class="fb-diagram">🍬🍬🍬🍬🍬 <span class="arrow">➜</span> 0명 <span class="arrow">=</span> ❌<span class="cap">나눠줄 사람이 0명이면 "몇 개씩"이라는 질문 자체가 성립하지 않아요</span></div>';
+const HAVRUTA_FB = {
+  'e3div-h1': [
+    {ok:true, text:'맞아요! "몇 명에게 나눠줄까?"처럼 사람 수를 아는 상황에서는 나눠주기가 자연스러워요.', diagram:FB_DIAGRAM_H1A},
+    {ok:true, text:'맞아요! "한 봉지에 몇 개씩 담을까?"처럼 묶음의 크기를 아는 상황에서는 묶어보기가 자연스러워요.', diagram:FB_DIAGRAM_H1B},
+    {ok:false, text:'답(몫)은 같지만, 문제가 "몇 명"을 묻는지 "몇 묶음"을 묻는지에 따라 더 자연스럽게 떠올릴 수 있는 방법이 달라요. 다시 생각해볼까요?', diagram:FB_DIAGRAM_H1_SAME},
+    {ok:false, text:'항상 나눠주기만 쓰면, "한 묶음에 몇 개씩 담을까?"처럼 사람 수를 모를 때는 오히려 더 헷갈려요. 상황에 따라 골라 쓰는 게 좋아요.', diagram:FB_DIAGRAM_H1B}
+  ],
+  'e3div-h2': [
+    {ok:true, text:'맞아요! 만약 나머지가 나누는 수보다 크거나 같다면, 그 안에 나누는 수가 또 들어있다는 뜻이라 몫을 하나 더 늘려야 해요. 나머지는 "더 이상 못 나누고 남은 것"이라 나누는 수보다 항상 작아야 진짜 나머지예요.', diagram:FB_DIAGRAM_H2},
+    {ok:false, text:'규칙을 외우는 것도 좋지만, "왜" 그런지 알면 다음에 헷갈리지 않아요. 나머지가 나누는 수보다 크면 어떤 일이 생길지 한번 생각해볼까요?', diagram:FB_DIAGRAM_H2},
+    {ok:false, text:'나머지가 항상 0이어야 하는 건 아니에요(0이면 딱 나누어떨어지는 거예요). 나머지는 0 이상이면서 나누는 수보다 작기만 하면 돼요.', diagram:FB_DIAGRAM_H2}
+  ],
+  'e3div-h3': [
+    {ok:true, text:'맞아요! 나눗셈은 "몇 명에게 나누는가"인데, 0명에게 나눈다는 건 애초에 뜻이 성립하지 않아요. 그래서 수학에서는 "0으로 나누는 것은 정의되지 않는다"고 말해요.', diagram:FB_DIAGRAM_H3},
+    {ok:false, text:'"무한대"라는 생각도 흥미로운데, 사실 수학에서는 0으로 나누는 걸 아예 "정의하지 않음(undefined)"이라고 해요 — 무한대라는 답조차 정할 수 없다는 뜻이에요.', diagram:FB_DIAGRAM_H3},
+    {ok:false, text:'0이 나온다면 그건 "0을 어떤 수로 나눈" 경우(0÷4=0)와 헷갈린 거예요. 지금 질문은 반대로 "어떤 수를 0으로" 나누는 경우예요 — 다시 생각해볼까요?', diagram:FB_DIAGRAM_H3}
+  ]
+};
+const cvState = {};
+function cvInit(id){
+  if(!(id in cvState)){ cvState[id]=0; }
+  cvRender(id);
+}
+function cvRender(id){
+  const cards = CV_DATA[id];
+  const i = cvState[id];
+  const d = cards[i];
+  document.getElementById('cv-'+id+'-num').textContent = (i+1)+' / '+cards.length;
+  document.getElementById('cv-'+id+'-fill').style.width = ((i+1)/cards.length*100)+'%';
+  document.getElementById('cv-'+id+'-body').innerHTML =
+    '<div class="section '+d.cls+'"><div class="section-title">'+d.title+'</div>'+d.html+'</div>';
+  const prevBtn = document.getElementById('cv-'+id+'-prev');
+  prevBtn.disabled = i===0;
+  document.getElementById('cv-'+id+'-next').textContent = i===cards.length-1 ? '완료 ✓' : '다음 →';
+}
+function cvNav(id, dir){
+  const cards = CV_DATA[id];
+  cvState[id] = Math.max(0, Math.min(cards.length-1, cvState[id]+dir));
+  cvRender(id);
+}
+function havrutaPick(qid, idx, btn){
+  const fb = HAVRUTA_FB[qid][idx];
+  const box = document.getElementById('fb-'+qid);
+  box.innerHTML = '<div class="story-line"><div class="story-avatar">🧑‍🏫</div><div class="story-bubble teacher"><span class="story-name">선생님</span>' + fb.text + '</div></div>' + (fb.diagram||'');
+  box.className = 'havruta-fb show';
+  const opts = btn.parentElement.querySelectorAll('.havruta-opt');
+  opts.forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+function havrutaReveal(qid, btn){
+  const box = document.getElementById('rv-'+qid);
+  box.classList.add('show');
+  btn.style.display = 'none';
+}
+document.addEventListener('DOMContentLoaded', function(){
+  Object.keys(CV_DATA).forEach(cvInit);
+});
+
 // ── 탭 전환 ──
 function showGrade(id) {
   document.querySelectorAll('.grade-section').forEach(s => s.classList.remove('active'));
