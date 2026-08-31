@@ -105,6 +105,12 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .timer-time{font-family:'Jua',sans-serif;font-size:2.1rem}
 .timer-sub{font-size:.78rem;color:rgba(255,255,255,.5);margin-top:4px}
 .timer-actions{display:flex;gap:10px}
+.timer-subject-box{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:14px;padding:12px 16px;margin-bottom:16px;text-align:center}
+.timer-subject-box .ts-label{font-size:.72rem;color:rgba(255,255,255,.5);margin-bottom:4px}
+.timer-subject-box .ts-subject{font-family:'Jua',sans-serif;font-size:1rem;margin-bottom:2px}
+.timer-subject-box .ts-note{font-size:.78rem;color:rgba(255,255,255,.6);margin-bottom:8px}
+.timer-subject-box .ts-link{display:inline-block;font-size:.8rem;color:#4ade80;text-decoration:none;border:1px solid rgba(74,222,128,.4);border-radius:20px;padding:6px 16px}
+.timer-subject-box .ts-link:hover{background:rgba(74,222,128,.12)}
 
 /* 스트룹 게임 */
 .stroop-word{font-family:'Jua',sans-serif;font-size:3rem;text-align:center;margin:26px 0;min-height:1.4em}
@@ -349,6 +355,7 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
           <div class="timer-sub">집중 중이에요 🌿</div>
         </div>
       </div>
+      <div id="timerSubjectBox" style="display:none"></div>
       <div class="timer-actions">
         <button class="btn btn-ghost" onclick="pauseTimer()" id="timerPauseBtn">⏸ 일시정지</button>
         <button class="btn btn-ghost" onclick="stopTimer()">■ 그만하기</button>
@@ -563,6 +570,7 @@ function beginTimer(){
   ring.style.strokeDashoffset = 0;
   updateTimerUI();
   document.getElementById('timerPauseBtn').textContent = '⏸ 일시정지';
+  renderTimerSubject();
   clearInterval(timerInterval);
   timerInterval = setInterval(tickTimer, 1000);
 }
@@ -742,6 +750,10 @@ const DAY_KEYS = ['mon','tue','wed','thu','fri','sat','sun'];
 const DAY_LABELS = {mon:'월요일',tue:'화요일',wed:'수요일',thu:'목요일',fri:'금요일',sat:'토요일',sun:'일요일'};
 const DAY_ICS = {mon:'MO',tue:'TU',wed:'WE',thu:'TH',fri:'FR',sat:'SA',sun:'SU'};
 const PLAN_SUBJECTS = ['🦕 수학왕국','🔬 과학탐험대','📖 자유 공부','✏️ 학교 숙제'];
+const SUBJECT_LINKS = {
+  '🦕 수학왕국': 'https://choisuka.github.io/toro_math/',
+  '🔬 과학탐험대': 'https://choisuka.github.io/science_game/'
+};
 const MASCOT_TIPS = {
   mon:'월요일은 학원 마치고 피곤할 수 있어요. 짧고 굵게 잡아볼까요?',
   tue:'화요일엔 지난주 배운 걸 살짝 복습해보는 것도 좋아요.',
@@ -778,6 +790,27 @@ function planDurationMinutes(d){
   const [eh,em] = d.end.split(':').map(Number);
   const mins = (eh*60+em) - (sh*60+sm);
   return mins > 0 ? mins : 0;
+}
+
+/* ───────── 타이머 화면에 오늘의 과목/페이지 표시 ───────── */
+function renderTimerSubject(){
+  const box = document.getElementById('timerSubjectBox');
+  if(!box) return;
+  const d = plan.updatedAt ? plan.days[todayKey()] : null;
+  if(!d || d.skip){
+    box.style.display = 'none';
+    box.innerHTML = '';
+    return;
+  }
+  const link = SUBJECT_LINKS[d.subject];
+  box.innerHTML = `
+    <div class="timer-subject-box">
+      <div class="ts-label">지금 시간에 계획된 과목</div>
+      <div class="ts-subject">${d.subject}</div>
+      ${d.note ? `<div class="ts-note">${d.note}</div>` : ''}
+      ${link ? `<a class="ts-link" href="${link}" target="_blank" rel="noopener">📖 지금 페이지 열기</a>` : ''}
+    </div>`;
+  box.style.display = 'block';
 }
 
 /* ───────── 홈 화면 계획 배너 ───────── */
