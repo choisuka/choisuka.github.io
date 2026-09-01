@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="토로의 집중력 정원">
-<meta name="description" content="토로의 집중력 정원 — 호흡 준비, 뽀모도로 타이머, 주의력 미니게임으로 아이의 집중력을 키우는 무료 앱">
+<meta name="description" content="토로의 집중력 정원 — 호흡 준비, 집중 타이머, 주의력 미니게임으로 아이의 집중력을 키우는 무료 앱">
 <meta name="theme-color" content="#0a0a1a">
 <title>토로의 집중력 정원</title>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
@@ -145,12 +145,18 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .breathe-count{font-size:.85rem;color:rgba(255,255,255,.5)}
 
 /* 타이머 화면 */
-.duration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+.duration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
 .dur-btn{
   padding:14px 4px;border-radius:12px;border:1px solid rgba(255,255,255,.15);
   background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-family:'Jua',sans-serif;font-size:.95rem;
 }
 .dur-btn.selected{background:linear-gradient(135deg,#059669,#10b981);border-color:transparent}
+.custom-duration-row{margin-bottom:18px}
+.custom-duration-row input[type=number]{
+  width:100%;padding:11px 14px;border-radius:10px;margin-top:6px;
+  border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;
+  font-family:'Nanum Gothic',sans-serif;font-size:.9rem;
+}
 .timer-ring-wrap{position:relative;width:220px;height:220px;margin:0 auto 20px}
 .timer-ring-wrap svg{transform:rotate(-90deg)}
 .timer-ring-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:12}
@@ -202,12 +208,15 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
 .plan-banner{border-radius:20px;padding:20px;margin-bottom:18px;text-align:center}
 .plan-banner.empty{background:linear-gradient(135deg,#1c1000,#451a03);border:1px solid rgba(245,158,11,.35)}
 .plan-banner.today{background:linear-gradient(135deg,#052e16,#0c1a3a);border:1px solid rgba(74,222,128,.3);text-align:left}
-.plan-banner h3{font-family:'Jua',sans-serif;font-size:1.05rem;margin-bottom:6px}
+.plan-banner h3{font-family:'Jua',sans-serif;font-size:1.05rem;margin-bottom:10px}
 .plan-banner p{font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:12px}
-.plan-today-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-.plan-today-info{font-size:.85rem;color:rgba(255,255,255,.85)}
+.plan-today-info{font-size:.85rem;color:rgba(255,255,255,.85);line-height:1.5}
 .plan-today-info b{font-family:'Jua',sans-serif;color:#4ade80}
 .plan-edit-link{display:inline-block;margin-top:8px;font-size:.76rem;color:rgba(255,255,255,.45);text-decoration:underline;cursor:pointer;background:none;border:none}
+.plan-block-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(255,255,255,.04);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.plan-block-row.now{border:1px solid rgba(74,222,128,.5);background:rgba(74,222,128,.1)}
+.plan-block-row.done{opacity:.4}
+.plan-block-now-tag{display:inline-block;font-size:.68rem;color:#4ade80;font-family:'Jua',sans-serif;margin-bottom:2px}
 
 /* 동기부여 인트로 */
 .story-card{text-align:center;padding:10px 6px}
@@ -230,27 +239,24 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
 .plan-dot.current{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff}
 .plan-day-title{text-align:center;font-family:'Jua',sans-serif;font-size:1.3rem;margin-bottom:6px}
 .mascot-tip{background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.25);border-radius:12px;padding:10px 14px;font-size:.8rem;color:rgba(255,255,255,.75);margin-bottom:18px;line-height:1.6}
-.plan-skip-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.05);border-radius:12px;padding:10px 14px;margin-bottom:16px}
-.plan-skip-row label{font-size:.86rem}
-.switch{position:relative;width:44px;height:24px}
-.switch input{opacity:0;width:0;height:0}
-.switch-track{position:absolute;inset:0;background:rgba(255,255,255,.15);border-radius:20px;cursor:pointer;transition:.2s}
-.switch-track::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
-.switch input:checked + .switch-track{background:#a855f7}
-.switch input:checked + .switch-track::before{transform:translateX(20px)}
 .plan-field-label{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:6px;display:block}
 .time-row{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .time-row input[type=time]{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:'Nanum Gothic',sans-serif;font-size:.9rem;color-scheme:dark}
 .subject-chips{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
 .subject-chip{padding:12px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:.82rem;text-align:center}
 .subject-chip.selected{background:linear-gradient(135deg,#1d4ed8,#3b82f6);border-color:transparent}
-.plan-note-input{width:100%;padding:11px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:'Nanum Gothic',sans-serif;font-size:.86rem;margin-bottom:18px}
+.plan-note-input{width:100%;padding:11px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:'Nanum Gothic',sans-serif;font-size:.86rem;margin-bottom:6px}
 .plan-nav{display:flex;gap:10px}
-.plan-skip-note{text-align:center;color:rgba(255,255,255,.4);font-size:.82rem;padding:20px 0}
+.plan-rest-note{text-align:center;color:rgba(255,255,255,.4);font-size:.82rem;padding:16px 0}
+.plan-block-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px;margin-bottom:14px}
+.plan-block-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.plan-block-num{font-family:'Jua',sans-serif;font-size:.85rem;color:rgba(255,255,255,.5)}
+.plan-block-remove{background:none;border:none;color:rgba(239,68,68,.8);font-size:.75rem;cursor:pointer;padding:4px}
+.add-block-btn{margin-bottom:18px}
 
 /* 계획 완성 화면 */
 .plan-week-table{width:100%;border-collapse:collapse;font-size:.78rem;margin-bottom:18px}
-.plan-week-table th,.plan-week-table td{padding:8px 6px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08)}
+.plan-week-table th,.plan-week-table td{padding:8px 6px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
 .plan-week-table th{color:rgba(255,255,255,.45);font-weight:400}
 .alarm-box{background:rgba(255,255,255,.05);border-radius:14px;padding:16px;margin-bottom:16px}
 .alarm-box p{font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:12px}
@@ -269,7 +275,7 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
 
   <header>
     <h1>🌱 토로의 집중력 정원</h1>
-    <p>짧은 호흡으로 마음을 가라앉히고, 타이머 집중과 주의력 게임으로<br>공부하기 좋은 상태를 만들어요. 집중력을 채운 뒤 바로 공부를 시작해보세요!</p>
+    <p>짧은 호흡으로 마음을 가라앉히고, 계획한 만큼 충분히 집중해서 공부해요.<br>공부가 끝나면 그때 쉬어도 좋아요.</p>
   </header>
 
   <!-- 홈 화면 -->
@@ -297,10 +303,10 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
     </button>
 
     <div class="mode-grid">
-      <button class="mode-btn mode-timer" onclick="startBreathing('timer')">
+      <button class="mode-btn mode-timer" onclick="startManualTimer()">
         <span class="m-icon">⏳</span>
-        <span class="m-title">공부 워밍업 타이머</span>
-        <span class="m-desc">호흡으로 준비하고<br>뽀모도로 타이머로 집중해서<br>공부할 몸과 마음을 만들어요</span>
+        <span class="m-title">집중 타이머</span>
+        <span class="m-desc">호흡으로 짧게 준비하고<br>원하는 만큼 길게 집중해요<br>(휴식은 끝난 뒤에!)</span>
       </button>
       <button class="mode-btn mode-game" onclick="startBreathing('game')">
         <span class="m-icon">🎯</span>
@@ -330,29 +336,8 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
       <div class="plan-day-title" id="planDayTitle">월요일 계획</div>
       <div class="mascot-tip" id="planMascotTip">🦕 토로의 한마디</div>
 
-      <div class="plan-skip-row">
-        <label for="planSkipToggle">오늘은 쉬는 날이에요</label>
-        <div class="switch">
-          <input type="checkbox" id="planSkipToggle" onchange="onPlanSkipToggle()">
-          <span class="switch-track" onclick="document.getElementById('planSkipToggle').click()"></span>
-        </div>
-      </div>
-
-      <div id="planFieldsWrap">
-        <span class="plan-field-label">공부 가능한 시간</span>
-        <div class="time-row">
-          <input type="time" id="planStartInput" value="19:00">
-          <span>~</span>
-          <input type="time" id="planEndInput" value="19:30">
-        </div>
-
-        <span class="plan-field-label">무엇을 공부할까요?</span>
-        <div class="subject-chips" id="planSubjectChips"></div>
-
-        <span class="plan-field-label">오늘의 목표 메모 (선택)</span>
-        <input type="text" class="plan-note-input" id="planNoteInput" placeholder="예: 분수 3단원 문제 5개 풀기">
-      </div>
-      <div id="planSkipNote" class="plan-skip-note" style="display:none">🌙 쉬는 날은 편히 쉬어요!</div>
+      <div id="planBlocksList"></div>
+      <button type="button" class="btn btn-ghost add-block-btn" onclick="addPlanBlock()">+ 공부 시간 추가</button>
 
       <div class="plan-nav">
         <button class="btn btn-ghost" id="planPrevBtn" onclick="planFormPrev()">← 이전</button>
@@ -443,12 +428,17 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
   <!-- 타이머 화면 -->
   <section class="screen" id="screen-timer">
     <div class="card" id="timerSetupCard">
-      <h3 style="text-align:center;margin-bottom:14px">공부 시작 전, 몇 분 집중해볼까요?</h3>
-      <div class="duration-grid">
-        <button class="dur-btn" data-min="5" onclick="selectDuration(5)">5분</button>
-        <button class="dur-btn" data-min="10" onclick="selectDuration(10)">10분</button>
-        <button class="dur-btn" data-min="15" onclick="selectDuration(15)">15분</button>
-        <button class="dur-btn" data-min="20" onclick="selectDuration(20)">20분</button>
+      <h3 style="text-align:center;margin-bottom:6px">오늘 얼마나 공부할까요?</h3>
+      <p style="text-align:center;font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:14px">중학생 이상은 1시간 이상 이어서 집중하는 걸 추천해요</p>
+      <div class="duration-grid" id="durationGrid">
+        <button class="dur-btn" data-min="30" onclick="selectDuration(30)">30분</button>
+        <button class="dur-btn" data-min="60" onclick="selectDuration(60)">60분</button>
+        <button class="dur-btn" data-min="90" onclick="selectDuration(90)">90분</button>
+        <button class="dur-btn" data-min="120" onclick="selectDuration(120)">120분</button>
+      </div>
+      <div class="custom-duration-row">
+        <span class="plan-field-label">또는 직접 입력 (분)</span>
+        <input type="number" id="customDurationInput" min="5" max="240" step="5" placeholder="예: 45" oninput="selectCustomDuration(this.value)">
       </div>
       <button class="btn btn-green" id="timerStartBtn" disabled onclick="beginTimer()">▶ 집중 시작</button>
     </div>
@@ -492,6 +482,9 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
       <div class="result-emoji" id="resultEmoji">🌳</div>
       <div class="result-title jua" id="resultTitle">정말 잘했어요!</div>
       <div class="result-grid" id="resultGrid"></div>
+      <div id="resultRestCTA" style="display:none;margin-bottom:10px">
+        <button class="btn btn-ghost" onclick="openRecoverPicker()">🌊 잠깐 쉬었다 갈까요?</button>
+      </div>
       <div id="resultStudyLinks" style="display:none;margin-bottom:12px">
         <p style="text-align:center;font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:10px">집중력이 채워졌어요! 지금 바로 공부하러 가볼까요?</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
@@ -601,7 +594,7 @@ function startBreathing(mode, autoStart){
 function enterTimerScreen(){
   showScreen('screen-timer');
   if(breatheAutoStart){
-    if(!selectedMinutes) selectedMinutes = 5;
+    if(!selectedMinutes) selectedMinutes = 60;
     beginTimer();
   }
 }
@@ -639,8 +632,9 @@ function skipBreathing(){
   else startStroopGame();
 }
 
-/* ───────── 뽀모도로 타이머 ───────── */
+/* ───────── 집중 타이머 (계획 시간과 통일된 자유 길이) ───────── */
 let selectedMinutes = null;
+let activeTimerBlock = null; // 계획의 특정 세션에서 시작한 경우, 그 세션 정보 {start,end,subject,note}
 let timerTotalSeconds = 0;
 let timerRemaining = 0;
 let timerInterval = null;
@@ -648,11 +642,18 @@ let timerPaused = false;
 const RING_R = 96;
 const RING_CIRC = 2 * Math.PI * RING_R;
 
+function startManualTimer(){
+  activeTimerBlock = null;
+  startBreathing('timer');
+}
 function resetTimerScreen(){
   document.getElementById('timerSetupCard').style.display = 'block';
   document.getElementById('timerRunCard').style.display = 'none';
   document.querySelectorAll('.dur-btn').forEach(b=>b.classList.remove('selected'));
+  const custom = document.getElementById('customDurationInput');
+  if(custom) custom.value = '';
   selectedMinutes = null;
+  activeTimerBlock = null;
   document.getElementById('timerStartBtn').disabled = true;
 }
 function selectDuration(min){
@@ -660,7 +661,20 @@ function selectDuration(min){
   document.querySelectorAll('.dur-btn').forEach(b=>{
     b.classList.toggle('selected', Number(b.dataset.min) === min);
   });
+  const custom = document.getElementById('customDurationInput');
+  if(custom) custom.value = '';
   document.getElementById('timerStartBtn').disabled = false;
+}
+function selectCustomDuration(val){
+  const n = parseInt(val, 10);
+  document.querySelectorAll('.dur-btn').forEach(b=>b.classList.remove('selected'));
+  if(n && n > 0){
+    selectedMinutes = n;
+    document.getElementById('timerStartBtn').disabled = false;
+  }else{
+    selectedMinutes = null;
+    document.getElementById('timerStartBtn').disabled = true;
+  }
 }
 function fmtTime(sec){
   const m = Math.floor(sec/60).toString().padStart(2,'0');
@@ -733,6 +747,7 @@ function showTimerResult(completed, minutes, earned){
     <div class="result-box"><div class="num">+${earned}</div><div class="lbl">획득 포인트</div></div>
     <div class="result-box"><div class="num">${data.streak}일</div><div class="lbl">연속 기록</div></div>
   `;
+  document.getElementById('resultRestCTA').style.display = completed ? 'block' : 'none';
   document.getElementById('resultStudyLinks').style.display = 'block';
   resetTimerScreen();
   showScreen('screen-result');
@@ -849,6 +864,7 @@ function finishStroopGame(){
     <div class="result-box"><div class="num">${avgReaction}ms</div><div class="lbl">평균 반응속도</div></div>
     <div class="result-box"><div class="num">+${earned}</div><div class="lbl">획득 포인트</div></div>
   `;
+  document.getElementById('resultRestCTA').style.display = 'none';
   document.getElementById('resultStudyLinks').style.display = 'block';
   showScreen('screen-result');
 }
@@ -922,6 +938,7 @@ function finishRecover(method){
   document.getElementById('resultGrid').innerHTML = `
     <div class="result-box" style="flex:1"><div class="num" style="font-size:.95rem">준비됐으면, 다시 돌아가볼까요? 🙂</div></div>
   `;
+  document.getElementById('resultRestCTA').style.display = 'none';
   document.getElementById('resultStudyLinks').style.display = 'block';
   showScreen('screen-result');
 }
@@ -1004,7 +1021,7 @@ function clearDoodle(){
   doodleCtx.clearRect(0,0,canvas.width,canvas.height);
 }
 
-/* ───────── 주간 계획 데이터 ───────── */
+/* ───────── 주간 계획 데이터 (하루에 여러 세션 지원) ───────── */
 const PLAN_KEY = 'toro_focus_plan_v1';
 const DAY_KEYS = ['mon','tue','wed','thu','fri','sat','sun'];
 const DAY_LABELS = {mon:'월요일',tue:'화요일',wed:'수요일',thu:'목요일',fri:'금요일',sat:'토요일',sun:'일요일'};
@@ -1015,27 +1032,51 @@ const SUBJECT_LINKS = {
   '🔬 과학탐험대': 'https://choisuka.github.io/science_game/'
 };
 const MASCOT_TIPS = {
-  mon:'월요일은 학원 마치고 피곤할 수 있어요. 짧고 굵게 잡아볼까요?',
+  mon:'월요일은 학원 마치고 피곤할 수 있어요. 그래도 한 세션은 1시간 이상 이어가봐요.',
   tue:'화요일엔 지난주 배운 걸 살짝 복습해보는 것도 좋아요.',
   wed:'한 주의 중간! 페이스를 유지하는 게 중요해요.',
   thu:'목요일은 주말이 얼마 안 남았어요. 조금만 더 힘내요!',
   fri:'금요일엔 이번 주 계획을 마무리 짓는 느낌으로 가볍게!',
-  sat:'주말엔 여유있게, 부족했던 부분을 복습해봐요.',
+  sat:'주말엔 시간이 넉넉하니 두 세션으로 나눠보는 것도 좋아요.',
   sun:'다음 주를 준비하는 마음으로 편하게 정리해봐요.'
 };
 
-function defaultPlanDay(){ return { skip:false, start:'19:00', end:'19:30', subject:PLAN_SUBJECTS[0], note:'' }; }
+function defaultPlanBlock(startOverride){
+  const start = startOverride || '19:00';
+  return { start, end: addMinutesToTime(start, 60), subject: PLAN_SUBJECTS[0], note:'' };
+}
+function addMinutesToTime(hhmm, mins){
+  let [h,m] = hhmm.split(':').map(Number);
+  m += mins;
+  h += Math.floor(m/60);
+  m = ((m % 60) + 60) % 60;
+  h = ((h % 24) + 24) % 24;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+}
+function toMin(hhmm){ const [h,m] = hhmm.split(':').map(Number); return h*60+m; }
+
 function loadPlan(){
   try{
     const raw = localStorage.getItem(PLAN_KEY);
     if(raw){
       const p = JSON.parse(raw);
-      DAY_KEYS.forEach(k=>{ if(!p.days[k]) p.days[k] = defaultPlanDay(); });
+      p.days = p.days || {};
+      DAY_KEYS.forEach(k=>{
+        const v = p.days[k];
+        if(Array.isArray(v)){
+          // 이미 새 형식(배열)
+        }else if(v && typeof v === 'object'){
+          // 예전 형식(요일당 블록 1개) → 배열로 마이그레이션
+          p.days[k] = v.skip ? [] : [{start:v.start||'19:00', end:v.end||'20:00', subject:v.subject||PLAN_SUBJECTS[0], note:v.note||''}];
+        }else{
+          p.days[k] = [defaultPlanBlock()];
+        }
+      });
       return p;
     }
   }catch(e){}
   const days = {};
-  DAY_KEYS.forEach(k=>days[k]=defaultPlanDay());
+  DAY_KEYS.forEach(k=>days[k]=[defaultPlanBlock()]);
   return { days, updatedAt:null, weeksCompleted:0 };
 }
 function savePlan(p){ try{ localStorage.setItem(PLAN_KEY, JSON.stringify(p)); }catch(e){} }
@@ -1044,36 +1085,38 @@ function todayKey(){
   const idx = new Date().getDay(); // 0=Sun
   return DAY_KEYS[(idx+6)%7];
 }
-function planDurationMinutes(d){
-  if(!d || d.skip) return 0;
-  const [sh,sm] = d.start.split(':').map(Number);
-  const [eh,em] = d.end.split(':').map(Number);
-  const mins = (eh*60+em) - (sh*60+sm);
+function blockDurationMinutes(b){
+  const mins = toMin(b.end) - toMin(b.start);
   return mins > 0 ? mins : 0;
 }
 
-/* ───────── 타이머 화면에 오늘의 과목/페이지 표시 ───────── */
+/* ───────── 타이머 화면에 지금 계획된 과목/페이지 표시 ───────── */
 function renderTimerSubject(){
   const box = document.getElementById('timerSubjectBox');
   if(!box) return;
-  const d = plan.updatedAt ? plan.days[todayKey()] : null;
-  if(!d || d.skip){
+  let b = activeTimerBlock;
+  if(!b && plan.updatedAt){
+    const blocks = plan.days[todayKey()] || [];
+    const nowMin = new Date().getHours()*60 + new Date().getMinutes();
+    b = blocks.find(x => nowMin >= toMin(x.start) && nowMin <= toMin(x.end)) || null;
+  }
+  if(!b){
     box.style.display = 'none';
     box.innerHTML = '';
     return;
   }
-  const link = SUBJECT_LINKS[d.subject];
+  const link = SUBJECT_LINKS[b.subject];
   box.innerHTML = `
     <div class="timer-subject-box">
       <div class="ts-label">지금 시간에 계획된 과목</div>
-      <div class="ts-subject">${d.subject}</div>
-      ${d.note ? `<div class="ts-note">${d.note}</div>` : ''}
+      <div class="ts-subject">${b.subject}</div>
+      ${b.note ? `<div class="ts-note">${b.note}</div>` : ''}
       ${link ? `<a class="ts-link" href="${link}" target="_blank" rel="noopener">📖 지금 페이지 열기</a>` : ''}
     </div>`;
   box.style.display = 'block';
 }
 
-/* ───────── 홈 화면 계획 배너 ───────── */
+/* ───────── 홈 화면 계획 배너 (하루 여러 세션 표시) ───────── */
 function renderPlanBanner(){
   const el = document.getElementById('planBanner');
   if(!el) return;
@@ -1087,8 +1130,8 @@ function renderPlanBanner(){
     return;
   }
   const tk = todayKey();
-  const d = plan.days[tk];
-  if(!d || d.skip){
+  const blocks = plan.days[tk] || [];
+  if(blocks.length === 0){
     el.innerHTML = `
       <div class="plan-banner today">
         <h3>🌙 오늘(${DAY_LABELS[tk]})은 쉬는 날이에요</h3>
@@ -1097,20 +1140,31 @@ function renderPlanBanner(){
       </div>`;
     return;
   }
-  const mins = planDurationMinutes(d);
+  const nowMin = new Date().getHours()*60 + new Date().getMinutes();
+  const withIdx = blocks.map((b,i)=>({b,i})).sort((a,b2)=>toMin(a.b.start)-toMin(b2.b.start));
+  const rows = withIdx.map(({b,i})=>{
+    const mins = blockDurationMinutes(b);
+    const startMin = toMin(b.start), endMin = toMin(b.end);
+    const status = nowMin < startMin ? '' : (nowMin <= endMin ? 'now' : 'done');
+    const tag = status==='now' ? '<span class="plan-block-now-tag">🟢 지금 시간이에요</span><br>' : '';
+    return `
+      <div class="plan-block-row ${status}">
+        <div class="plan-today-info">${tag}⏰ <b>${b.start}~${b.end}</b> (${mins}분)<br>${b.subject}${b.note?' · '+b.note:''}</div>
+        <button class="btn btn-green" style="width:auto;padding:8px 16px;font-size:.82rem;flex-shrink:0" onclick="startPlannedTimer(${mins}, ${i})">▶ 시작</button>
+      </div>`;
+  }).join('');
   el.innerHTML = `
     <div class="plan-banner today">
-      <h3>📌 오늘(${DAY_LABELS[tk]})의 계획</h3>
-      <div class="plan-today-row">
-        <div class="plan-today-info">⏰ <b>${d.start}~${d.end}</b> (${mins}분)<br>${d.subject}${d.note ? ' · '+d.note : ''}</div>
-      </div>
-      <button class="btn btn-green" onclick="startPlannedTimer(${mins})">▶ 계획대로 집중 시작</button>
+      <h3>📌 오늘(${DAY_LABELS[tk]})의 계획 · 세션 ${blocks.length}개</h3>
+      ${rows}
       <button class="plan-edit-link" onclick="startPlanFlow(true)">계획 다시 세우기</button>
     </div>`;
 }
 
-function startPlannedTimer(minutes){
-  selectedMinutes = Math.max(1, minutes || 5);
+function startPlannedTimer(minutes, blockIdx){
+  selectedMinutes = Math.max(1, minutes || 60);
+  const blocks = plan.days[todayKey()] || [];
+  activeTimerBlock = (blockIdx != null && blocks[blockIdx]) ? blocks[blockIdx] : null;
   startBreathing('timer', true);
 }
 
@@ -1124,7 +1178,7 @@ const STORY_CARDS = [
   {
     emoji:'🗓️',
     title:'요일마다 학교·학원 시간이 정해져 있죠',
-    body:'그 사이 남는 시간이 진짜 <b>내 공부 시간</b>이에요.<br>그 시간을 미리 정해두면 흔들리지 않아요.'
+    body:'그 사이 남는 시간이 진짜 <b>내 공부 시간</b>이에요.<br>하루에 여러 번 나눠서 해도 괜찮아요.'
   },
   {
     emoji:'📈',
@@ -1165,7 +1219,7 @@ function startPlanFlow(skipIntro){
   showScreen('screen-plan-intro');
 }
 
-/* ───────── 7일 계획 폼 ───────── */
+/* ───────── 7일 계획 폼 (하루 여러 세션) ───────── */
 let planDayIdx = 0;
 let planDraft = null;
 function beginPlanForm(){
@@ -1183,42 +1237,71 @@ function renderPlanDots(){
     return `<span class="plan-dot ${cls}">${i+1}</span>`;
   }).join('');
 }
+function currentDayBlocks(){
+  return planDraft[DAY_KEYS[planDayIdx]];
+}
 function renderPlanDayCard(){
   const key = DAY_KEYS[planDayIdx];
-  const d = planDraft[key];
   document.getElementById('planDayTitle').textContent = `${DAY_LABELS[key]} 계획`;
   document.getElementById('planMascotTip').textContent = '🦕 토로의 한마디: ' + MASCOT_TIPS[key];
-  document.getElementById('planSkipToggle').checked = !!d.skip;
-  document.getElementById('planStartInput').value = d.start;
-  document.getElementById('planEndInput').value = d.end;
-  document.getElementById('planNoteInput').value = d.note || '';
-  document.getElementById('planSubjectChips').innerHTML = PLAN_SUBJECTS.map(s=>
-    `<button type="button" class="subject-chip${s===d.subject?' selected':''}" onclick="pickPlanSubject('${s}')">${s}</button>`
-  ).join('');
-  document.getElementById('planFieldsWrap').style.display = d.skip ? 'none' : 'block';
-  document.getElementById('planSkipNote').style.display = d.skip ? 'block' : 'none';
+  renderPlanBlocksList();
   document.getElementById('planPrevBtn').style.visibility = planDayIdx===0 ? 'hidden' : 'visible';
   document.getElementById('planNextBtn').textContent = planDayIdx===DAY_KEYS.length-1 ? '🎉 계획 완성하기' : '다음 →';
 }
-function pickPlanSubject(s){
-  saveCurrentDayDraft();
-  planDraft[DAY_KEYS[planDayIdx]].subject = s;
-  renderPlanDayCard();
+function renderPlanBlocksList(){
+  const blocks = currentDayBlocks();
+  const wrap = document.getElementById('planBlocksList');
+  if(blocks.length === 0){
+    wrap.innerHTML = `<div class="plan-rest-note">🌙 아직 이 요일엔 공부 세션이 없어요.<br>이대로 두면 쉬는 날이 돼요. 필요하면 아래에서 추가해보세요.</div>`;
+    return;
+  }
+  wrap.innerHTML = blocks.map((b,i)=>`
+    <div class="plan-block-card">
+      <div class="plan-block-header">
+        <span class="plan-block-num">세션 ${i+1}</span>
+        ${blocks.length>1 ? `<button type="button" class="plan-block-remove" onclick="removePlanBlock(${i})">✕ 삭제</button>` : ''}
+      </div>
+      <span class="plan-field-label">공부 시간 (1시간 이상 추천)</span>
+      <div class="time-row">
+        <input type="time" value="${b.start}" onchange="updatePlanBlockField(${i},'start',this.value)">
+        <span>~</span>
+        <input type="time" value="${b.end}" onchange="updatePlanBlockField(${i},'end',this.value)">
+      </div>
+      <span class="plan-field-label">무엇을 공부할까요?</span>
+      <div class="subject-chips" data-block="${i}">
+        ${PLAN_SUBJECTS.map(s=>`<button type="button" class="subject-chip${s===b.subject?' selected':''}" onclick="pickPlanBlockSubject(${i},'${s}')">${s}</button>`).join('')}
+      </div>
+      <span class="plan-field-label">목표 메모 (선택)</span>
+      <input type="text" class="plan-note-input" value="${(b.note||'').replace(/"/g,'&quot;')}" placeholder="예: 분수 3단원 문제 5개 풀기" oninput="updatePlanBlockField(${i},'note',this.value)">
+    </div>
+  `).join('');
 }
-function onPlanSkipToggle(){
-  saveCurrentDayDraft();
-  planDraft[DAY_KEYS[planDayIdx]].skip = document.getElementById('planSkipToggle').checked;
-  renderPlanDayCard();
+function updatePlanBlockField(idx, field, value){
+  const blocks = currentDayBlocks();
+  if(!blocks[idx]) return;
+  blocks[idx][field] = value;
 }
-function saveCurrentDayDraft(){
-  const key = DAY_KEYS[planDayIdx];
-  const d = planDraft[key];
-  d.start = document.getElementById('planStartInput').value || d.start;
-  d.end = document.getElementById('planEndInput').value || d.end;
-  d.note = document.getElementById('planNoteInput').value.trim();
+function pickPlanBlockSubject(idx, s){
+  updatePlanBlockField(idx, 'subject', s);
+  const chipWrap = document.querySelector(`.subject-chips[data-block="${idx}"]`);
+  if(chipWrap){
+    chipWrap.querySelectorAll('.subject-chip').forEach(btn=>{
+      btn.classList.toggle('selected', btn.textContent === s);
+    });
+  }
+}
+function addPlanBlock(){
+  const blocks = currentDayBlocks();
+  const last = blocks[blocks.length-1];
+  const startTime = last ? addMinutesToTime(last.end, 30) : '18:00';
+  blocks.push(defaultPlanBlock(startTime));
+  renderPlanBlocksList();
+}
+function removePlanBlock(idx){
+  currentDayBlocks().splice(idx,1);
+  renderPlanBlocksList();
 }
 function planFormNext(){
-  saveCurrentDayDraft();
   if(planDayIdx < DAY_KEYS.length-1){
     planDayIdx++;
     renderPlanDots();
@@ -1228,7 +1311,6 @@ function planFormNext(){
   }
 }
 function planFormPrev(){
-  saveCurrentDayDraft();
   if(planDayIdx > 0){
     planDayIdx--;
     renderPlanDots();
@@ -1250,14 +1332,16 @@ function finishPlanForm(){
 }
 function renderPlanCelebrate(){
   const rows = DAY_KEYS.map(k=>{
-    const d = plan.days[k];
-    const desc = d.skip ? '쉬는 날 🌙' : `${d.start}~${d.end} · ${d.subject}`;
+    const blocks = plan.days[k] || [];
+    const desc = blocks.length
+      ? blocks.map(b=>`${b.start}~${b.end} · ${b.subject}`).join('<br>')
+      : '쉬는 날 🌙';
     return `<tr><td>${DAY_LABELS[k]}</td><td>${desc}</td></tr>`;
   }).join('');
   document.getElementById('planWeekTable').innerHTML = `<tr><th>요일</th><th>계획</th></tr>${rows}`;
 }
 
-/* ───────── 캘린더(.ics) 내보내기 ───────── */
+/* ───────── 캘린더(.ics) 내보내기 (하루 여러 세션) ───────── */
 function pad2(n){ return String(n).padStart(2,'0'); }
 function nextDateForDow(dowIcs){
   const order = ['SU','MO','TU','WE','TH','FR','SA'];
@@ -1274,24 +1358,25 @@ function icsDateTime(date, hh, mm){
 function downloadPlanICS(){
   const lines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Toro Focus Garden//KO'];
   DAY_KEYS.forEach(k=>{
-    const d = plan.days[k];
-    if(d.skip) return;
-    const [sh,sm] = d.start.split(':').map(Number);
-    const [eh,em] = d.end.split(':').map(Number);
-    const startDate = nextDateForDow(DAY_ICS[k]);
-    const uid = `toro-focus-${k}-${Date.now()}@choisuka.github.io`;
-    lines.push(
-      'BEGIN:VEVENT',
-      `UID:${uid}`,
-      `DTSTAMP:${icsDateTime(new Date(), new Date().getHours(), new Date().getMinutes())}`,
-      `DTSTART:${icsDateTime(startDate, sh, sm)}`,
-      `DTEND:${icsDateTime(startDate, eh, em)}`,
-      `RRULE:FREQ=WEEKLY;BYDAY=${DAY_ICS[k]}`,
-      `SUMMARY:🌱 ${d.subject} 공부 시간`,
-      `DESCRIPTION:${(d.note||'토로의 집중력 정원 계획').replace(/\n/g,' ')}`,
-      'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:공부 시간 10분 전이에요!','TRIGGER:-PT10M','END:VALARM',
-      'END:VEVENT'
-    );
+    const blocks = plan.days[k] || [];
+    blocks.forEach((b, i)=>{
+      const [sh,sm] = b.start.split(':').map(Number);
+      const [eh,em] = b.end.split(':').map(Number);
+      const startDate = nextDateForDow(DAY_ICS[k]);
+      const uid = `toro-focus-${k}-${i}-${Date.now()}@choisuka.github.io`;
+      lines.push(
+        'BEGIN:VEVENT',
+        `UID:${uid}`,
+        `DTSTAMP:${icsDateTime(new Date(), new Date().getHours(), new Date().getMinutes())}`,
+        `DTSTART:${icsDateTime(startDate, sh, sm)}`,
+        `DTEND:${icsDateTime(startDate, eh, em)}`,
+        `RRULE:FREQ=WEEKLY;BYDAY=${DAY_ICS[k]}`,
+        `SUMMARY:🌱 ${b.subject} 공부 시간`,
+        `DESCRIPTION:${(b.note||'토로의 집중력 정원 계획').replace(/\n/g,' ')}`,
+        'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:공부 시간 10분 전이에요!','TRIGGER:-PT10M','END:VALARM',
+        'END:VEVENT'
+      );
+    });
   });
   lines.push('END:VCALENDAR');
   const blob = new Blob([lines.join('\r\n')], {type:'text/calendar;charset=utf-8'});
@@ -1305,7 +1390,7 @@ function downloadPlanICS(){
   setTimeout(()=>URL.revokeObjectURL(url), 2000);
 }
 
-/* ───────── 브라우저 알림 (탭이 열려있을 때만 동작) ───────── */
+/* ───────── 브라우저 알림 (탭이 열려있을 때만 동작, 하루 여러 세션) ───────── */
 let notifyTimers = [];
 function enableBrowserNotify(){
   if(!('Notification' in window)){
@@ -1326,17 +1411,18 @@ function scheduleTodayNotification(){
   notifyTimers.forEach(t=>clearTimeout(t));
   notifyTimers = [];
   if(Notification.permission !== 'granted') return;
-  const d = plan.days[todayKey()];
-  if(!d || d.skip) return;
-  const [h,m] = d.start.split(':').map(Number);
-  const target = new Date();
-  target.setHours(h, m, 0, 0);
-  const delay = target.getTime() - Date.now();
-  if(delay > 0 && delay < 24*60*60*1000){
-    notifyTimers.push(setTimeout(()=>{
-      new Notification('🌱 토로의 집중력 정원', {body:`지금은 ${d.subject} 공부 시간이에요!`});
-    }, delay));
-  }
+  const blocks = plan.days[todayKey()] || [];
+  blocks.forEach(b=>{
+    const [h,m] = b.start.split(':').map(Number);
+    const target = new Date();
+    target.setHours(h, m, 0, 0);
+    const delay = target.getTime() - Date.now();
+    if(delay > 0 && delay < 24*60*60*1000){
+      notifyTimers.push(setTimeout(()=>{
+        new Notification('🌱 토로의 집중력 정원', {body:`지금은 ${b.subject} 공부 시간이에요!`});
+      }, delay));
+    }
+  });
 }
 
 /* ───────── 초기화 ───────── */
