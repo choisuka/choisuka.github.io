@@ -27,6 +27,7 @@ a{color:inherit}
 .top-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .back-link{font-size:.85rem;color:rgba(255,255,255,.5);text-decoration:none;padding:6px 12px;border:1px solid rgba(255,255,255,.15);border-radius:20px}
 .back-link:hover{color:#fff;border-color:rgba(255,255,255,.35)}
+button.back-link{background:none;cursor:pointer;font-family:'Nanum Gothic',sans-serif}
 header{text-align:center;padding:12px 0 24px}
 header h1{font-size:1.9rem;background:linear-gradient(90deg,#10b981,#4ade80,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:1.6}
@@ -269,7 +270,7 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
 
 <div class="wrap">
   <div class="top-nav">
-    <a class="back-link" href="https://choisuka.github.io/">← 메인 허브</a>
+    <button class="back-link" onclick="goHome()">← 정원</button>
     <span class="back-link" style="border-color:transparent;color:rgba(255,255,255,.35)">🦕 토로</span>
   </div>
 
