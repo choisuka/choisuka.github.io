@@ -128,6 +128,21 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .btn-ghost{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15)}
 
 /* 화면 전환 */
+.review-q{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px;margin-bottom:14px;font-size:.92rem;line-height:1.7;text-align:center}
+.review-q .sol{margin-top:8px;font-size:.85rem;color:rgba(255,255,255,.8);text-align:left}
+.review-sol{text-align:left}
+.review-sol strong:first-child{display:block;margin-bottom:6px}
+.review-opts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.review-opt{flex:1;min-width:90px}
+.review-opt.selected{border-color:#a855f7;background:rgba(168,85,247,.25)}
+.review-ask{font-size:.85rem;color:rgba(255,255,255,.7);margin:8px 0}
+.review-input{width:100%;box-sizing:border-box;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:10px;color:#fff;padding:10px;font-size:1rem;font-family:inherit;margin-bottom:10px}
+.review-keys{display:flex;gap:6px;margin-bottom:12px}
+.review-keys .btn{flex:1;padding:8px 0}
+.read-link{text-decoration:none;text-align:left;font-size:.88rem}
+.review-msg{font-size:.9rem;margin:10px 0;text-align:center}
+.review-msg.ok{color:#4ade80}
+.review-msg.warn{color:#fbbf24}
 .screen{display:none}
 .screen.active{display:block}
 
@@ -281,6 +296,20 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
 
   <!-- 홈 화면 -->
   <section class="screen active" id="screen-home">
+    <div id="studyNotice" style="display:none;margin-bottom:12px;padding:10px 14px;border-radius:14px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);font-size:.9rem;text-align:center"></div>
+    <button class="recover-cta" id="reviewCard" style="display:none" onclick="openReview()">
+      <span class="rc-icon">📌</span>
+      <span class="rc-text">
+        <span class="rc-title">오늘 복습할 문제 <span id="reviewCardCount">0</span>개</span>
+        <span class="rc-desc">며칠 전에 공부한 내용, 기억나는지 풀어봐요</span>
+      </span>
+      <span class="rc-arrow">→</span>
+    </button>
+    <div class="card" id="readCard" style="display:none;padding:16px">
+      <div class="jua" style="font-size:1rem;margin-bottom:6px">📖 다시 읽어볼 카드</div>
+      <p style="font-size:.8rem;color:rgba(255,255,255,.6);margin-bottom:10px">카드를 열어서 확인하면 포인트가 들어와요. 다녀온 뒤 정원을 다시 열어 보세요.</p>
+      <div id="readCardList" style="display:grid;gap:8px"></div>
+    </div>
     <div id="planBanner"></div>
 
     <div class="stats-row">
@@ -478,6 +507,14 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
   </section>
 
   <!-- 결과 화면 -->
+  <section class="screen" id="screen-review">
+    <div class="card">
+      <div class="result-title jua">📌 복습 문제</div>
+      <p id="reviewProgress" style="text-align:center;font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:12px"></p>
+      <div id="reviewBody"></div>
+    </div>
+  </section>
+
   <section class="screen" id="screen-result">
     <div class="card">
       <div class="result-emoji" id="resultEmoji">🌳</div>
@@ -544,6 +581,237 @@ function addPoints(n){
   renderHome();
 }
 
+/* ───────── 교재 학습 기록 → 포인트 ───────── */
+// jewish_math의 "오늘 배운 것 적기"가 같은 호스트의 localStorage에 남긴 기록을 읽는다. 같은 단원·같은 날은 한 번만 지급.
+const STUDY_LOG_KEY = 'toro_study_log_v1';
+const STUDY_POINTS = 10, STUDY_BONUS_POINTS = 5;
+let studyNoticeText = '';
+function appendNotice(t){ studyNoticeText = studyNoticeText ? studyNoticeText + ' · ' + t : t; }
+function loadStudyLog(){
+  try{
+    const a = JSON.parse(localStorage.getItem(STUDY_LOG_KEY)||'[]');
+    return Array.isArray(a) ? a : [];
+  }catch(e){ return []; }
+}
+function claimStudyPoints(){
+  if(!Array.isArray(data.claimedStudy)) data.claimedStudy = [];
+  const today = todayStr();
+  const byKey = {};
+  loadStudyLog().forEach(e=>{
+    if(!e || typeof e.unit !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(e.date) || e.date > today) return;
+    const k = e.unit + '|' + e.date;
+    byKey[k] = byKey[k] || {bonus:false};
+    if(e.bonus === true) byKey[k].bonus = true;
+  });
+  let earned = 0, count = 0;
+  Object.keys(byKey).forEach(k=>{
+    if(data.claimedStudy.includes(k)) return;
+    data.claimedStudy.push(k);
+    earned += STUDY_POINTS + (byKey[k].bonus ? STUDY_BONUS_POINTS : 0);
+    count++;
+  });
+  if(count){
+    data.points += earned;
+    data.sessions.push({date: today, type:'study', count, points: earned});
+    saveData(data);
+    appendNotice(`📖 공부 기록 ${count}건 · +${earned}P`);
+  }
+}
+function renderStudyNotice(){
+  const el = document.getElementById('studyNotice');
+  el.style.display = studyNoticeText ? 'block' : 'none';
+  el.textContent = studyNoticeText;
+}
+
+/* ───────── 복습 문제 ───────── */
+// jewish_math에서 "📌 복습할래요"로 예약한 문제(문제·풀이·채점 기준 포함)를 기한이 되면 내고 채점한다.
+// 푼 결과는 이 앱의 data.reviewDone에만 쓴다(교재 쪽 기록과 같은 키를 동시에 쓰지 않으려고).
+const REVIEW_KEY = 'toro_review_v1';
+const REVIEW_PTS = {tried:3, part:10, full:20, viewed:5, opened:5}; // viewed=풀이 확인, opened=카드 열어보기
+const REVIEW_OPEN_KEY = 'toro_review_open_v1'; // 교재가 남기는 "예약한 카드를 열어 봄" 기록 {복습id: 날짜}
+const TEXTBOOK_URL = location.hostname === 'choisuka.github.io'
+  ? 'https://choisuka.github.io/toro_math/jewish_math/index.html'
+  : '../jewish_math/index.html';
+function loadReviews(){
+  try{
+    const a = JSON.parse(localStorage.getItem(REVIEW_KEY)||'[]');
+    return Array.isArray(a) ? a : [];
+  }catch(e){ return []; }
+}
+function dueReviews(){
+  const done = data.reviewDone || {};
+  const today = todayStr();
+  return loadReviews().filter(r=> r && r.id && r.spec && /^\d{4}-\d{2}-\d{2}$/.test(r.due) && r.due <= today && !done[r.id])
+    .sort((a,b)=> a.due < b.due ? -1 : 1);
+}
+function dueSolveReviews(){ return dueReviews().filter(r=>r.spec.kind !== 'open'); }
+function dueOpenReviews(){ return dueReviews().filter(r=>r.spec.kind === 'open'); }
+// 교재에서 예약한 카드를 기한 이후에 열었다면 포인트를 준다(기한을 넘겨서 열면 시도 포인트만)
+function claimOpenedCards(){
+  let touched;
+  try{ touched = JSON.parse(localStorage.getItem(REVIEW_OPEN_KEY)||'{}'); }catch(e){ touched = {}; }
+  if(!touched || typeof touched !== 'object' || Array.isArray(touched)) return;
+  if(!data.reviewDone) data.reviewDone = {};
+  let earned = 0, count = 0;
+  dueOpenReviews().forEach(r=>{
+    const d = touched[r.id];
+    if(typeof d !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(d) || d < r.due) return;
+    const points = d > r.due ? REVIEW_PTS.tried : REVIEW_PTS.opened;
+    data.reviewDone[r.id] = {date: d, tier:'opened', points};
+    data.sessions.push({date: todayStr(), type:'review', tier:'opened', points});
+    earned += points; count++;
+  });
+  if(count){
+    data.points += earned;
+    saveData(data);
+    appendNotice(`📖 카드 복습 ${count}건 · +${earned}P`);
+  }
+}
+function renderReviewCard(){
+  const n = dueSolveReviews().length;
+  const el = document.getElementById('reviewCard');
+  el.style.display = n ? 'block' : 'none';
+  document.getElementById('reviewCardCount').textContent = n;
+  const open = dueOpenReviews();
+  const box = document.getElementById('readCard');
+  box.style.display = open.length ? 'block' : 'none';
+  document.getElementById('readCardList').innerHTML = open.map(r=>
+    `<a class="btn btn-ghost read-link" href="${TEXTBOOK_URL}?open=e4move:${r.spec.card}">${r.spec.title} — 열어서 확인하기 →</a>`).join('');
+}
+/* 식 계산기: eval을 쓰지 않고 + - × ÷ ( )만 직접 계산한다. 잘못된 식은 NaN */
+function calcExpr(s){
+  let i = 0;
+  const peek = ()=> s[i];
+  function num(){
+    const m = /^\d+(\.\d+)?/.exec(s.slice(i));
+    if(!m) return NaN;
+    i += m[0].length;
+    return parseFloat(m[0]);
+  }
+  function factor(){
+    if(peek()==='-'){ i++; return -factor(); }
+    if(peek()==='('){
+      i++;
+      const v = expr();
+      if(peek()!==')') return NaN;
+      i++;
+      return v;
+    }
+    return num();
+  }
+  function term(){
+    let v = factor();
+    while(peek()==='*' || peek()==='/'){
+      const op = s[i++];
+      const r = factor();
+      v = op==='*' ? v*r : (r===0 ? NaN : v/r);
+    }
+    return v;
+  }
+  function expr(){
+    let v = term();
+    while(peek()==='+' || peek()==='-'){
+      const op = s[i++];
+      const r = term();
+      v = op==='+' ? v+r : v-r;
+    }
+    return v;
+  }
+  const v = expr();
+  return i === s.length ? v : NaN;
+}
+/* 식 채점: 'full'=식이 맞고 문제의 수를 씀, 'part'=정답 숫자만 맞음, 'wrong' */
+function judgeExpression(text, spec){
+  const cleaned = text.replace(/[×xX＊]/g,'*').replace(/[÷／]/g,'/').replace(/[−–—]/g,'-')
+    .replace(/[^0-9+\-*\/().=]/g,'');
+  const pieces = cleaned.split('=').filter(p=>p!=='');
+  if(!pieces.length) return 'wrong';
+  const values = pieces.map(calcExpr);
+  if(values.some(v=>isNaN(v))) return 'wrong';
+  if(values.some(v=>Math.abs(v-values[0]) > 1e-9)) return 'wrong'; // 20×3=70 같은 거짓 등식
+  const isAnswer = v => spec.answers.some(a=>Math.abs(a-v) < 1e-9);
+  const hasOp = pieces.some(p=>/[+\-*\/]/.test(p.replace(/^-/,'')));
+  const nums = (cleaned.match(/\d+(\.\d+)?/g)||[]).map(Number);
+  const usesGiven = nums.some(x=>spec.givens.includes(x));
+  if(values.every(isAnswer) && hasOp && usesGiven) return 'full';
+  if(values.some(isAnswer)) return 'part';
+  return 'wrong';
+}
+function reasonOk(text, patterns){
+  const norm = text.replace(/[^가-힣a-zA-Z0-9]/g,'');
+  const distinct = new Set(norm.split('')).size;
+  if(norm.length < 10 || distinct < 5 || text.trim().split(/\s+/).length < 2) return false;
+  return patterns.every(p=>new RegExp(p).test(norm));
+}
+let reviewCur = null, reviewChoice = null;
+function openReview(){
+  const list = dueSolveReviews();
+  if(!list.length){ goHome(); return; }
+  reviewCur = list[0];
+  reviewChoice = null;
+  const spec = reviewCur.spec;
+  let input = '';
+  if(spec.kind==='view'){
+    input = '<p class="review-ask">머릿속으로 풀어 본 다음, 풀이를 확인해 보세요.</p>';
+  }else if(spec.kind==='choice'){
+    input = '<div class="review-opts">' + spec.options.map((o,i)=>`<button class="btn btn-ghost review-opt" onclick="pickReviewOption(${i})">${o}</button>`).join('') + '</div>';
+    if(spec.reason) input += `<p class="review-ask">${spec.reasonAsk}</p><textarea id="reviewText" class="review-input" rows="3" maxlength="200" placeholder="여기에 써 보세요 (10글자 이상)"></textarea>`;
+  }else{
+    input = `<p class="review-ask">${spec.ask}</p><input id="reviewText" class="review-input" type="text" maxlength="60" autocomplete="off" placeholder="식을 써 보세요">`
+      + '<div class="review-keys">' + ['×','÷','(',')','='].map(k=>`<button class="btn btn-ghost" onclick="insertReviewKey('${k}')">${k}</button>`).join('') + '</div>';
+  }
+  document.getElementById('reviewBody').innerHTML =
+    `<div class="review-q">${reviewCur.q}</div>${input}<div id="reviewResult"></div>`
+    + `<button class="btn btn-purple" id="reviewSubmitBtn" onclick="submitReview()">${spec.kind==='view' ? '💡 풀이 확인하기' : '✅ 제출하기'}</button>`;
+  document.getElementById('reviewProgress').textContent = `남은 복습 ${list.length}개`;
+  showScreen('screen-review');
+}
+function pickReviewOption(i){
+  reviewChoice = i;
+  document.querySelectorAll('.review-opt').forEach((b,k)=>b.classList.toggle('selected', k===i));
+}
+function insertReviewKey(k){
+  const el = document.getElementById('reviewText');
+  el.value += k;
+  el.focus();
+}
+function submitReview(){
+  const r = reviewCur, spec = r.spec;
+  const input = document.getElementById('reviewText');
+  const text = input ? input.value.trim() : '';
+  const out = document.getElementById('reviewResult');
+  let tier, msg;
+  if(spec.kind==='view'){
+    tier = 'viewed'; msg = '풀이를 확인했어요! 내 생각과 비교해 보세요.';
+  }else if(spec.kind==='choice'){
+    if(reviewChoice===null){ out.innerHTML = '<p class="review-msg warn">먼저 답을 골라 주세요.</p>'; return; }
+    if(spec.reason && !text){ out.innerHTML = '<p class="review-msg warn">이유도 한 문장 써 주세요.</p>'; return; }
+    if(spec.options[reviewChoice] !== spec.answer){ tier = 'tried'; msg = '아쉬워요. 풀이를 보고 다시 생각해 봐요.'; }
+    else if(spec.reason && !reasonOk(text, spec.reason)){ tier = 'part'; msg = '답은 맞았어요! 이유를 더 정확히 쓰면 만점이에요.'; }
+    else{ tier = 'full'; msg = '정답이에요! 잘 기억하고 있었네요 🌟'; }
+  }else{
+    if(!text){ out.innerHTML = '<p class="review-msg warn">식을 써 주세요.</p>'; return; }
+    const j = judgeExpression(text, spec);
+    if(j==='full'){ tier = 'full'; msg = '식도 답도 맞았어요! 🌟'; }
+    else if(j==='part'){ tier = 'part'; msg = '답은 맞았어요! 문제의 수를 써서 식으로 나타내면 만점이에요.'; }
+    else{ tier = 'tried'; msg = '아쉬워요. 풀이를 보고 다시 생각해 봐요.'; }
+  }
+  const late = todayStr() > r.due;
+  const points = late ? REVIEW_PTS.tried : REVIEW_PTS[tier];
+  if(late && tier!=='tried') msg += ' (기한이 지나서 시도 포인트만 받아요)';  if(!data.reviewDone) data.reviewDone = {};
+  data.reviewDone[r.id] = {date: todayStr(), tier, points};
+  data.points += points;
+  data.sessions.push({date: todayStr(), type:'review', tier, points});
+  saveData(data);
+  document.querySelectorAll('.review-opt, .review-keys .btn').forEach(b=>b.disabled = true);
+  document.getElementById('reviewSubmitBtn').style.display = 'none';
+  if(input) input.disabled = true;
+  const more = dueReviews().length;
+  out.innerHTML = `<p class="review-msg ${tier==='tried'?'warn':'ok'}">${msg} <strong>+${points}P</strong></p>`
+    + `<div class="review-q review-sol"><strong>풀이</strong>${r.s}</div>`
+    + (more ? '<button class="btn btn-purple" onclick="openReview()">다음 복습 문제 →</button>' : '<button class="btn btn-purple" onclick="goHome()">🏠 정원으로 돌아가기</button>');
+}
+
 /* ───────── 화면 전환 ───────── */
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -558,6 +826,10 @@ function goHome(){
 /* ───────── 홈/정원 렌더 ───────── */
 function renderHome(){
   ensureTodayMinutesReset();
+  claimStudyPoints();
+  claimOpenedCards();
+  renderStudyNotice();
+  renderReviewCard();
   saveData(data);
   renderPlanBanner();
   document.getElementById('statStreak').textContent = data.streak;
