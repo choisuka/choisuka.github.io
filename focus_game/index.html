@@ -503,7 +503,12 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
 <script>
 /* ───────── 저장 데이터 ───────── */
 const STORAGE_KEY = 'toro_focus_garden_v1';
-function todayStr(){ return new Date().toISOString().slice(0,10); }
+// toISOString()은 UTC라 한국 시간 0~9시에 어제 날짜가 나오므로 로컬 날짜로 만든다
+function dateStr(d){
+  const p = n => (n<10?'0':'')+n;
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
+}
+function todayStr(){ return dateStr(new Date()); }
 function loadData(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -527,7 +532,7 @@ function bumpStreak(){
   const today = todayStr();
   if(data.lastDate === today) return; // 이미 오늘 기록됨
   const y = new Date(); y.setDate(y.getDate()-1);
-  const yStr = y.toISOString().slice(0,10);
+  const yStr = dateStr(y);
   if(data.lastDate === yStr){ data.streak += 1; }
   else{ data.streak = 1; }
   data.lastDate = today;
