@@ -161,6 +161,10 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .cam-actions{display:flex;gap:8px;padding:12px;width:100%;box-sizing:border-box;background:#111}
 .cam-actions .btn{flex:1}
 .cam-file{display:flex;align-items:center;justify-content:center;cursor:pointer}
+.img-modal{position:fixed;inset:0;background:#0a0a1a;z-index:1000;display:none;flex-direction:column}
+.img-modal.show{display:flex}
+.img-modal-body{flex:1;overflow-y:auto;padding:12px;-webkit-overflow-scrolling:touch}
+.img-hint{font-size:.82rem;color:#fbbf24;line-height:1.6;margin-bottom:8px}
 .wh-card{border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px;margin-bottom:12px;background:rgba(255,255,255,.03)}
 .wh-card.wh-warn{border-color:#fbbf24}
 .wh-head{display:flex;gap:10px;align-items:center;margin-bottom:8px}
@@ -619,6 +623,15 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
       <button class="btn btn-green" id="camShot">📸 찍기</button>
       <label class="btn btn-ghost cam-file">📁 파일에서 고르기<input type="file" accept="image/*" id="camFile" hidden></label>
       <button class="btn btn-ghost" id="camCancel">취소</button>
+    </div>
+  </div>
+
+  <div id="imgModal" class="img-modal">
+    <div id="imgModalBody" class="img-modal-body"></div>
+    <div class="cam-actions">
+      <button class="btn btn-green" id="imgShareBtn" onclick="shareViewerItems()">📤 공유 창 열기</button>
+      <button class="btn btn-ghost" onclick="downloadViewerItems()">⬇️ 파일로 내려받기</button>
+      <button class="btn btn-ghost" onclick="closeSaveViewer()">닫기</button>
     </div>
   </div>
 
@@ -1935,7 +1948,7 @@ function fmtBytes(n){ return n < 1024*1024 ? Math.round(n/1024)+'KB' : (n/1024/1
 let camStream = null;
 async function startCamera(video){
   camStream = await navigator.mediaDevices.getUserMedia({
-    video: { facingMode: { ideal: 'environment' }, width: { ideal: 2560 }, height: { ideal: 1440 } }, audio: false });
+    video: { facingMode: { ideal: 'environment' }, width: { ideal: 4032 }, height: { ideal: 3024 } }, audio: false });
   video.srcObject = camStream;
   await video.play();
 }
@@ -2000,7 +2013,7 @@ function openPhotoAdd(){
     return;
   }
   revokeLive();
-  photoDraft = { blobs:[null,null,null], urls:[null,null,null], days:1 };
+  photoDraft = { blobs:[null,null,null], urls:[null,null,null], dims:['','',''], days:1 };
   showScreen('screen-photo-add');
   renderPhotoAdd();
 }
@@ -2011,7 +2024,7 @@ function renderPhotoAdd(){
     const has = !!photoDraft.blobs[i];
     const enabled = i === 0 || !!photoDraft.blobs[i-1];
     html += `<div class="ph-step"><div class="ph-step-title">${s.title}</div><p class="review-ask">${s.ask}</p>`
-      + (has ? `<img class="photo-img" src="${photoDraft.urls[i]}" alt="${s.title}">` : '')
+      + (has ? `<img class="photo-img" src="${photoDraft.urls[i]}" alt="${s.title}"><div class="wh-meta">해상도 ${photoDraft.dims[i]} · ${fmtBytes(photoDraft.blobs[i].size)}</div>` : '')
       + `<button class="btn ${has ? 'btn-ghost' : 'btn-green'}" ${enabled ? '' : 'disabled'} onclick="takePhotoStep(${i})">${has ? '🔁 다시 찍기' : '📷 찍기 / 고르기'}</button></div>`;
   });
   if(photoDraft.blobs.every(Boolean)){
@@ -2030,6 +2043,7 @@ async function takePhotoStep(i){
   if(photoDraft.urls[i]) URL.revokeObjectURL(photoDraft.urls[i]);
   photoDraft.blobs[i] = blob;
   photoDraft.urls[i] = URL.createObjectURL(blob);
+  try{ const bmp = await createImageBitmap(blob); photoDraft.dims[i] = `${bmp.width}×${bmp.height}`; }catch(e){ photoDraft.dims[i] = '?'; }
   const title = document.getElementById('phTitle'), memo = document.getElementById('phMemo');
   const keep = { t: title ? title.value : '', m: memo ? memo.value : '' };
   renderPhotoAdd();
@@ -2217,28 +2231,52 @@ async function makeCardImage(id){
   });
   return { blob: await canvasToJpeg(c, 0.9), name: `공부카드_${(r.spec.title || r.id).replace(/[\\/:*?"<>|]/g,'_')}_${r.created}.jpg` };
 }
-async function deliverFile(blob, name){
-  const file = new File([blob], name, { type: blob.type });
-  if(navigator.canShare && navigator.canShare({ files:[file] })){
-    try{ await navigator.share({ files:[file], title: name }); return; }catch(e){ if(e && e.name === 'AbortError') return; }
-  }
+function downloadBlob(blob, name){
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = name;
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(()=>URL.revokeObjectURL(a.href), 3000);
 }
+// 저장 화면: 이미지를 직접 보여 준다. 길게 누르면 브라우저의 저장 메뉴가 뜨고, 아래 버튼(공유 창·파일로 내려받기)도 쓸 수 있다.
+// 어느 방식이든 사용자가 직접 고르므로 어디에 저장되는지 눈으로 확인할 수 있다.
+let saveViewerItems = [];
+function showSaveViewer(items, hint){
+  saveViewerItems = items;
+  const urls = items.map(it=>liveUrl(it.blob));
+  document.getElementById('imgModalBody').innerHTML = `<p class="img-hint">${hint}</p>`
+    + items.map((it, i)=>`<img class="photo-img" src="${urls[i]}" alt="${escapeHtml(it.name)}">`).join('');
+  const f = new File([items[0].blob], items[0].name, { type: items[0].blob.type });
+  document.getElementById('imgShareBtn').style.display = (navigator.canShare && navigator.canShare({ files:[f] })) ? '' : 'none';
+  document.getElementById('imgModal').classList.add('show');
+}
+function closeSaveViewer(){
+  document.getElementById('imgModal').classList.remove('show');
+  document.getElementById('imgModalBody').innerHTML = '';
+  saveViewerItems = [];
+}
+async function shareViewerItems(){
+  const files = saveViewerItems.map(it=>new File([it.blob], it.name, { type: it.blob.type }));
+  try{ await navigator.share({ files, title: '공부카드' }); }catch(e){}
+}
+function downloadViewerItems(){
+  saveViewerItems.forEach((it, i)=>setTimeout(()=>downloadBlob(it.blob, it.name), i * 500));
+}
+const SAVE_HINT = '이미지를 <b>길게 눌러</b> "사진에 저장" 또는 "파일에 저장"을 고르거나, 아래 버튼을 눌러요. (브라우저에 따라 "파일로 내려받기"가 안 될 수 있어요. 그럴 땐 이미지를 길게 눌러 저장하세요.)';
 async function saveCardToPhone(id){
-  try{ const { blob, name } = await makeCardImage(id); await deliverFile(blob, name); }
-  catch(e){ alert('저장하지 못했어요. 사진이 없거나 브라우저가 막았을 수 있어요.'); }
+  try{ const { blob, name } = await makeCardImage(id); showSaveViewer([{ blob, name }], SAVE_HINT); }
+  catch(e){ alert('저장 이미지를 만들지 못했어요. 사진이 없거나 브라우저가 막았을 수 있어요.'); }
 }
 async function saveCardOriginals(id){
   const r = loadReviews().find(x=> x && x.id === id);
-  const base = (r && r.spec.title || id).replace(/[\\/:*?"<>|]/g,'_');
+  const base = (r && r.spec.title || id).replace(/[\\/:*?"<>|]/g, '_');
   const names = { q:'문제', s:'풀이', i:'아이디어정리' };
+  const items = [];
   for(const k of ['q','s','i']){
-    const b = await photoGet(id+':'+k);
-    if(b) await deliverFile(b, `${base}_${names[k]}.jpg`);
+    const bl = await photoGet(id + ':' + k);
+    if(bl) items.push({ blob: bl, name: `${base}_${names[k]}.jpg` });
   }
+  if(!items.length){ alert('사진을 찾을 수 없어요.'); return; }
+  showSaveViewer(items, SAVE_HINT);
 }
 
 /* ── 수명·용량 관리: 만든 지 30일이 지난 복습(사진·교재 복습 모두)은 자동 삭제, 7일 전부터 경고 ── */
