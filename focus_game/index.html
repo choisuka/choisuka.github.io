@@ -145,6 +145,22 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .review-again{margin:12px 0}
 .review-again-btn{flex:1;min-width:64px;padding:8px 4px;font-size:.8rem}
 .review-again-btn.selected{border-color:#a855f7;background:rgba(168,85,247,.25)}
+.pt-pop{display:inline-block;position:relative;font-weight:800;padding:2px 12px;border-radius:999px;color:#0a0a1a;transform-origin:50% 85%;--amp:1;animation:ptPop .45s cubic-bezier(.2,1.6,.4,1) both,ptDance 1.1s ease-in-out .45s 2 both}
+.pt-t0{background:#64748b;color:#fff;animation:none}
+.pt-t1{background:#94a3b8;--amp:.5;animation-iteration-count:1,1}
+.pt-t2{background:#38bdf8;--amp:.8}
+.pt-t3{background:#fbbf24;--amp:1}
+.pt-t4{background:#facc15;--amp:1.3;box-shadow:0 0 14px 3px rgba(250,204,21,.65);animation:ptPop .45s cubic-bezier(.2,1.6,.4,1) both,ptDance 1.1s ease-in-out .45s 3 both}
+.pt-t5{background:linear-gradient(90deg,#f472b6,#a855f7,#38bdf8);background-size:200% 100%;color:#fff;--amp:1.6;font-size:1.15em;box-shadow:0 0 18px 4px rgba(244,114,182,.6);animation:ptPop .45s cubic-bezier(.2,1.6,.4,1) both,ptDance 1.1s ease-in-out .45s 4 both,ptShimmer 1.4s linear infinite}
+.pt-still{animation:none!important}
+.pt-spark{position:absolute;left:50%;top:50%;pointer-events:none;font-size:15px;animation:ptFly 1.2s ease-out forwards}
+.pt-statpop{animation:ptStat .5s ease-in-out 2;color:#facc15}
+@keyframes ptPop{0%{transform:scale(.2) rotate(-25deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes ptDance{0%,100%{transform:rotate(0) translateY(0) scale(1)}15%{transform:rotate(calc(-9deg * var(--amp))) translateY(calc(-6px * var(--amp))) scale(1.12)}30%{transform:rotate(calc(9deg * var(--amp))) translateY(0) scale(1)}45%{transform:rotate(calc(-7deg * var(--amp))) translateY(calc(-5px * var(--amp))) scale(1.1)}60%{transform:rotate(calc(7deg * var(--amp))) translateY(0) scale(1)}80%{transform:rotate(calc(-3deg * var(--amp))) translateY(calc(-2px * var(--amp)))}}
+@keyframes ptShimmer{0%{background-position:0 0}100%{background-position:200% 0}}
+@keyframes ptFly{0%{transform:translate(-50%,-50%) scale(.3);opacity:1}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.1) rotate(var(--rot));opacity:0}}
+@keyframes ptStat{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+@media (prefers-reduced-motion: reduce){.pt-pop,.pt-spark,.pt-statpop{animation:none!important}}
 .tool-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
 .tool-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:.8rem;cursor:pointer;font-family:inherit}
 .tool-btn span{font-size:1.4rem}
@@ -725,7 +741,9 @@ function claimStudyPoints(){
 function renderStudyNotice(){
   const el = document.getElementById('studyNotice');
   el.style.display = studyNoticeText ? 'block' : 'none';
-  el.textContent = studyNoticeText;
+  const fresh = studyNoticeText !== ptLastNotice;          // 새로 생긴 알림만 움직이고, 홈으로 돌아올 때마다 다시 춤추지는 않는다
+  el.innerHTML = fmtNotice(studyNoticeText, !fresh);
+  if(fresh && studyNoticeText){ ptLastNotice = studyNoticeText; ptAnimate(el); }
 }
 
 /* ───────── 복습 문제 ───────── */
@@ -960,7 +978,7 @@ function finishReview(r, tier, msg, solHtml){
   const sb = document.getElementById('reviewSubmitBtn'); if(sb) sb.style.display = 'none';
   const inp = document.getElementById('reviewText'); if(inp) inp.disabled = true;
   const more = dueSolveReviews().length;
-  out.innerHTML = `<p class="review-msg ${tier==='tried'?'warn':'ok'}">${msg} <strong>+${points}P</strong>${bonus ? ` <span style="font-size:.8em">(반복 보너스 +${bonus})</span>` : ''}</p>`
+  out.innerHTML = `<p class="review-msg ${tier==='tried'?'warn':'ok'}">${msg} ${ptBadge(points)}${bonus ? ` <span style="font-size:.8em">(반복 보너스 +${bonus})</span>` : ''}</p>`
     + (solHtml ? `<div class="review-q review-sol"><strong>풀이</strong>${solHtml}</div>` : '')
     + `<div class="review-again"><p class="review-ask" id="reviewAgainMsg">이 문제, 다시 풀어볼까요? 안 고르면 내일 다시 나와요.</p>`
     + '<div class="review-opts">'
@@ -968,13 +986,15 @@ function finishReview(r, tier, msg, solHtml){
     + `<button class="btn btn-ghost review-again-btn" data-n="0" onclick="chooseReviewNext('${r.id}',0)">끝내기</button>`
     + '</div></div>'
     + (more ? '<button class="btn btn-purple" onclick="openReview()">다음 복습 문제 →</button>' : '<button class="btn btn-purple" onclick="goHome()">🏠 정원으로 돌아가기</button>');
+  ptAnimate(out);
 }
 // 푼 문제를 n일 뒤에 다시 풀거나(반복), 끝내기(0)로 완료: 편지(사진 카드는 사진도) 삭제 + 완료 보너스
 function chooseReviewNext(id, n){
   const msg = document.getElementById('reviewAgainMsg');
   if(n === 0){
     const bonus = completeReview(id);
-    msg.textContent = '끝냈어요! 우편함에서 삭제했어요.' + (bonus ? ` 완료 보너스 +${bonus}P` : '');
+    msg.innerHTML = '끝냈어요! 우편함에서 삭제했어요.' + (bonus ? ' 완료 보너스 ' + ptBadge(bonus) : '');
+    ptAnimate(msg);
     document.querySelectorAll('.review-again-btn').forEach(b=>b.disabled = true);
   }else{
     setReviewDue(id, n);
@@ -1012,7 +1032,7 @@ function renderHome(){
   saveData(data);
   renderPlanBanner();
   document.getElementById('statStreak').textContent = data.streak;
-  document.getElementById('statPoints').textContent = data.points;
+  ptStatCount(data.points);
   document.getElementById('statMinutes').textContent = data.todayMinutes;
 
   const p = data.points;
@@ -1201,9 +1221,10 @@ function showTimerResult(completed, minutes, earned){
   document.getElementById('resultTitle').textContent = completed ? '집중을 끝까지 해냈어요!' : '여기까지 집중했어요, 멋져요!';
   document.getElementById('resultGrid').innerHTML = `
     <div class="result-box"><div class="num">${minutes}분</div><div class="lbl">집중 시간</div></div>
-    <div class="result-box"><div class="num">+${earned}</div><div class="lbl">획득 포인트</div></div>
+    <div class="result-box"><div class="num">${ptBadge(earned)}</div><div class="lbl">획득 포인트</div></div>
     <div class="result-box"><div class="num">${data.streak}일</div><div class="lbl">연속 기록</div></div>
   `;
+  ptAnimate(document.getElementById('resultGrid'));
   document.getElementById('resultRestCTA').style.display = completed ? 'block' : 'none';
   document.getElementById('resultStudyLinks').style.display = 'block';
   resetTimerScreen();
@@ -1319,8 +1340,9 @@ function finishStroopGame(){
   document.getElementById('resultGrid').innerHTML = `
     <div class="result-box"><div class="num">${stroopCorrect}/${STROOP_TOTAL_ROUNDS}</div><div class="lbl">정답</div></div>
     <div class="result-box"><div class="num">${avgReaction}ms</div><div class="lbl">평균 반응속도</div></div>
-    <div class="result-box"><div class="num">+${earned}</div><div class="lbl">획득 포인트</div></div>
+    <div class="result-box"><div class="num">${ptBadge(earned)}</div><div class="lbl">획득 포인트</div></div>
   `;
+  ptAnimate(document.getElementById('resultGrid'));
   document.getElementById('resultRestCTA').style.display = 'none';
   document.getElementById('resultStudyLinks').style.display = 'block';
   showScreen('screen-result');
@@ -2555,6 +2577,65 @@ function downloadAlarmICS(){
   a.href = URL.createObjectURL(blob); a.download = 'toro_study_alarms.ics';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+}
+
+/* ───────── 점수 연출: 크기별 색 · 살짝 춤추기 · 숫자가 올라가기 · 큰 점수는 반짝이 ─────────
+   움직임을 줄이는 설정(prefers-reduced-motion)을 켠 기기에서는 움직이지 않고 숫자만 보여 준다. */
+let ptLastNotice = '';
+function ptTier(p){ return p <= 0 ? 0 : p < 5 ? 1 : p < 10 ? 2 : p < 20 ? 3 : p < 30 ? 4 : 5; }   // 3P·5P·10P·20P·30P 이상
+function ptBadge(p, opt){
+  const t = ptTier(p), still = opt && opt.still;
+  const spark = t === 5 ? '🎉 ' : t === 4 ? '✨ ' : '';
+  return `<span class="pt-pop pt-t${t}${still ? ' pt-still' : ''}" data-pts="${p}"${still ? ' data-done="1"' : ''}>${spark}+<span class="pt-num">${p}</span>P</span>`;
+}
+function ptReduced(){ return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); }
+function ptAnimate(root){
+  if(ptReduced()) return;
+  (root || document).querySelectorAll('.pt-pop[data-pts]:not([data-done])').forEach(el=>{
+    el.dataset.done = '1';
+    const target = +el.dataset.pts, t = ptTier(target), num = el.querySelector('.pt-num');
+    if(target <= 0 || !num) return;
+    const dur = Math.min(900, 350 + target * 15), t0 = performance.now();
+    num.textContent = '0';
+    (function step(now){
+      const k = Math.min(1, (now - t0) / dur);
+      num.textContent = Math.round(target * (1 - Math.pow(1 - k, 3)));
+      if(k < 1) requestAnimationFrame(step);
+      else { num.textContent = target; ptBurst(el, t); }
+    })(t0);
+  });
+}
+function ptBurst(el, t){
+  if(t < 4) return;
+  const icons = ['✨','⭐','🎉','💛','🌟','💖'], n = t === 5 ? 18 : 10;
+  for(let i = 0; i < n; i++){
+    const s = document.createElement('span');
+    s.className = 'pt-spark';
+    s.textContent = icons[Math.floor(Math.random() * icons.length)];
+    const ang = Math.random() * Math.PI * 2, r = 50 + Math.random() * 70;
+    s.style.setProperty('--dx', Math.round(Math.cos(ang) * r) + 'px');
+    s.style.setProperty('--dy', Math.round(Math.sin(ang) * r - 20) + 'px');
+    s.style.setProperty('--rot', Math.round((Math.random() - .5) * 360) + 'deg');
+    el.appendChild(s);
+    setTimeout(()=>s.remove(), 1300);
+  }
+}
+function fmtNotice(text, still){ return escapeHtml(text).replace(/\+(\d+)P/g, (m, n)=>ptBadge(+n, { still })); }
+// 홈의 포인트 숫자: 늘었으면 이전 값에서 올라가며 반짝
+let ptStatShown = null;
+function ptStatCount(p){
+  const el = document.getElementById('statPoints');
+  const from = ptStatShown;
+  ptStatShown = p;
+  if(from === null || p <= from || ptReduced()){ el.textContent = p; return; }
+  const dur = Math.min(1200, 400 + (p - from) * 12), t0 = performance.now();
+  el.classList.add('pt-statpop');
+  (function step(now){
+    const k = Math.min(1, (now - t0) / dur);
+    el.textContent = Math.round(from + (p - from) * (1 - Math.pow(1 - k, 3)));
+    if(k < 1) requestAnimationFrame(step);
+    else { el.textContent = p; setTimeout(()=>el.classList.remove('pt-statpop'), 600); }
+  })(t0);
 }
 
 /* ───────── 앱 안 브라우저(카카오톡 등) 감지 ─────────
