@@ -153,7 +153,8 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .ph-step-title{font-weight:700;margin:10px 0 4px;font-size:.9rem}
 .ph-day-btn.selected,.cal-tab.selected{border-color:#a855f7;background:rgba(168,85,247,.25)}
 .ph-grade-btn{flex:1;min-width:80px}
-.ph-day-btn,.cal-tab{flex:1;min-width:64px;width:auto}
+.ph-day-btn,.cal-tab,.ph-think-btn{flex:1;min-width:56px;width:auto}
+.ph-think-btn.selected,.wh-day.selected{border-color:#a855f7;background:rgba(168,85,247,.25)}
 .cal-row .btn{width:auto}
 .cam-modal{position:fixed;inset:0;background:#000;z-index:1000;display:none;flex-direction:column;align-items:center}
 .cam-modal.show{display:flex}
@@ -2018,7 +2019,7 @@ function openPhotoAdd(){
     return;
   }
   revokeLive();
-  photoDraft = { blobs:[null,null,null], urls:[null,null,null], dims:['','',''], days:1 };
+  photoDraft = { blobs:[null,null,null], urls:[null,null,null], dims:['','',''], days:1, thinkSec: 120 };
   showScreen('screen-photo-add');
   renderPhotoAdd();
 }
@@ -2036,7 +2037,9 @@ function renderPhotoAdd(){
     html += '<div class="ph-step"><div class="ph-step-title">저장하기</div>'
       + '<input id="phTitle" class="review-input" type="text" maxlength="40" placeholder="제목 (선택) 예) 일차함수 3번">'
       + '<input id="phMemo" class="review-input" type="text" maxlength="60" placeholder="교재·쪽수 메모 (선택) 예) 개념원리 p.85">'
-      + '<p class="review-ask">언제 복습할까요?</p><div class="review-opts">'
+      + '<p class="review-ask">이 문제를 푸는 데 걸리는 시간은? (복습할 때 이 시간이 지나야 풀이를 볼 수 있어요)</p><div class="review-opts">'
+      + THINK_CHOICES.map(n=>`<button class="btn btn-ghost ph-think-btn${n===photoDraft.thinkSec?' selected':''}" onclick="pickThinkSec(${n})">${thinkLabel(n)}</button>`).join('')
+      + '</div><p class="review-ask">언제 복습할까요?</p><div class="review-opts">'
       + [1,2,3,7].map(n=>`<button class="btn btn-ghost ph-day-btn${n===photoDraft.days?' selected':''}" onclick="pickPhotoDays(${n})">${n}일 후</button>`).join('')
       + '</div><button class="btn btn-purple" id="phSaveBtn" onclick="savePhotoCard()">💾 공부창고에 저장</button><div id="phSaveMsg"></div></div>';
   }
@@ -2053,6 +2056,10 @@ async function takePhotoStep(i){
   const keep = { t: title ? title.value : '', m: memo ? memo.value : '' };
   renderPhotoAdd();
   if(document.getElementById('phTitle')){ document.getElementById('phTitle').value = keep.t; document.getElementById('phMemo').value = keep.m; }
+}
+function pickThinkSec(n){
+  photoDraft.thinkSec = n;
+  document.querySelectorAll('.ph-think-btn').forEach((b, k)=>b.classList.toggle('selected', THINK_CHOICES[k] === n));
 }
 function pickPhotoDays(n){
   photoDraft.days = n;
@@ -2076,7 +2083,7 @@ async function savePhotoCard(){
   const days = photoDraft.days;
   updateReviews(l=>l.concat([{
     id, type:'photo', created: todayStr(), due: addDaysStr(days), rounds: 0,
-    spec:{ kind:'photo', title:(document.getElementById('phTitle').value || '').trim(), memo:(document.getElementById('phMemo').value || '').trim() },
+    spec:{ kind:'photo', title:(document.getElementById('phTitle').value || '').trim(), memo:(document.getElementById('phMemo').value || '').trim(), thinkSec: photoDraft.thinkSec },
     q:'', s:''
   }]));
   photoDraft.urls.forEach(u=>{ if(u) URL.revokeObjectURL(u); });
@@ -2087,16 +2094,20 @@ async function savePhotoCard(){
 
 /* ── 사진 복습: 문제 사진이 먼저 뜬다 → 종이에 풀기 → 풀이·아이디어 정리 확인 → 스스로 채점 ── */
 let photoAttempt = null;
-// 스스로 채점의 정직성 장치: 풀이는 문제를 띄운 뒤 일정 시간이 지나야 볼 수 있고, 내 풀이 사진(풀이를 보기 전에 찍은 것)이 없으면 "완벽"을 누를 수 없다
-let PHOTO_THINK_SECONDS = 15, photoTimer = null, photoHadAttempt = false;
+// 스스로 채점의 정직성 장치: 풀이는 문제를 띄운 뒤 "이 문제를 푸는 데 걸리는 시간"이 지나야 볼 수 있고(카드마다 올릴 때 정함, 없으면 기본값),
+// 내 풀이 사진(풀이를 보기 전에 찍은 것)이 없으면 "완벽"을 누를 수 없다
+let PHOTO_THINK_SECONDS = 120, photoTimer = null, photoHadAttempt = false;
+const THINK_CHOICES = [60, 120, 180, 300, 600];
+function fmtThink(sec){ return sec >= 60 ? `${Math.floor(sec/60)}:${String(sec % 60).padStart(2,'0')}` : `${sec}초`; }
+function thinkLabel(sec){ return sec >= 60 && sec % 60 === 0 ? `${sec/60}분` : `${sec}초`; }
 function stopThinkTimer(){ if(photoTimer){ clearInterval(photoTimer); photoTimer = null; } }
-function startThinkTimer(){
+function startThinkTimer(sec){
   stopThinkTimer();
-  let left = PHOTO_THINK_SECONDS;
+  let left = sec;
   const label = ()=>{
     const btn = document.getElementById('phSolvedBtn');
     if(!btn){ stopThinkTimer(); return; }
-    btn.textContent = left > 0 ? `⏳ ${left}초 뒤에 풀이를 볼 수 있어요` : '✅ 풀어 봤어요 → 풀이 보기';
+    btn.textContent = left > 0 ? `⏳ ${fmtThink(left)} 뒤에 풀이를 볼 수 있어요` : '✅ 풀어 봤어요 → 풀이 보기';
     btn.disabled = left > 0;
   };
   label();
@@ -2120,19 +2131,22 @@ async function openPhotoReview(r, remain){
     return;
   }
   const memo = r.spec.memo ? `<div style="font-size:.78rem;color:rgba(255,255,255,.55)">${escapeHtml(r.spec.memo)}</div>` : '';
+  const thinkSec = r.spec.thinkSec || PHOTO_THINK_SECONDS;
   body.innerHTML = `<div class="review-q"><strong>📷 ${escapeHtml(cardTitle(r))}</strong>${memo}<img class="photo-img" src="${liveUrl(qBlob)}" alt="문제"></div>`
-    + `<p class="review-ask">종이에 풀어 보세요. 풀이는 ${PHOTO_THINK_SECONDS}초 뒤부터 볼 수 있어요. 풀이를 보기 <b>전에</b> 내 풀이를 사진으로 찍어 두면 "완벽"을 받을 수 있어요.</p>`
+    + `<p class="review-ask">종이에 풀어 보세요. 풀이는 <b>${thinkLabel(thinkSec)}</b> 뒤부터 볼 수 있어요. 풀이를 보기 <b>전에</b> 내 풀이를 사진으로 찍어 두면 "완벽"을 받을 수 있어요.</p>`
+    + '<div id="phAttemptState" class="wh-meta" style="margin-bottom:6px">내 풀이 사진: ❌ 아직 없음</div>'
     + '<div id="phAttemptBox"></div>'
     + '<button class="btn btn-ghost" id="phAttemptBtn" onclick="attemptPhoto()">📷 내 풀이 사진 찍기 ("완벽"을 받으려면 필요)</button>'
     + `<button class="btn btn-purple" id="phSolvedBtn" disabled onclick="revealPhotoSolution('${r.id}')">✅ 풀어 봤어요 → 풀이 보기</button>`
     + '<div id="phRevealBox"></div><div id="reviewResult"></div>';
   showScreen('screen-review');
-  startThinkTimer();
+  startThinkTimer(thinkSec);
 }
 async function attemptPhoto(){
   const blob = await pickPhoto('종이에 푼 내 풀이를 찍어요. (찍지 않아도 돼요)');
   if(!blob) return;
   photoAttempt = blob;
+  const st = document.getElementById('phAttemptState'); if(st) st.textContent = '내 풀이 사진: ✅ 있음 (풀이를 본 뒤 "완벽"을 받을 수 있어요)';
   document.getElementById('phAttemptBox').innerHTML = `<div class="ph-step-title">내 풀이</div><img class="photo-img" src="${liveUrl(blob)}" alt="내 풀이">`;
 }
 async function revealPhotoSolution(id){
@@ -2144,7 +2158,8 @@ async function revealPhotoSolution(id){
   photoHadAttempt = !!photoAttempt;                      // 풀이를 보기 전에 찍은 내 풀이 사진이 있었는지
   const ab = document.getElementById('phAttemptBtn'); if(ab) ab.style.display = 'none';
   const [s, i] = await Promise.all([photoGet(id+':s'), photoGet(id+':i')]);
-  box.innerHTML = '<div class="ph-step-title">② 풀이</div>' + (s ? `<img class="photo-img" src="${liveUrl(s)}" alt="풀이">` : '<p>사진 없음</p>')
+  box.innerHTML = `<div class="wh-meta" style="margin-bottom:6px">풀이를 보기 전 내 풀이 사진: ${photoHadAttempt ? '✅ 확인됨' : '❌ 없음'}</div>`
+    + '<div class="ph-step-title">② 풀이</div>' + (s ? `<img class="photo-img" src="${liveUrl(s)}" alt="풀이">` : '<p>사진 없음</p>')
     + '<div class="ph-step-title">③ 아이디어 정리</div>' + (i ? `<img class="photo-img" src="${liveUrl(i)}" alt="아이디어 정리">` : '<p>사진 없음</p>')
     + '<p class="review-ask">내 풀이와 비교해서 스스로 채점해 보세요.</p>'
     + (photoHadAttempt ? '' : '<p class="review-ask" style="color:#fbbf24">내 풀이 사진 없이 풀이를 봐서 "완벽"은 누를 수 없어요. 다음에는 풀이를 보기 전에 내 풀이를 찍어 보세요.</p>')
@@ -2200,6 +2215,10 @@ async function renderWarehouse(){
         <button class="btn btn-ghost" onclick="saveCardOriginals('${r.id}')">🖼️ 사진 3장 저장</button>
       </div>
       <div class="wh-actions">
+        <span class="wh-meta" style="align-self:center">풀이 시간</span>
+        ${THINK_CHOICES.map(n=>`<button class="btn btn-ghost wh-day${(r.spec.thinkSec || PHOTO_THINK_SECONDS) === n ? ' selected' : ''}" onclick="setThinkSec('${r.id}',${n})">${thinkLabel(n)}</button>`).join('')}
+      </div>
+      <div class="wh-actions">
         <span class="wh-meta" style="align-self:center">복습 날짜</span>
         ${[1,2,3,7].map(n=>`<button class="btn btn-ghost wh-day" onclick="moveCardDue('${r.id}',${n})">${n}일 후</button>`).join('')}
         <button class="btn btn-ghost wh-day" onclick="moveCardDue('${r.id}',0)">지금</button>
@@ -2217,6 +2236,10 @@ async function toggleWarehouseCard(id){
   const [q, s, i] = await Promise.all([photoGet(id+':q'), photoGet(id+':s'), photoGet(id+':i')]);
   const one = (b, t)=> b ? `<div class="ph-step-title">${t}</div><img class="photo-img" src="${liveUrl(b)}" alt="${t}">` : '';
   box.innerHTML = one(q,'① 문제') + one(s,'② 풀이') + one(i,'③ 아이디어 정리');
+}
+function setThinkSec(id, n){
+  updateReviews(l=>l.map(r=> r && r.id === id ? Object.assign({}, r, { spec: Object.assign({}, r.spec, { thinkSec: n }) }) : r));
+  renderWarehouse();
 }
 function moveCardDue(id, n){
   updateReviews(l=>l.map(r=> r && r.id === id ? Object.assign({}, r, { due: addDaysStr(n) }) : r));
