@@ -991,6 +991,7 @@ function showScreen(id){
 function goHome(){
   revokeLive();
   stopCamera();
+  stopThinkTimer();
   renderHome();
   showScreen('screen-home');
 }
@@ -2086,10 +2087,28 @@ async function savePhotoCard(){
 
 /* ── 사진 복습: 문제 사진이 먼저 뜬다 → 종이에 풀기 → 풀이·아이디어 정리 확인 → 스스로 채점 ── */
 let photoAttempt = null;
+// 스스로 채점의 정직성 장치: 풀이는 문제를 띄운 뒤 일정 시간이 지나야 볼 수 있고, 내 풀이 사진(풀이를 보기 전에 찍은 것)이 없으면 "완벽"을 누를 수 없다
+let PHOTO_THINK_SECONDS = 15, photoTimer = null, photoHadAttempt = false;
+function stopThinkTimer(){ if(photoTimer){ clearInterval(photoTimer); photoTimer = null; } }
+function startThinkTimer(){
+  stopThinkTimer();
+  let left = PHOTO_THINK_SECONDS;
+  const label = ()=>{
+    const btn = document.getElementById('phSolvedBtn');
+    if(!btn){ stopThinkTimer(); return; }
+    btn.textContent = left > 0 ? `⏳ ${left}초 뒤에 풀이를 볼 수 있어요` : '✅ 풀어 봤어요 → 풀이 보기';
+    btn.disabled = left > 0;
+  };
+  label();
+  if(left <= 0) return;
+  photoTimer = setInterval(()=>{ left--; label(); if(left <= 0) stopThinkTimer(); }, 1000);
+}
 function cardTitle(r){ return (r.spec && (r.spec.title || r.spec.memo)) || '내 문제'; }
 async function openPhotoReview(r, remain){
   revokeLive();
   photoAttempt = null;
+  photoHadAttempt = false;
+  stopThinkTimer();
   document.getElementById('reviewProgress').textContent = `남은 복습 ${remain}개`;
   const body = document.getElementById('reviewBody');
   let qBlob = null;
@@ -2102,12 +2121,13 @@ async function openPhotoReview(r, remain){
   }
   const memo = r.spec.memo ? `<div style="font-size:.78rem;color:rgba(255,255,255,.55)">${escapeHtml(r.spec.memo)}</div>` : '';
   body.innerHTML = `<div class="review-q"><strong>📷 ${escapeHtml(cardTitle(r))}</strong>${memo}<img class="photo-img" src="${liveUrl(qBlob)}" alt="문제"></div>`
-    + '<p class="review-ask">종이에 풀어 보세요. 다 풀었으면 아래 버튼을 눌러요.</p>'
+    + `<p class="review-ask">종이에 풀어 보세요. 풀이는 ${PHOTO_THINK_SECONDS}초 뒤부터 볼 수 있어요. 풀이를 보기 <b>전에</b> 내 풀이를 사진으로 찍어 두면 "완벽"을 받을 수 있어요.</p>`
     + '<div id="phAttemptBox"></div>'
-    + '<button class="btn btn-ghost" onclick="attemptPhoto()">📷 내 풀이 사진 찍기 (선택)</button>'
-    + `<button class="btn btn-purple" id="phSolvedBtn" onclick="revealPhotoSolution('${r.id}')">✅ 풀어 봤어요 → 풀이 보기</button>`
+    + '<button class="btn btn-ghost" id="phAttemptBtn" onclick="attemptPhoto()">📷 내 풀이 사진 찍기 ("완벽"을 받으려면 필요)</button>'
+    + `<button class="btn btn-purple" id="phSolvedBtn" disabled onclick="revealPhotoSolution('${r.id}')">✅ 풀어 봤어요 → 풀이 보기</button>`
     + '<div id="phRevealBox"></div><div id="reviewResult"></div>';
   showScreen('screen-review');
+  startThinkTimer();
 }
 async function attemptPhoto(){
   const blob = await pickPhoto('종이에 푼 내 풀이를 찍어요. (찍지 않아도 돼요)');
@@ -2117,19 +2137,26 @@ async function attemptPhoto(){
 }
 async function revealPhotoSolution(id){
   const box = document.getElementById('phRevealBox');
-  document.getElementById('phSolvedBtn').style.display = 'none';
+  const solvedBtn = document.getElementById('phSolvedBtn');
+  if(!solvedBtn || solvedBtn.disabled) return;           // 대기 시간이 끝나기 전에는 풀이를 볼 수 없다
+  solvedBtn.style.display = 'none';
+  stopThinkTimer();
+  photoHadAttempt = !!photoAttempt;                      // 풀이를 보기 전에 찍은 내 풀이 사진이 있었는지
+  const ab = document.getElementById('phAttemptBtn'); if(ab) ab.style.display = 'none';
   const [s, i] = await Promise.all([photoGet(id+':s'), photoGet(id+':i')]);
   box.innerHTML = '<div class="ph-step-title">② 풀이</div>' + (s ? `<img class="photo-img" src="${liveUrl(s)}" alt="풀이">` : '<p>사진 없음</p>')
     + '<div class="ph-step-title">③ 아이디어 정리</div>' + (i ? `<img class="photo-img" src="${liveUrl(i)}" alt="아이디어 정리">` : '<p>사진 없음</p>')
     + '<p class="review-ask">내 풀이와 비교해서 스스로 채점해 보세요.</p>'
+    + (photoHadAttempt ? '' : '<p class="review-ask" style="color:#fbbf24">내 풀이 사진 없이 풀이를 봐서 "완벽"은 누를 수 없어요. 다음에는 풀이를 보기 전에 내 풀이를 찍어 보세요.</p>')
     + '<div class="review-opts">'
-    + `<button class="btn btn-ghost ph-grade-btn" onclick="gradePhotoCard('${id}','full')">완벽 +20</button>`
+    + `<button class="btn btn-ghost ph-grade-btn" ${photoHadAttempt ? '' : 'disabled'} onclick="gradePhotoCard('${id}','full')">완벽 +20</button>`
     + `<button class="btn btn-ghost ph-grade-btn" onclick="gradePhotoCard('${id}','part')">반쯤 +10</button>`
     + `<button class="btn btn-ghost ph-grade-btn" onclick="gradePhotoCard('${id}','tried')">아쉬워요 +3</button></div>`;
 }
 function gradePhotoCard(id, tier){
   const r = loadReviews().find(x=> x && x.id === id);
   if(!r) return;
+  if(tier === 'full' && !photoHadAttempt) return;        // 내 풀이 사진 없이는 "완벽" 불가
   const msg = tier === 'full' ? '완벽해요! 🌟' : tier === 'part' ? '반쯤 알고 있어요. 다음에는 더 정확하게!' : '괜찮아요. 풀이를 다시 보고 기억해 봐요.';
   finishReview(r, tier, msg, '');
 }
