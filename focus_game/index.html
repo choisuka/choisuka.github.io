@@ -2692,6 +2692,16 @@ function refreshHomeOnReturn(){
 }
 document.addEventListener('visibilitychange', refreshHomeOnReturn);
 window.addEventListener('pageshow', e=>{ if(e.persisted) refreshHomeOnReturn(); });
+window.addEventListener('focus', refreshHomeOnReturn);
+window.addEventListener('storage', e=>{ if(e.key === REVIEW_OPEN_KEY) refreshHomeOnReturn(); });
+// 교재가 위에 덮여 열렸다 닫히는 방식(X 버튼)에서는 위 신호가 안 올 수 있어, 홈이 보이는 동안 "열어 봄" 기록이 바뀌었는지 직접 살핀다
+let lastOpenSeen = localStorage.getItem(REVIEW_OPEN_KEY) || '';
+setInterval(()=>{
+  const now = localStorage.getItem(REVIEW_OPEN_KEY) || '';
+  if(now === lastOpenSeen) return;
+  lastOpenSeen = now;
+  refreshHomeOnReturn();
+}, 1500);
 if('Notification' in window && Notification.permission === 'granted'){
   scheduleTodayNotification();
 }
