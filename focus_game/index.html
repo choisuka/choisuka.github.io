@@ -143,6 +143,31 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .review-again{margin:12px 0}
 .review-again-btn{flex:1;min-width:64px;padding:8px 4px;font-size:.8rem}
 .review-again-btn.selected{border-color:#a855f7;background:rgba(168,85,247,.25)}
+.tool-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.tool-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:.8rem;cursor:pointer;font-family:inherit}
+.tool-btn span{font-size:1.4rem}
+.photo-img{width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.15);margin:8px 0;background:#111;display:block}
+.ph-step{margin-bottom:16px}
+.ph-step-title{font-weight:700;margin:10px 0 4px;font-size:.9rem}
+.ph-day-btn.selected{border-color:#a855f7;background:rgba(168,85,247,.25)}
+.ph-grade-btn{flex:1;min-width:80px}
+.cam-modal{position:fixed;inset:0;background:#000;z-index:1000;display:none;flex-direction:column;align-items:center}
+.cam-modal.show{display:flex}
+.cam-ask{color:#fff;padding:12px;font-size:.95rem;text-align:center}
+.cam-modal video{flex:1;min-height:0;width:100%;object-fit:contain;background:#000}
+.cam-msg{color:#fbbf24;font-size:.85rem;padding:6px 12px;text-align:center}
+.cam-actions{display:flex;gap:8px;padding:12px;width:100%;box-sizing:border-box;background:#111}
+.cam-actions .btn{flex:1}
+.cam-file{display:flex;align-items:center;justify-content:center;cursor:pointer}
+.wh-card{border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px;margin-bottom:12px;background:rgba(255,255,255,.03)}
+.wh-card.wh-warn{border-color:#fbbf24}
+.wh-head{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.wh-thumb{width:64px;height:64px;object-fit:cover;border-radius:8px;background:#111;flex:none}
+.wh-title{font-weight:700;font-size:.95rem}
+.wh-meta{font-size:.74rem;color:rgba(255,255,255,.55);line-height:1.5}
+.wh-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.wh-actions .btn{flex:1;min-width:70px;padding:8px 4px;font-size:.78rem}
+.ph-day-btn{flex:1;min-width:64px;width:auto}
 .review-msg{font-size:.9rem;margin:10px 0;text-align:center}
 .review-msg.ok{color:#4ade80}
 .review-msg.warn{color:#fbbf24}
@@ -300,6 +325,7 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
   <!-- 홈 화면 -->
   <section class="screen active" id="screen-home">
     <div id="studyNotice" style="display:none;margin-bottom:12px;padding:10px 14px;border-radius:14px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);font-size:.9rem;text-align:center"></div>
+    <div id="expireNotice" style="display:none;margin-bottom:12px;padding:10px 14px;border-radius:14px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.35);font-size:.85rem;text-align:center"></div>
     <button class="recover-cta" id="reviewCard" style="display:none" onclick="openReview()">
       <span class="rc-icon">📌</span>
       <span class="rc-text">
@@ -346,6 +372,11 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
         <span class="m-title">주의력 게임</span>
         <span class="m-desc">색깔 맞추기로<br>순간 집중력을 훈련해요</span>
       </button>
+    </div>
+
+    <div class="tool-row">
+      <button class="tool-btn" onclick="openPhotoAdd()"><span>📷</span>내 문제 추가</button>
+      <button class="tool-btn" onclick="openWarehouse()"><span>📦</span>공부창고</button>
     </div>
   </section>
 
@@ -518,6 +549,24 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
     </div>
   </section>
 
+  <section class="screen" id="screen-photo-add">
+    <div class="card">
+      <div class="result-title jua">📷 내 문제 추가</div>
+      <div id="photoAddBody"></div>
+      <button class="btn btn-ghost" onclick="cancelPhotoAdd()">← 취소하고 돌아가기</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-warehouse">
+    <div class="card">
+      <div class="result-title jua">📦 공부창고</div>
+      <p id="whInfo" style="text-align:center;font-size:.8rem;color:rgba(255,255,255,.6);margin-bottom:12px"></p>
+      <p class="review-ask" style="font-size:.76rem">사진은 이 폰(브라우저) 안에만 저장되고 사진 앱에는 보이지 않아요. 만든 지 30일이 지나면 자동으로 삭제되니, 남기고 싶으면 "폰에 저장"을 눌러 두세요.</p>
+      <div id="whList"></div>
+      <button class="btn btn-purple" onclick="goHome()">🏠 정원으로 돌아가기</button>
+    </div>
+  </section>
+
   <section class="screen" id="screen-result">
     <div class="card">
       <div class="result-emoji" id="resultEmoji">🌳</div>
@@ -535,6 +584,17 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
       <button class="btn btn-purple" onclick="goHome()">🏠 정원으로 돌아가기</button>
     </div>
   </section>
+
+  <div id="camModal" class="cam-modal">
+    <p id="camAsk" class="cam-ask"></p>
+    <video id="camVideo" playsinline muted autoplay></video>
+    <p id="camMsg" class="cam-msg"></p>
+    <div class="cam-actions">
+      <button class="btn btn-green" id="camShot">📸 찍기</button>
+      <label class="btn btn-ghost cam-file">📁 파일에서 고르기<input type="file" accept="image/*" id="camFile" hidden></label>
+      <button class="btn btn-ghost" id="camCancel">취소</button>
+    </div>
+  </div>
 
   <footer>매일 조금씩, 토로와 함께 집중력을 키워요 🦕</footer>
 </div>
@@ -647,6 +707,7 @@ function setReviewDue(id, days){
 }
 function deleteReviews(ids){
   updateReviews(l=>l.filter(r=> !(r && ids.includes(r.id))));
+  ids.filter(i=>String(i).startsWith('ph-')).forEach(i=>{ photoDeleteCard(i).catch(()=>{}); });   // 사진 카드는 사진도 함께 삭제
 }
 // 예전 방식(푼 편지를 지우지 않고 reviewDone에만 표시)으로 푼 편지를 우편함에서 치운다
 function purgeLegacyReviewDone(){
@@ -775,12 +836,13 @@ function reasonOk(text, patterns){
   return patterns.every(p=>new RegExp(p).test(norm));
 }
 let reviewCur = null, reviewChoice = null;
-function openReview(){
+function openReview(id){
   const list = dueSolveReviews();
   if(!list.length){ goHome(); return; }
-  reviewCur = list[0];
+  reviewCur = (typeof id === 'string' && list.find(r=>r.id === id)) || list[0];
   reviewChoice = null;
   const spec = reviewCur.spec;
+  if(spec.kind === 'photo'){ openPhotoReview(reviewCur, list.length); return; }
   let input = '';
   if(spec.kind==='view'){
     input = '<p class="review-ask">머릿속으로 풀어 본 다음, 풀이를 확인해 보세요.</p>';
@@ -827,20 +889,36 @@ function submitReview(){
     else if(j==='part'){ tier = 'part'; msg = '답은 맞았어요! 문제의 수를 써서 식으로 나타내면 만점이에요.'; }
     else{ tier = 'tried'; msg = '아쉬워요. 풀이를 보고 다시 생각해 봐요.'; }
   }
-  const late = todayStr() > r.due;
-  const points = late ? REVIEW_PTS.tried : REVIEW_PTS[tier];
-  if(late && tier!=='tried') msg += ' (기한이 지나서 시도 포인트만 받아요)';
-  data.points += points;
-  data.sessions.push({date: todayStr(), type:'review', tier, points});
-  saveData(data);
+  finishReview(r, tier, msg, r.s);
+}
+// 채점 마무리(교재 복습·사진 카드 공통): 포인트, 반복 가산, 내일로 미루기, 결과 화면
+function finishReview(r, tier, msg, solHtml){
+  const out = document.getElementById('reviewResult');
+  const today = todayStr();
+  const already = r.lastGraded === today;          // 같은 카드는 하루에 한 번만 포인트
+  const late = today > r.due;
+  const round = (r.rounds || 0) + (already ? 0 : 1);
+  let points = 0, bonus = 0;
+  if(already){
+    msg += ' (이 카드는 오늘 이미 포인트를 받았어요)';
+  }else{
+    points = late ? REVIEW_PTS.tried : REVIEW_PTS[tier];
+    if(late && tier !== 'tried') msg += ' (기한이 지나서 시도 포인트만 받아요)';
+    if(!late && tier !== 'tried') bonus = round === 2 ? 5 : round === 3 ? 10 : round >= 4 ? 15 : 0;   // 한 달 안에 반복할수록 가산
+    points += bonus;
+    data.points += points;
+    data.sessions.push({date: today, type:'review', tier, points});
+    if(round === 1) bumpMonthStat('newReviewed');
+    saveData(data);
+  }
   // 채점하면 일단 내일로 미룬다: 아무것도 안 고르고 닫아도 같은 날 다시 풀어 포인트를 반복해서 받지 못하고 편지도 남는다
-  setReviewDue(r.id, 1);
-  document.querySelectorAll('.review-opt, .review-keys .btn').forEach(b=>b.disabled = true);
-  document.getElementById('reviewSubmitBtn').style.display = 'none';
-  if(input) input.disabled = true;
+  updateReviews(l=>l.map(x=> x && x.id === r.id ? Object.assign({}, x, {rounds: round, lastGraded: today, due: addDaysStr(1)}) : x));
+  document.querySelectorAll('.review-opt, .review-keys .btn, .ph-grade-btn').forEach(b=>b.disabled = true);
+  const sb = document.getElementById('reviewSubmitBtn'); if(sb) sb.style.display = 'none';
+  const inp = document.getElementById('reviewText'); if(inp) inp.disabled = true;
   const more = dueSolveReviews().length;
-  out.innerHTML = `<p class="review-msg ${tier==='tried'?'warn':'ok'}">${msg} <strong>+${points}P</strong></p>`
-    + `<div class="review-q review-sol"><strong>풀이</strong>${r.s}</div>`
+  out.innerHTML = `<p class="review-msg ${tier==='tried'?'warn':'ok'}">${msg} <strong>+${points}P</strong>${bonus ? ` <span style="font-size:.8em">(반복 보너스 +${bonus})</span>` : ''}</p>`
+    + (solHtml ? `<div class="review-q review-sol"><strong>풀이</strong>${solHtml}</div>` : '')
     + `<div class="review-again"><p class="review-ask" id="reviewAgainMsg">이 문제, 다시 풀어볼까요? 안 고르면 내일 다시 나와요.</p>`
     + '<div class="review-opts">'
     + [1,2,3,7].map(n=>`<button class="btn btn-ghost review-again-btn" data-n="${n}" onclick="chooseReviewNext('${r.id}',${n})">${n}일 후</button>`).join('')
@@ -848,12 +926,12 @@ function submitReview(){
     + '</div></div>'
     + (more ? '<button class="btn btn-purple" onclick="openReview()">다음 복습 문제 →</button>' : '<button class="btn btn-purple" onclick="goHome()">🏠 정원으로 돌아가기</button>');
 }
-// 푼 문제를 n일 뒤에 다시 풀거나(반복), 끝내기(0)로 편지를 삭제한다
+// 푼 문제를 n일 뒤에 다시 풀거나(반복), 끝내기(0)로 완료: 편지(사진 카드는 사진도) 삭제 + 완료 보너스
 function chooseReviewNext(id, n){
   const msg = document.getElementById('reviewAgainMsg');
   if(n === 0){
-    deleteReviews([id]);
-    msg.textContent = '끝냈어요. 이 문제는 우편함에서 삭제했어요.';
+    const bonus = completeReview(id);
+    msg.textContent = '끝냈어요! 우편함에서 삭제했어요.' + (bonus ? ` 완료 보너스 +${bonus}P` : '');
     document.querySelectorAll('.review-again-btn').forEach(b=>b.disabled = true);
   }else{
     setReviewDue(id, n);
@@ -869,6 +947,8 @@ function showScreen(id){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function goHome(){
+  revokeLive();
+  stopCamera();
   renderHome();
   showScreen('screen-home');
 }
@@ -878,8 +958,11 @@ function renderHome(){
   ensureTodayMinutesReset();
   claimStudyPoints();
   purgeLegacyReviewDone();
+  purgeExpiredReviews();
   claimOpenedCards();
+  payMonthlyBonus();
   renderStudyNotice();
+  renderExpireNotice();
   renderReviewCard();
   saveData(data);
   renderPlanBanner();
@@ -1754,6 +1837,452 @@ function scheduleTodayNotification(){
 }
 
 /* ───────── 초기화 ───────── */
+/* ───────── 사진 복습·공부창고 ─────────
+   사진은 이 기기의 브라우저 안(IndexedDB)에만 저장된다. 서버·GitHub로는 올라가지 않고, 폰 갤러리에도 보이지 않는다.
+   카드 정보(제목·날짜·복습 횟수)는 교재 복습과 같은 우편함(toro_review_v1)에 type:'photo'로 넣는다. */
+const PHOTO_CAP = 20;            // 공부창고 기준 장수
+const PHOTO_MAX_SIDE = 2000;     // 올릴 때 한 번만 줄인다(그 뒤로는 변환 없이 그대로 보여 준다)
+const PHOTO_QUALITY = 0.85;
+const EXPIRE_DAYS = 30;          // 만든 지 30일이 지나면 자동 삭제
+const EXPIRE_WARN_DAYS = 7;      // 삭제 7일 전부터 경고
+const MONTH_BONUS_PER = 5;       // 월간 교체 보너스: 새로 복습한 장수와 완료한 장수 중 작은 쪽 × 5P
+const PHOTO_DB = 'toro_garden_photos', PHOTO_STORE = 'photos';
+const DOW_KEYS = ['sun','mon','tue','wed','thu','fri','sat'];
+
+/* 날짜 도구 */
+function parseDate(ds){ const [y,m,d] = ds.split('-').map(Number); return new Date(y, m-1, d); }
+function daysBetween(a, b){ return Math.round((parseDate(b) - parseDate(a)) / 86400000); }
+function monthKey(ds){ return (ds || todayStr()).slice(0,7); }
+const live = { urls: [] };       // 화면에 띄운 사진 주소(화면을 바꿀 때 해제)
+function revokeLive(){ live.urls.forEach(u=>URL.revokeObjectURL(u)); live.urls = []; }
+function liveUrl(blob){ const u = URL.createObjectURL(blob); live.urls.push(u); return u; }
+
+/* IndexedDB */
+let photoDbPromise = null;
+function photoDb(){
+  if(!photoDbPromise){
+    photoDbPromise = new Promise((resolve, reject)=>{
+      if(!window.indexedDB){ reject(new Error('indexedDB 없음')); return; }
+      const req = indexedDB.open(PHOTO_DB, 1);
+      req.onupgradeneeded = ()=>{ req.result.createObjectStore(PHOTO_STORE); };
+      req.onsuccess = ()=> resolve(req.result);
+      req.onerror = ()=> reject(req.error);
+    });
+  }
+  return photoDbPromise;
+}
+async function photoPut(key, blob){
+  const db = await photoDb();
+  return new Promise((res, rej)=>{
+    const tx = db.transaction(PHOTO_STORE, 'readwrite');
+    tx.objectStore(PHOTO_STORE).put(blob, key);
+    tx.oncomplete = ()=>res(); tx.onerror = ()=>rej(tx.error); tx.onabort = ()=>rej(tx.error);
+  });
+}
+async function photoGet(key){
+  const db = await photoDb();
+  return new Promise((res, rej)=>{
+    const req = db.transaction(PHOTO_STORE, 'readonly').objectStore(PHOTO_STORE).get(key);
+    req.onsuccess = ()=>res(req.result || null); req.onerror = ()=>rej(req.error);
+  });
+}
+async function photoDeleteCard(id){
+  const db = await photoDb();
+  return new Promise((res, rej)=>{
+    const tx = db.transaction(PHOTO_STORE, 'readwrite');
+    ['q','s','i'].forEach(k=>tx.objectStore(PHOTO_STORE).delete(id+':'+k));
+    tx.oncomplete = ()=>res(); tx.onerror = ()=>rej(tx.error);
+  });
+}
+async function photoTotalBytes(){
+  const db = await photoDb();
+  return new Promise((res, rej)=>{
+    let sum = 0;
+    const req = db.transaction(PHOTO_STORE, 'readonly').objectStore(PHOTO_STORE).openCursor();
+    req.onsuccess = ()=>{ const c = req.result; if(c){ sum += (c.value && c.value.size) || 0; c.continue(); } else res(sum); };
+    req.onerror = ()=>rej(req.error);
+  });
+}
+function fmtBytes(n){ return n < 1024*1024 ? Math.round(n/1024)+'KB' : (n/1024/1024).toFixed(1)+'MB'; }
+
+/* 사진 만들기: 카메라(정원 안) 또는 파일 고르기 → 긴 변 2000px JPEG로 한 번만 줄임 */
+let camStream = null;
+async function startCamera(video){
+  camStream = await navigator.mediaDevices.getUserMedia({
+    video: { facingMode: { ideal: 'environment' }, width: { ideal: 2560 }, height: { ideal: 1440 } }, audio: false });
+  video.srcObject = camStream;
+  await video.play();
+}
+function stopCamera(){ if(camStream){ camStream.getTracks().forEach(t=>t.stop()); camStream = null; } }
+async function fileToBitmap(file){
+  if(window.createImageBitmap){
+    try{ return await createImageBitmap(file, { imageOrientation: 'from-image' }); }catch(e){}
+    try{ return await createImageBitmap(file); }catch(e){}
+  }
+  return await new Promise((res, rej)=>{
+    const img = new Image();
+    img.onload = ()=>res(img); img.onerror = rej; img.src = URL.createObjectURL(file);
+  });
+}
+function drawScaled(src, w, h){
+  const scale = Math.min(1, PHOTO_MAX_SIDE / Math.max(w, h));
+  const c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(w*scale)); c.height = Math.max(1, Math.round(h*scale));
+  c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+  return c;
+}
+function canvasToJpeg(c, q){ return new Promise(res=>c.toBlob(res, 'image/jpeg', q || PHOTO_QUALITY)); }
+function pickPhoto(ask){
+  return new Promise(async resolve=>{
+    const modal = document.getElementById('camModal'), video = document.getElementById('camVideo'), msg = document.getElementById('camMsg');
+    const shot = document.getElementById('camShot');
+    document.getElementById('camAsk').textContent = ask;
+    msg.textContent = ''; shot.disabled = false;
+    modal.classList.add('show');
+    let finished = false;
+    const done = blob=>{ if(finished) return; finished = true; stopCamera(); modal.classList.remove('show'); resolve(blob); };
+    document.getElementById('camCancel').onclick = ()=>done(null);
+    shot.onclick = async ()=>{
+      if(!video.videoWidth) return;
+      done(await canvasToJpeg(drawScaled(video, video.videoWidth, video.videoHeight)));
+    };
+    document.getElementById('camFile').onchange = async e=>{
+      const f = e.target.files[0]; e.target.value = '';
+      if(!f) return;
+      try{
+        const bmp = await fileToBitmap(f);
+        done(await canvasToJpeg(drawScaled(bmp, bmp.width || bmp.naturalWidth, bmp.height || bmp.naturalHeight)));
+      }catch(err){ msg.textContent = '사진을 읽지 못했어요. 다른 사진을 골라 주세요.'; }
+    };
+    try{ await startCamera(video); }
+    catch(err){ msg.textContent = '정원 안 카메라를 쓸 수 없어요. 아래 "파일에서 고르기"를 눌러 주세요.'; shot.disabled = true; }
+  });
+}
+
+/* ── 카드 올리기(사진 3장: 문제 → 풀이 → 아이디어 정리) ── */
+const PHOTO_STEPS = [
+  { title:'① 문제', ask:'풀고 싶은 문제를 사진으로 찍어요.' },
+  { title:'② 풀이', ask:'내가 푼 풀이(또는 해설)를 찍어요.' },
+  { title:'③ 아이디어 정리', ask:'이 문제의 핵심 아이디어를 종이에 한 번 더 정리해서 찍어요.' }
+];
+let photoDraft = null;
+function photoCards(){ return loadReviews().filter(r=> r && r.type === 'photo'); }
+function openPhotoAdd(){
+  const cnt = photoCards().length;
+  if(cnt >= PHOTO_CAP){
+    alert(`공부창고가 가득 찼어요 (${cnt}/${PHOTO_CAP}장). 복습을 끝낸 카드를 완료(삭제)한 뒤 추가해 주세요.`);
+    return;
+  }
+  revokeLive();
+  photoDraft = { blobs:[null,null,null], urls:[null,null,null], days:1 };
+  showScreen('screen-photo-add');
+  renderPhotoAdd();
+}
+function renderPhotoAdd(){
+  const body = document.getElementById('photoAddBody');
+  let html = '<p class="review-ask">사진 3장을 차례로 올려요. 마지막 "아이디어 정리"는 꼭 필요해요. 한 번 올리면 복습할 때도 똑같은 모습으로 보여요.</p>';
+  PHOTO_STEPS.forEach((s, i)=>{
+    const has = !!photoDraft.blobs[i];
+    const enabled = i === 0 || !!photoDraft.blobs[i-1];
+    html += `<div class="ph-step"><div class="ph-step-title">${s.title}</div><p class="review-ask">${s.ask}</p>`
+      + (has ? `<img class="photo-img" src="${photoDraft.urls[i]}" alt="${s.title}">` : '')
+      + `<button class="btn ${has ? 'btn-ghost' : 'btn-green'}" ${enabled ? '' : 'disabled'} onclick="takePhotoStep(${i})">${has ? '🔁 다시 찍기' : '📷 찍기 / 고르기'}</button></div>`;
+  });
+  if(photoDraft.blobs.every(Boolean)){
+    html += '<div class="ph-step"><div class="ph-step-title">저장하기</div>'
+      + '<input id="phTitle" class="review-input" type="text" maxlength="40" placeholder="제목 (선택) 예) 일차함수 3번">'
+      + '<input id="phMemo" class="review-input" type="text" maxlength="60" placeholder="교재·쪽수 메모 (선택) 예) 개념원리 p.85">'
+      + '<p class="review-ask">언제 복습할까요?</p><div class="review-opts">'
+      + [1,2,3,7].map(n=>`<button class="btn btn-ghost ph-day-btn${n===photoDraft.days?' selected':''}" onclick="pickPhotoDays(${n})">${n}일 후</button>`).join('')
+      + '</div><button class="btn btn-purple" id="phSaveBtn" onclick="savePhotoCard()">💾 공부창고에 저장</button><div id="phSaveMsg"></div></div>';
+  }
+  body.innerHTML = html;
+}
+async function takePhotoStep(i){
+  const blob = await pickPhoto(PHOTO_STEPS[i].ask);
+  if(!blob) return;
+  if(photoDraft.urls[i]) URL.revokeObjectURL(photoDraft.urls[i]);
+  photoDraft.blobs[i] = blob;
+  photoDraft.urls[i] = URL.createObjectURL(blob);
+  const title = document.getElementById('phTitle'), memo = document.getElementById('phMemo');
+  const keep = { t: title ? title.value : '', m: memo ? memo.value : '' };
+  renderPhotoAdd();
+  if(document.getElementById('phTitle')){ document.getElementById('phTitle').value = keep.t; document.getElementById('phMemo').value = keep.m; }
+}
+function pickPhotoDays(n){
+  photoDraft.days = n;
+  document.querySelectorAll('.ph-day-btn').forEach((b, k)=>b.classList.toggle('selected', [1,2,3,7][k] === n));
+}
+async function savePhotoCard(){
+  const btn = document.getElementById('phSaveBtn'), msg = document.getElementById('phSaveMsg');
+  btn.disabled = true;
+  const id = 'ph-' + Date.now().toString(36);
+  try{
+    if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(()=>{});
+    await photoPut(id+':q', photoDraft.blobs[0]);
+    await photoPut(id+':s', photoDraft.blobs[1]);
+    await photoPut(id+':i', photoDraft.blobs[2]);
+  }catch(e){
+    photoDeleteCard(id).catch(()=>{});
+    msg.innerHTML = '<p class="review-msg warn">저장하지 못했어요. 폰 저장 공간이나 브라우저 설정(시크릿 모드 등)을 확인해 주세요.</p>';
+    btn.disabled = false;
+    return;
+  }
+  const days = photoDraft.days;
+  updateReviews(l=>l.concat([{
+    id, type:'photo', created: todayStr(), due: addDaysStr(days), rounds: 0,
+    spec:{ kind:'photo', title:(document.getElementById('phTitle').value || '').trim(), memo:(document.getElementById('phMemo').value || '').trim() },
+    q:'', s:''
+  }]));
+  photoDraft.urls.forEach(u=>{ if(u) URL.revokeObjectURL(u); });
+  photoDraft = null;
+  appendNotice(`📷 공부창고에 저장했어요 · ${days}일 뒤 복습`);
+  goHome();
+}
+
+/* ── 사진 복습: 문제 사진이 먼저 뜬다 → 종이에 풀기 → 풀이·아이디어 정리 확인 → 스스로 채점 ── */
+let photoAttempt = null;
+function cardTitle(r){ return (r.spec && (r.spec.title || r.spec.memo)) || '내 문제'; }
+async function openPhotoReview(r, remain){
+  revokeLive();
+  photoAttempt = null;
+  document.getElementById('reviewProgress').textContent = `남은 복습 ${remain}개`;
+  const body = document.getElementById('reviewBody');
+  let qBlob = null;
+  try{ qBlob = await photoGet(r.id+':q'); }catch(e){}
+  if(!qBlob){
+    body.innerHTML = '<div class="review-q">이 카드의 사진을 찾을 수 없어요. 브라우저 저장 데이터가 지워졌을 수 있어요.</div>'
+      + `<button class="btn btn-ghost" onclick="deleteReviews(['${r.id}']);goHome()">이 카드 삭제하고 돌아가기</button>`;
+    showScreen('screen-review');
+    return;
+  }
+  const memo = r.spec.memo ? `<div style="font-size:.78rem;color:rgba(255,255,255,.55)">${escapeHtml(r.spec.memo)}</div>` : '';
+  body.innerHTML = `<div class="review-q"><strong>📷 ${escapeHtml(cardTitle(r))}</strong>${memo}<img class="photo-img" src="${liveUrl(qBlob)}" alt="문제"></div>`
+    + '<p class="review-ask">종이에 풀어 보세요. 다 풀었으면 아래 버튼을 눌러요.</p>'
+    + '<div id="phAttemptBox"></div>'
+    + '<button class="btn btn-ghost" onclick="attemptPhoto()">📷 내 풀이 사진 찍기 (선택)</button>'
+    + `<button class="btn btn-purple" id="phSolvedBtn" onclick="revealPhotoSolution('${r.id}')">✅ 풀어 봤어요 → 풀이 보기</button>`
+    + '<div id="phRevealBox"></div><div id="reviewResult"></div>';
+  showScreen('screen-review');
+}
+async function attemptPhoto(){
+  const blob = await pickPhoto('종이에 푼 내 풀이를 찍어요. (찍지 않아도 돼요)');
+  if(!blob) return;
+  photoAttempt = blob;
+  document.getElementById('phAttemptBox').innerHTML = `<div class="ph-step-title">내 풀이</div><img class="photo-img" src="${liveUrl(blob)}" alt="내 풀이">`;
+}
+async function revealPhotoSolution(id){
+  const box = document.getElementById('phRevealBox');
+  document.getElementById('phSolvedBtn').style.display = 'none';
+  const [s, i] = await Promise.all([photoGet(id+':s'), photoGet(id+':i')]);
+  box.innerHTML = '<div class="ph-step-title">② 풀이</div>' + (s ? `<img class="photo-img" src="${liveUrl(s)}" alt="풀이">` : '<p>사진 없음</p>')
+    + '<div class="ph-step-title">③ 아이디어 정리</div>' + (i ? `<img class="photo-img" src="${liveUrl(i)}" alt="아이디어 정리">` : '<p>사진 없음</p>')
+    + '<p class="review-ask">내 풀이와 비교해서 스스로 채점해 보세요.</p>'
+    + '<div class="review-opts">'
+    + `<button class="btn btn-ghost ph-grade-btn" onclick="gradePhotoCard('${id}','full')">완벽 +20</button>`
+    + `<button class="btn btn-ghost ph-grade-btn" onclick="gradePhotoCard('${id}','part')">반쯤 +10</button>`
+    + `<button class="btn btn-ghost ph-grade-btn" onclick="gradePhotoCard('${id}','tried')">아쉬워요 +3</button></div>`;
+}
+function gradePhotoCard(id, tier){
+  const r = loadReviews().find(x=> x && x.id === id);
+  if(!r) return;
+  const msg = tier === 'full' ? '완벽해요! 🌟' : tier === 'part' ? '반쯤 알고 있어요. 다음에는 더 정확하게!' : '괜찮아요. 풀이를 다시 보고 기억해 봐요.';
+  finishReview(r, tier, msg, '');
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ── 공부창고: 올린 사진 카드를 모아 보고, 폰에 저장하고, 날짜를 바꾸고, 완료(삭제)한다 ── */
+async function openWarehouse(){
+  revokeLive();
+  showScreen('screen-warehouse');
+  await renderWarehouse();
+}
+async function renderWarehouse(){
+  revokeLive();
+  const cards = photoCards().sort((a,b)=> a.created < b.created ? 1 : -1);
+  const list = document.getElementById('whList'), info = document.getElementById('whInfo');
+  let bytes = 0, quota = '';
+  try{ bytes = await photoTotalBytes(); }catch(e){}
+  try{
+    if(navigator.storage && navigator.storage.estimate){
+      const e = await navigator.storage.estimate();
+      if(e.quota) quota = ` · 이 기기 브라우저 저장공간 ${fmtBytes(e.usage||0)} / ${fmtBytes(e.quota)}`;
+    }
+  }catch(e){}
+  info.textContent = `카드 ${cards.length} / ${PHOTO_CAP}장 · 사진 ${fmtBytes(bytes)}${quota}`;
+  if(!cards.length){
+    list.innerHTML = '<p class="review-ask" style="text-align:center">아직 카드가 없어요. 홈에서 "📷 내 문제 추가"로 올려 보세요.</p>';
+    return;
+  }
+  list.innerHTML = cards.map(r=>{
+    const age = daysBetween(r.created, todayStr());
+    const left = EXPIRE_DAYS - age;
+    const warn = left <= EXPIRE_WARN_DAYS ? ' wh-warn' : '';
+    return `<div class="wh-card${warn}" id="wh-${r.id}">
+      <div class="wh-head"><img class="wh-thumb" id="th-${r.id}" alt=""><div>
+        <div class="wh-title">${escapeHtml(cardTitle(r))}</div>
+        <div class="wh-meta">올린 날 ${r.created} · 복습 ${r.rounds||0}회 · 다음 복습 ${r.due}</div>
+        <div class="wh-meta">${left > 0 ? `${left}일 뒤 자동 삭제` : '오늘 자동 삭제'}${r.spec.memo ? ' · '+escapeHtml(r.spec.memo) : ''}</div></div></div>
+      <div class="wh-actions">
+        <button class="btn btn-ghost" onclick="toggleWarehouseCard('${r.id}')">👀 열어 보기</button>
+        <button class="btn btn-ghost" onclick="saveCardToPhone('${r.id}')">📥 폰에 저장</button>
+        <button class="btn btn-ghost" onclick="saveCardOriginals('${r.id}')">🖼️ 사진 3장 저장</button>
+      </div>
+      <div class="wh-actions">
+        <span class="wh-meta" style="align-self:center">복습 날짜</span>
+        ${[1,2,3,7].map(n=>`<button class="btn btn-ghost wh-day" onclick="moveCardDue('${r.id}',${n})">${n}일 후</button>`).join('')}
+        <button class="btn btn-ghost wh-day" onclick="moveCardDue('${r.id}',0)">지금</button>
+      </div>
+      <div class="wh-actions"><button class="btn btn-purple" onclick="completeCard('${r.id}')">🎉 완료하고 삭제</button><button class="btn btn-ghost" onclick="discardCard('${r.id}')">🗑️ 점수 없이 삭제</button></div>
+      <div id="whopen-${r.id}"></div></div>`;
+  }).join('');
+  for(const r of cards){
+    try{ const b = await photoGet(r.id+':q'); const el = document.getElementById('th-'+r.id); if(b && el) el.src = liveUrl(b); }catch(e){}
+  }
+}
+async function toggleWarehouseCard(id){
+  const box = document.getElementById('whopen-'+id);
+  if(box.innerHTML){ box.innerHTML = ''; return; }
+  const [q, s, i] = await Promise.all([photoGet(id+':q'), photoGet(id+':s'), photoGet(id+':i')]);
+  const one = (b, t)=> b ? `<div class="ph-step-title">${t}</div><img class="photo-img" src="${liveUrl(b)}" alt="${t}">` : '';
+  box.innerHTML = one(q,'① 문제') + one(s,'② 풀이') + one(i,'③ 아이디어 정리');
+}
+function moveCardDue(id, n){
+  updateReviews(l=>l.map(r=> r && r.id === id ? Object.assign({}, r, { due: addDaysStr(n) }) : r));
+  if(n === 0){ goHome(); openReview(id); return; }
+  renderWarehouse();
+}
+function completeCard(id){
+  if(!confirm('이 카드를 완료하고 사진을 삭제할까요? 삭제하면 되돌릴 수 없어요. (폰에 저장하려면 먼저 "📥 폰에 저장"을 눌러 주세요)')) return;
+  const bonus = completeReview(id);
+  appendNotice(bonus ? `🎉 완료 보너스 +${bonus}P` : '🗑️ 카드를 삭제했어요 (복습 기록이 없어 보너스 없음)');
+  renderHome();
+  renderWarehouse();
+}
+function discardCard(id){
+  if(!confirm('점수 없이 삭제할까요? 사진도 함께 지워지고 되돌릴 수 없어요.')) return;
+  deleteReviews([id]);
+  renderWarehouse();
+}
+
+/* ── 폰에 저장: 3장을 세로로 이어 붙인 JPG 1장(기본) 또는 원본 3장 ── */
+async function makeCardImage(id){
+  const r = loadReviews().find(x=> x && x.id === id);
+  const blobs = await Promise.all([photoGet(id+':q'), photoGet(id+':s'), photoGet(id+':i')]);
+  if(blobs.some(b=>!b)) throw new Error('사진 없음');
+  const bmps = await Promise.all(blobs.map(b=>createImageBitmap(b)));
+  const W = 1200, PAD = 24, HEAD = 90, CAP = 54;
+  const heights = bmps.map(b=> Math.round(b.height * (W - PAD*2) / b.width));
+  const H = HEAD + heights.reduce((a, h)=>a + h + CAP + PAD, 0);
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#111'; ctx.font = 'bold 40px sans-serif';
+  ctx.fillText(cardTitle(r).slice(0, 30), PAD, 56);
+  ctx.font = '26px sans-serif'; ctx.fillStyle = '#555';
+  ctx.fillText(`${r.created}${r.spec.memo ? ' · ' + r.spec.memo.slice(0, 30) : ''}`, PAD, 84);
+  let y = HEAD;
+  const names = ['① 문제', '② 풀이', '③ 아이디어 정리'];
+  bmps.forEach((b, k)=>{
+    ctx.fillStyle = '#2563eb'; ctx.font = 'bold 32px sans-serif'; ctx.fillText(names[k], PAD, y + 38);
+    y += CAP;
+    ctx.drawImage(b, PAD, y, W - PAD*2, heights[k]);
+    y += heights[k] + PAD;
+  });
+  return { blob: await canvasToJpeg(c, 0.9), name: `공부카드_${(r.spec.title || r.id).replace(/[\\/:*?"<>|]/g,'_')}_${r.created}.jpg` };
+}
+async function deliverFile(blob, name){
+  const file = new File([blob], name, { type: blob.type });
+  if(navigator.canShare && navigator.canShare({ files:[file] })){
+    try{ await navigator.share({ files:[file], title: name }); return; }catch(e){ if(e && e.name === 'AbortError') return; }
+  }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(a.href), 3000);
+}
+async function saveCardToPhone(id){
+  try{ const { blob, name } = await makeCardImage(id); await deliverFile(blob, name); }
+  catch(e){ alert('저장하지 못했어요. 사진이 없거나 브라우저가 막았을 수 있어요.'); }
+}
+async function saveCardOriginals(id){
+  const r = loadReviews().find(x=> x && x.id === id);
+  const base = (r && r.spec.title || id).replace(/[\\/:*?"<>|]/g,'_');
+  const names = { q:'문제', s:'풀이', i:'아이디어정리' };
+  for(const k of ['q','s','i']){
+    const b = await photoGet(id+':'+k);
+    if(b) await deliverFile(b, `${base}_${names[k]}.jpg`);
+  }
+}
+
+/* ── 수명·용량 관리: 만든 지 30일이 지난 복습(사진·교재 복습 모두)은 자동 삭제, 7일 전부터 경고 ── */
+function purgeExpiredReviews(){
+  const today = todayStr();
+  const dead = loadReviews().filter(r=> r && r.id && /^\d{4}-\d{2}-\d{2}$/.test(r.created || '') && daysBetween(r.created, today) > EXPIRE_DAYS).map(r=>r.id);
+  if(dead.length){
+    deleteReviews(dead);
+    appendNotice(`🗑️ 30일이 지난 복습 ${dead.length}개를 자동으로 삭제했어요`);
+  }
+}
+function expiringSoon(){
+  const today = todayStr();
+  return loadReviews().filter(r=> r && /^\d{4}-\d{2}-\d{2}$/.test(r.created || '')
+    && (EXPIRE_DAYS - daysBetween(r.created, today)) <= EXPIRE_WARN_DAYS);
+}
+function renderExpireNotice(){
+  const el = document.getElementById('expireNotice');
+  const list = expiringSoon();
+  el.style.display = list.length ? 'block' : 'none';
+  const photos = list.filter(r=>r.type === 'photo').length;
+  el.innerHTML = list.length
+    ? `⏳ 곧(7일 이내) 자동 삭제되는 복습이 ${list.length}개 있어요.` + (photos ? ' <a href="#" onclick="openWarehouse();return false" style="color:#fbbf24">공부창고에서 확인·폰에 저장</a>' : '')
+    : '';
+}
+
+/* ── 점수 규칙: 반복 가산, 완료 보너스, 월간 교체 보너스 ── */
+function bumpMonthStat(k){
+  data.monthStats = data.monthStats || {};
+  const m = monthKey();
+  data.monthStats[m] = data.monthStats[m] || { newReviewed:0, completed:0 };
+  data.monthStats[m][k] += 1;
+}
+// 완료(끝내기): 복습 3회 이상 +30, 1~2회 +10, 0회는 보너스 없음. 편지·카드·사진 모두 같은 규칙. 반환: 받은 보너스
+function completeReview(id){
+  const r = loadReviews().find(x=> x && x.id === id);
+  const rounds = r ? (r.rounds || 0) : 0;
+  const bonus = rounds >= 3 ? 30 : rounds >= 1 ? 10 : 0;
+  if(bonus){
+    data.points += bonus;
+    data.sessions.push({ date: todayStr(), type:'review', tier:'complete', points: bonus });
+    if(rounds >= 3) bumpMonthStat('completed');
+    saveData(data);
+  }
+  deleteReviews([id]);
+  return bonus;
+}
+function payMonthlyBonus(){
+  const cur = monthKey();
+  data.monthPaid = data.monthPaid || {};
+  Object.keys(data.monthStats || {}).forEach(m=>{
+    if(m >= cur || data.monthPaid[m]) return;
+    const s = data.monthStats[m];
+    const n = Math.min(s.newReviewed, s.completed, PHOTO_CAP);
+    const b = n * MONTH_BONUS_PER;
+    data.monthPaid[m] = true;
+    if(b){
+      data.points += b;
+      data.sessions.push({ date: todayStr(), type:'review', tier:'month', points: b });
+      appendNotice(`🔄 ${m} 교체 보너스 +${b}P (새로 복습 ${s.newReviewed}장 · 완료 ${s.completed}장)`);
+    }
+    saveData(data);
+  });
+}
+
+function cancelPhotoAdd(){
+  if(photoDraft){ photoDraft.urls.forEach(u=>{ if(u) URL.revokeObjectURL(u); }); photoDraft = null; }
+  goHome();
+}
+
 renderHome();
 if('Notification' in window && Notification.permission === 'granted'){
   scheduleTodayNotification();
