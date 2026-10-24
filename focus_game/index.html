@@ -2686,6 +2686,12 @@ if('serviceWorker' in navigator && location.protocol !== 'file:'){
   window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); });
 }
 renderHome();
+// 교재에서 카드를 읽고 돌아오면(뒤로가기·앱 전환) 홈을 다시 그려 "열어 봄" 포인트를 바로 받는다
+function refreshHomeOnReturn(){
+  if(document.visibilityState === 'visible' && document.getElementById('screen-home').classList.contains('active')) renderHome();
+}
+document.addEventListener('visibilitychange', refreshHomeOnReturn);
+window.addEventListener('pageshow', e=>{ if(e.persisted) refreshHomeOnReturn(); });
 if('Notification' in window && Notification.permission === 'granted'){
   scheduleTodayNotification();
 }
