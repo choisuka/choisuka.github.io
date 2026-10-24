@@ -912,7 +912,7 @@ function openReview(id){
     if(spec.reason) input += `<p class="review-ask">${spec.reasonAsk}</p><textarea id="reviewText" class="review-input" rows="3" maxlength="200" placeholder="여기에 써 보세요 (10글자 이상)"></textarea>`;
   }else{
     input = `<p class="review-ask">${spec.ask}</p><input id="reviewText" class="review-input" type="text" maxlength="60" autocomplete="off" placeholder="식을 써 보세요">`
-      + '<div class="review-keys">' + ['×','÷','(',')','='].map(k=>`<button class="btn btn-ghost" onclick="insertReviewKey('${k}')">${k}</button>`).join('') + '</div>';
+      + '<div class="review-keys">' + ['+','-','×','÷','(',')','='].map(k=>`<button class="btn btn-ghost" onclick="insertReviewKey('${k}')">${k}</button>`).join('') + '</div>';
   }
   document.getElementById('reviewBody').innerHTML =
     `<div class="review-q">${reviewCur.q}</div>${input}<div id="reviewResult"></div>`
