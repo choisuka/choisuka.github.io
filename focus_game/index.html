@@ -149,8 +149,10 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .photo-img{width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.15);margin:8px 0;background:#111;display:block}
 .ph-step{margin-bottom:16px}
 .ph-step-title{font-weight:700;margin:10px 0 4px;font-size:.9rem}
-.ph-day-btn.selected{border-color:#a855f7;background:rgba(168,85,247,.25)}
+.ph-day-btn.selected,.cal-tab.selected{border-color:#a855f7;background:rgba(168,85,247,.25)}
 .ph-grade-btn{flex:1;min-width:80px}
+.ph-day-btn,.cal-tab{flex:1;min-width:64px;width:auto}
+.cal-row .btn{width:auto}
 .cam-modal{position:fixed;inset:0;background:#000;z-index:1000;display:none;flex-direction:column;align-items:center}
 .cam-modal.show{display:flex}
 .cam-ask{color:#fff;padding:12px;font-size:.95rem;text-align:center}
@@ -167,7 +169,17 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .wh-meta{font-size:.74rem;color:rgba(255,255,255,.55);line-height:1.5}
 .wh-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .wh-actions .btn{flex:1;min-width:70px;padding:8px 4px;font-size:.78rem}
-.ph-day-btn{flex:1;min-width:64px;width:auto}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:10px 0}
+.cal-dow{text-align:center;font-size:.7rem;color:rgba(255,255,255,.5)}
+.cal-cell{min-height:54px;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:3px;background:rgba(255,255,255,.03);color:#fff;font-size:.72rem;text-align:left;cursor:pointer;font-family:inherit}
+.cal-cell.today{border-color:#4ade80}
+.cal-cell.sel{background:rgba(168,85,247,.25);border-color:#a855f7}
+.cal-cell .cal-badges{display:block;font-size:.66rem;margin-top:2px;line-height:1.3}
+.cal-day{margin-top:12px}
+.cal-sec{font-size:.78rem;color:#fbbf24;margin:8px 0 4px}
+.cal-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:.82rem;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,.1)}
+.cal-week-day{border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px;margin-bottom:6px}
 .review-msg{font-size:.9rem;margin:10px 0;text-align:center}
 .review-msg.ok{color:#4ade80}
 .review-msg.warn{color:#fbbf24}
@@ -377,6 +389,7 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
     <div class="tool-row">
       <button class="tool-btn" onclick="openPhotoAdd()"><span>📷</span>내 문제 추가</button>
       <button class="tool-btn" onclick="openWarehouse()"><span>📦</span>공부창고</button>
+      <button class="tool-btn" onclick="openCalendar()"><span>📅</span>공부 캘린더</button>
     </div>
   </section>
 
@@ -563,6 +576,19 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
       <p id="whInfo" style="text-align:center;font-size:.8rem;color:rgba(255,255,255,.6);margin-bottom:12px"></p>
       <p class="review-ask" style="font-size:.76rem">사진은 이 폰(브라우저) 안에만 저장되고 사진 앱에는 보이지 않아요. 만든 지 30일이 지나면 자동으로 삭제되니, 남기고 싶으면 "폰에 저장"을 눌러 두세요.</p>
       <div id="whList"></div>
+      <button class="btn btn-purple" onclick="goHome()">🏠 정원으로 돌아가기</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-calendar">
+    <div class="card">
+      <div class="result-title jua">📅 공부 캘린더</div>
+      <div id="calBody"></div>
+      <div class="ph-step">
+        <div class="ph-step-title">⏰ 구글 캘린더 알람</div>
+        <p class="review-ask">매일 오전 8시·오후 5시, 토·일 오후 1시에 "정원 열어 복습하기" 알람이 울려요. 구글 캘린더에서 설정 → 가져오기·내보내기 → 가져오기로 이 파일을 <b>한 번만</b> 가져오세요. 가져온 뒤 알림이 일정 시각에 울리는지 한 번 확인해 주세요.</p>
+        <button class="btn btn-green" onclick="downloadAlarmICS()">⏰ 알람 파일(.ics) 받기</button>
+      </div>
       <button class="btn btn-purple" onclick="goHome()">🏠 정원으로 돌아가기</button>
     </div>
   </section>
@@ -2281,6 +2307,158 @@ function payMonthlyBonus(){
 function cancelPhotoAdd(){
   if(photoDraft){ photoDraft.urls.forEach(u=>{ if(u) URL.revokeObjectURL(u); }); photoDraft = null; }
   goHome();
+}
+
+/* ───────── 공부 캘린더 (월 / 주 / 일) ─────────
+   복습 예정일(우편함), 주간 계획, 한 일(포인트 기록)을 한 화면에서 본다. 서버 없이 이 기기의 기록만 쓴다. */
+let calView = 'month', calDate = new Date();
+const CAL_DOW_LABEL = '일월화수목금토';
+function openCalendar(){ calDate = new Date(); calView = 'month'; showScreen('screen-calendar'); renderCalendar(); }
+function setCalView(v){ calView = v; renderCalendar(); }
+function shiftCal(n){
+  if(calView === 'month') calDate = new Date(calDate.getFullYear(), calDate.getMonth() + n, 1);
+  else calDate = new Date(calDate.getFullYear(), calDate.getMonth(), calDate.getDate() + n * (calView === 'week' ? 7 : 1));
+  renderCalendar();
+}
+function calToday(){ calDate = new Date(); renderCalendar(); }
+function selectCalDate(ds, view){ calDate = parseDate(ds); if(view) calView = view; renderCalendar(); }
+
+function itemsForDate(ds, reviews){
+  const dow = DOW_KEYS[parseDate(ds).getDay()];
+  const blocks = (plan && plan.days && plan.updatedAt && ds >= plan.updatedAt) ? (plan.days[dow] || []) : [];
+  return {
+    reviews: reviews.filter(r=> r && r.due === ds),
+    planBlocks: blocks,
+    done: (data.sessions || []).filter(s=> s.date === ds)
+  };
+}
+function reviewLabel(r){
+  if(r.type === 'photo') return '📷 ' + escapeHtml(cardTitle(r));
+  if(r.spec && r.spec.kind === 'open') return '📖 ' + escapeHtml(r.spec.title || '카드 읽기');
+  return '📌 교재 복습';
+}
+function doneLabel(s){
+  if(s.type === 'timer') return `⏳ 집중 타이머 ${s.minutes || 0}분 (+${s.points}P)`;
+  if(s.type === 'game') return `🎯 주의력 게임 (+${s.points}P)`;
+  if(s.type === 'study') return `📖 공부 기록 ${s.count || 1}건 (+${s.points}P)`;
+  if(s.type === 'review') return `📌 복습 (+${s.points}P)`;
+  return `✅ 활동 (+${s.points || 0}P)`;
+}
+function dayPanel(ds, reviews){
+  const it = itemsForDate(ds, reviews), today = todayStr();
+  let h = `<div class="cal-day"><div class="ph-step-title">${ds} (${CAL_DOW_LABEL[parseDate(ds).getDay()]})${ds === today ? ' · 오늘' : ''}</div>`;
+  h += '<div class="cal-sec">📌 복습</div>';
+  h += it.reviews.length ? it.reviews.map(r=>{
+    const canStart = ds <= today && !(r.spec && r.spec.kind === 'open');
+    return `<div class="cal-row"><span style="flex:1;min-width:120px">${reviewLabel(r)}</span>`
+      + (canStart ? `<button class="btn btn-purple" style="flex:none;padding:6px 10px;font-size:.78rem" onclick="startReviewFromCal('${r.id}')">복습하기</button>` : '')
+      + `<input type="date" value="${ds}" style="background:#161b22;color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:4px" onchange="calMoveDue('${r.id}',this.value)">`
+      + `<button class="btn btn-ghost" style="flex:none;padding:6px 10px;font-size:.78rem" onclick="calDelete('${r.id}')">삭제</button></div>`;
+  }).join('') : '<p class="wh-meta">이 날 예정된 복습이 없어요.</p>';
+  if(it.planBlocks.length){
+    h += '<div class="cal-sec">⏰ 계획</div>' + it.planBlocks.map(b=>`<div class="cal-row">${b.start}~${b.end} · ${escapeHtml(b.subject)}${b.note ? ' · ' + escapeHtml(b.note) : ''}</div>`).join('');
+  }
+  if(it.done.length){
+    h += '<div class="cal-sec">✅ 한 일</div>' + it.done.map(s=>`<div class="cal-row">${doneLabel(s)}</div>`).join('');
+  }
+  return h + '</div>';
+}
+function startReviewFromCal(id){ goHome(); openReview(id); }
+function calMoveDue(id, v){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(v)) return;
+  updateReviews(l=>l.map(r=> r && r.id === id ? Object.assign({}, r, { due: v }) : r));
+  renderCalendar();
+}
+function calDelete(id){
+  if(!confirm('이 복습을 삭제할까요? (사진 카드는 사진도 함께 지워지고 점수는 없어요)')) return;
+  deleteReviews([id]);
+  renderCalendar();
+}
+function renderCalendar(){
+  const el = document.getElementById('calBody');
+  const reviews = loadReviews(), today = todayStr(), ds = dateStr(calDate);
+  const tabs = ['month','week','day'].map(v=>`<button class="btn btn-ghost cal-tab${calView === v ? ' selected' : ''}" onclick="setCalView('${v}')">${{month:'한 달', week:'일주일', day:'하루'}[v]}</button>`).join('');
+  const y = calDate.getFullYear(), m = calDate.getMonth();
+  const weekStart = new Date(y, m, calDate.getDate() - calDate.getDay());
+  let title;
+  if(calView === 'month') title = `${y}년 ${m+1}월`;
+  else if(calView === 'week') title = `${dateStr(weekStart)} ~ ${dateStr(new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate()+6))}`;
+  else title = `${ds} (${CAL_DOW_LABEL[calDate.getDay()]})`;
+  let html = `<div class="review-opts">${tabs}</div>`
+    + `<div class="cal-nav"><button class="btn btn-ghost" style="flex:none;width:44px" onclick="shiftCal(-1)">◀</button><strong style="text-align:center;flex:1">${title}</strong><button class="btn btn-ghost" style="flex:none;width:44px" onclick="shiftCal(1)">▶</button></div>`
+    + '<button class="btn btn-ghost" style="margin-bottom:8px;padding:6px" onclick="calToday()">오늘로</button>';
+  if(calView === 'month'){
+    const offset = new Date(y, m, 1).getDay(), dim = new Date(y, m+1, 0).getDate();
+    html += '<div class="cal-grid">' + [...CAL_DOW_LABEL].map(c=>`<div class="cal-dow">${c}</div>`).join('');
+    for(let i = 0; i < offset; i++) html += '<div></div>';
+    for(let d = 1; d <= dim; d++){
+      const cds = dateStr(new Date(y, m, d)), it = itemsForDate(cds, reviews);
+      const badges = [it.reviews.length ? `📌${it.reviews.length}` : '', it.planBlocks.length ? '⏰' : '', it.done.length ? '✅' : ''].filter(Boolean).join(' ');
+      html += `<button class="cal-cell${cds === today ? ' today' : ''}${cds === ds ? ' sel' : ''}" onclick="selectCalDate('${cds}')">${d}<span class="cal-badges">${badges}</span></button>`;
+    }
+    html += '</div>' + dayPanel(ds, reviews);
+  }else if(calView === 'week'){
+    for(let k = 0; k < 7; k++){
+      const d = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + k), cds = dateStr(d), it = itemsForDate(cds, reviews);
+      html += `<div class="cal-week-day"><button class="btn btn-ghost" style="padding:4px 8px;font-size:.78rem;margin-bottom:4px" onclick="selectCalDate('${cds}','day')">${cds} (${CAL_DOW_LABEL[d.getDay()]})${cds === today ? ' · 오늘' : ''}</button>`
+        + (it.reviews.map(r=>`<div class="cal-row">${reviewLabel(r)}</div>`).join('')
+          + it.planBlocks.map(b=>`<div class="cal-row">⏰ ${b.start}~${b.end} ${escapeHtml(b.subject)}</div>`).join('')
+          + (it.done.length ? `<div class="cal-row">✅ 한 일 ${it.done.length}건 (+${it.done.reduce((a, s)=>a + (s.points || 0), 0)}P)</div>` : '')
+          || '<div class="wh-meta">없음</div>')
+        + '</div>';
+    }
+  }else{
+    html += dayPanel(ds, reviews);
+  }
+  el.innerHTML = html;
+}
+
+/* ───────── 구글 캘린더 알람(.ics) ─────────
+   복습 항목마다가 아니라 고정 시각 알람이다: 매일 08:00·17:00, 토·일 13:00. 구글 캘린더에 한 번만 가져오면 계속 울린다. */
+const GARDEN_URL = 'https://choisuka.github.io/focus_game/';
+function icsEscape(s){ return String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n'); }
+function icsFold(line){   // 한 줄은 75바이트까지: 넘으면 줄바꿈 + 공백으로 이어 붙인다(한글·이모지는 바이트 수로 계산)
+  const enc = new TextEncoder();
+  let out = '', cur = '', bytes = 0;
+  for(const ch of line){
+    const b = enc.encode(ch).length;
+    if(bytes + b > 73){ out += cur + '\r\n '; cur = ''; bytes = 0; }
+    cur += ch; bytes += b;
+  }
+  return out + cur;
+}
+function buildAlarmICS(now){
+  now = now || new Date();
+  const ymd = d=> `${d.getFullYear()}${pad2(d.getMonth()+1)}${pad2(d.getDate())}`;
+  const stamp = `${now.getUTCFullYear()}${pad2(now.getUTCMonth()+1)}${pad2(now.getUTCDate())}T${pad2(now.getUTCHours())}${pad2(now.getUTCMinutes())}${pad2(now.getUTCSeconds())}Z`;
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const saturday = new Date(today.getFullYear(), today.getMonth(), today.getDate() + ((6 - today.getDay() + 7) % 7));
+  const events = [
+    { uid:'toro-alarm-0800', date: ymd(today), s:'080000', e:'081500', rule:'FREQ=DAILY', summary:'🌱 아침 복습 — 정원 열기' },
+    { uid:'toro-alarm-1700', date: ymd(today), s:'170000', e:'171500', rule:'FREQ=DAILY', summary:'🌱 저녁 복습 — 정원 열기' },
+    { uid:'toro-alarm-1300-weekend', date: ymd(saturday), s:'130000', e:'131500', rule:'FREQ=WEEKLY;BYDAY=SA,SU', summary:'🌱 주말 오후 복습 — 정원 열기' }
+  ];
+  const L = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Toro Focus Garden//KO','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'X-WR-CALNAME:정원 공부 알람','X-WR-TIMEZONE:Asia/Seoul',
+    'BEGIN:VTIMEZONE','TZID:Asia/Seoul','BEGIN:STANDARD','DTSTART:19700101T000000','TZOFFSETFROM:+0900','TZOFFSETTO:+0900','TZNAME:KST','END:STANDARD','END:VTIMEZONE'];
+  events.forEach(ev=>{
+    L.push('BEGIN:VEVENT', `UID:${ev.uid}@choisuka.github.io`, `DTSTAMP:${stamp}`,
+      `DTSTART;TZID=Asia/Seoul:${ev.date}T${ev.s}`, `DTEND;TZID=Asia/Seoul:${ev.date}T${ev.e}`,
+      `RRULE:${ev.rule}`, `SUMMARY:${icsEscape(ev.summary)}`,
+      `DESCRIPTION:${icsEscape('오늘 복습할 문제를 확인해요.\n정원 열기: ' + GARDEN_URL)}`,
+      `URL:${GARDEN_URL}`, 'TRANSP:TRANSPARENT',
+      'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${icsEscape('정원 열어 복습하기')}`, 'TRIGGER:PT0S', 'END:VALARM',
+      'END:VEVENT');
+  });
+  L.push('END:VCALENDAR');
+  return L.map(icsFold).join('\r\n') + '\r\n';
+}
+function downloadAlarmICS(){
+  const blob = new Blob([buildAlarmICS()], { type:'text/calendar;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'toro_study_alarms.ics';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
 }
 
 renderHome();
