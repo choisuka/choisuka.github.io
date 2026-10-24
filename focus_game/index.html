@@ -340,6 +340,7 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
 
   <!-- 홈 화면 -->
   <section class="screen active" id="screen-home">
+    <div id="inAppNotice" style="display:none;margin-bottom:12px;padding:12px 14px;border-radius:14px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.4);font-size:.85rem;line-height:1.55"></div>
     <div id="studyNotice" style="display:none;margin-bottom:12px;padding:10px 14px;border-radius:14px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);font-size:.9rem;text-align:center"></div>
     <div id="expireNotice" style="display:none;margin-bottom:12px;padding:10px 14px;border-radius:14px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.35);font-size:.85rem;text-align:center"></div>
     <button class="recover-cta" id="reviewCard" style="display:none" onclick="openReview()">
@@ -995,6 +996,7 @@ function goHome(){
 /* ───────── 홈/정원 렌더 ───────── */
 function renderHome(){
   ensureTodayMinutesReset();
+  renderInAppNotice(detectInApp());
   claimStudyPoints();
   purgeLegacyReviewDone();
   purgeExpiredReviews();
@@ -2149,7 +2151,7 @@ async function renderWarehouse(){
       if(e.quota) quota = ` · 이 기기 브라우저 저장공간 ${fmtBytes(e.usage||0)} / ${fmtBytes(e.quota)}`;
     }
   }catch(e){}
-  info.textContent = `카드 ${cards.length} / ${PHOTO_CAP}장 · 사진 ${fmtBytes(bytes)}${quota}`;
+  info.innerHTML = `카드 ${cards.length} / ${PHOTO_CAP}장 · 사진 ${fmtBytes(bytes)}${quota}<br>저장 위치: ${storageWhere()}`;
   if(!cards.length){
     list.innerHTML = '<p class="review-ask" style="text-align:center">아직 카드가 없어요. 홈에서 "📷 내 문제 추가"로 올려 보세요.</p>';
     return;
@@ -2261,9 +2263,13 @@ async function shareViewerItems(){
 function downloadViewerItems(){
   saveViewerItems.forEach((it, i)=>setTimeout(()=>downloadBlob(it.blob, it.name), i * 500));
 }
+function saveHint(){
+  const info = detectInApp();
+  return (info ? `<b>${info.name} 안에서는 내려받기가 안 될 수 있어요.</b> 크롬에서 열어 주세요.<br>` : '') + SAVE_HINT;
+}
 const SAVE_HINT = '이미지를 <b>길게 눌러</b> "사진에 저장" 또는 "파일에 저장"을 고르거나, 아래 버튼을 눌러요. (브라우저에 따라 "파일로 내려받기"가 안 될 수 있어요. 그럴 땐 이미지를 길게 눌러 저장하세요.)';
 async function saveCardToPhone(id){
-  try{ const { blob, name } = await makeCardImage(id); showSaveViewer([{ blob, name }], SAVE_HINT); }
+  try{ const { blob, name } = await makeCardImage(id); showSaveViewer([{ blob, name }], saveHint()); }
   catch(e){ alert('저장 이미지를 만들지 못했어요. 사진이 없거나 브라우저가 막았을 수 있어요.'); }
 }
 async function saveCardOriginals(id){
@@ -2276,7 +2282,7 @@ async function saveCardOriginals(id){
     if(bl) items.push({ blob: bl, name: `${base}_${names[k]}.jpg` });
   }
   if(!items.length){ alert('사진을 찾을 수 없어요.'); return; }
-  showSaveViewer(items, SAVE_HINT);
+  showSaveViewer(items, saveHint());
 }
 
 /* ── 수명·용량 관리: 만든 지 30일이 지난 복습(사진·교재 복습 모두)은 자동 삭제, 7일 전부터 경고 ── */
@@ -2497,6 +2503,49 @@ function downloadAlarmICS(){
   a.href = URL.createObjectURL(blob); a.download = 'toro_study_alarms.ics';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+}
+
+/* ───────── 앱 안 브라우저(카카오톡 등) 감지 ─────────
+   카카오톡 등에서 링크를 누르면 폰의 크롬이 아니라 그 앱 안의 내장 브라우저가 열린다.
+   내장 브라우저는 크롬과 저장 공간이 따로라서 사진·기록이 서로 보이지 않고, 파일 내려받기도 막힐 수 있다. */
+function detectInApp(ua){
+  ua = ua || navigator.userAgent;
+  if(/KAKAOTALK/i.test(ua)) return { name:'카카오톡', kakao:true };
+  if(/NAVER\(inapp/i.test(ua)) return { name:'네이버 앱' };
+  if(/Instagram/i.test(ua)) return { name:'인스타그램' };
+  if(/FBAN|FBAV/i.test(ua)) return { name:'페이스북' };
+  if(/\bLine\//i.test(ua)) return { name:'라인' };
+  if(/DaumApps/i.test(ua)) return { name:'다음 앱' };
+  if(/; wv\)/.test(ua) || (/(iPhone|iPad|iPod)/.test(ua) && !/Safari/.test(ua))) return { name:'앱 안' };
+  return null;
+}
+function externalOpenUrl(info, url){
+  url = url || location.href.split('#')[0];
+  return info && info.kakao ? 'kakaotalk://web/openExternal?url=' + encodeURIComponent(url) : '';
+}
+function renderInAppNotice(info){
+  const el = document.getElementById('inAppNotice');
+  if(!info){ el.style.display = 'none'; el.innerHTML = ''; return; }
+  el.style.display = 'block';
+  el.innerHTML = `<strong>⚠️ ${info.name} 안에서 열렸어요</strong><br>`
+    + '여기에 저장한 사진·기록은 <b>크롬 등 다른 브라우저와 공유되지 않고</b>, 파일 내려받기도 안 될 수 있어요. 공부 기록은 항상 같은 브라우저(크롬 권장)에서 쓰세요.'
+    + '<div class="review-opts" style="margin-top:8px">'
+    + (info.kakao ? '<button class="btn btn-green" onclick="openInExternalBrowser()">🌐 크롬(기본 브라우저)으로 열기</button>' : '')
+    + '<button class="btn btn-ghost" onclick="copyGardenLink()">🔗 주소 복사해서 크롬에 붙여넣기</button></div>'
+    + '<div id="copyMsg" style="font-size:.78rem;margin-top:6px"></div>';
+}
+function openInExternalBrowser(){
+  const u = externalOpenUrl(detectInApp());
+  if(u) location.href = u;
+}
+async function copyGardenLink(){
+  const url = location.href.split('#')[0], msg = document.getElementById('copyMsg');
+  try{ await navigator.clipboard.writeText(url); msg.textContent = '주소를 복사했어요. 크롬을 열고 주소창에 붙여넣어 주세요.'; }
+  catch(e){ msg.textContent = '복사하지 못했어요. 주소창의 주소를 길게 눌러 복사해 주세요: ' + url; }
+}
+function storageWhere(){
+  const info = detectInApp();
+  return info ? `${info.name} 안 브라우저 (크롬 등 다른 브라우저와 공유되지 않아요)` : '이 브라우저 (같은 브라우저에서만 보여요)';
 }
 
 renderHome();
