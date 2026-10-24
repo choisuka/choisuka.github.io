@@ -140,6 +140,9 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .review-keys{display:flex;gap:6px;margin-bottom:12px}
 .review-keys .btn{flex:1;padding:8px 0}
 .read-link{text-decoration:none;text-align:left;font-size:.88rem}
+.review-again{margin:12px 0}
+.review-again-btn{flex:1;min-width:64px;padding:8px 4px;font-size:.8rem}
+.review-again-btn.selected{border-color:#a855f7;background:rgba(168,85,247,.25)}
 .review-msg{font-size:.9rem;margin:10px 0;text-align:center}
 .review-msg.ok{color:#4ade80}
 .review-msg.warn{color:#fbbf24}
@@ -623,24 +626,39 @@ function renderStudyNotice(){
 }
 
 /* ───────── 복습 문제 ───────── */
-// jewish_math에서 "📌 복습할래요"로 예약한 문제(문제·풀이·채점 기준 포함)를 기한이 되면 내고 채점한다.
-// 푼 결과는 이 앱의 data.reviewDone에만 쓴다(교재 쪽 기록과 같은 키를 동시에 쓰지 않으려고).
+// 교재가 "📌 복습할래요"로 보낸 편지(문제·풀이·채점 기준 포함)가 toro_review_v1 우편함에 쌓인다.
+// 정원은 기한이 된 편지를 내고 채점한다. 푼 뒤에는 날짜를 미루거나(반복) 삭제한다(끝내기).
+// 교재도 같은 우편함에 편지를 넣으므로, 고치기 직전에 항상 다시 읽는다.
 const REVIEW_KEY = 'toro_review_v1';
 const REVIEW_PTS = {tried:3, part:10, full:20, viewed:5, opened:5}; // viewed=풀이 확인, opened=카드 열어보기
 const REVIEW_OPEN_KEY = 'toro_review_open_v1'; // 교재가 남기는 "예약한 카드를 열어 봄" 기록 {복습id: 날짜}
-const TEXTBOOK_URL = location.hostname === 'choisuka.github.io'
-  ? 'https://choisuka.github.io/toro_math/jewish_math/index.html'
-  : '../jewish_math/index.html';
 function loadReviews(){
   try{
     const a = JSON.parse(localStorage.getItem(REVIEW_KEY)||'[]');
     return Array.isArray(a) ? a : [];
   }catch(e){ return []; }
 }
+function updateReviews(fn){
+  try{ localStorage.setItem(REVIEW_KEY, JSON.stringify(fn(loadReviews()))); }catch(e){}
+}
+function addDaysStr(n){ const d = new Date(); d.setDate(d.getDate()+n); return dateStr(d); }
+function setReviewDue(id, days){
+  updateReviews(l=>l.map(r=> r && r.id===id ? Object.assign({}, r, {due: addDaysStr(days)}) : r));
+}
+function deleteReviews(ids){
+  updateReviews(l=>l.filter(r=> !(r && ids.includes(r.id))));
+}
+// 예전 방식(푼 편지를 지우지 않고 reviewDone에만 표시)으로 푼 편지를 우편함에서 치운다
+function purgeLegacyReviewDone(){
+  const ids = Object.keys(data.reviewDone || {});
+  if(!ids.length) return;
+  deleteReviews(ids);
+  data.reviewDone = {};
+  saveData(data);
+}
 function dueReviews(){
-  const done = data.reviewDone || {};
   const today = todayStr();
-  return loadReviews().filter(r=> r && r.id && r.spec && /^\d{4}-\d{2}-\d{2}$/.test(r.due) && r.due <= today && !done[r.id])
+  return loadReviews().filter(r=> r && r.id && r.spec && /^\d{4}-\d{2}-\d{2}$/.test(r.due) && r.due <= today)
     .sort((a,b)=> a.due < b.due ? -1 : 1);
 }
 function dueSolveReviews(){ return dueReviews().filter(r=>r.spec.kind !== 'open'); }
@@ -650,20 +668,31 @@ function claimOpenedCards(){
   let touched;
   try{ touched = JSON.parse(localStorage.getItem(REVIEW_OPEN_KEY)||'{}'); }catch(e){ touched = {}; }
   if(!touched || typeof touched !== 'object' || Array.isArray(touched)) return;
-  if(!data.reviewDone) data.reviewDone = {};
   let earned = 0, count = 0;
+  const claimed = [];
   dueOpenReviews().forEach(r=>{
     const d = touched[r.id];
     if(typeof d !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(d) || d < r.due) return;
     const points = d > r.due ? REVIEW_PTS.tried : REVIEW_PTS.opened;
-    data.reviewDone[r.id] = {date: d, tier:'opened', points};
     data.sessions.push({date: todayStr(), type:'review', tier:'opened', points});
     earned += points; count++;
+    claimed.push(r.id);
   });
   if(count){
     data.points += earned;
     saveData(data);
+    deleteReviews(claimed);   // 카드 복습은 확인하면 끝: 편지 삭제
     appendNotice(`📖 카드 복습 ${count}건 · +${earned}P`);
+  }
+  // 우편함에 없는 편지의 "열어 봄" 기록은 치운다(교재는 추가만, 정원은 삭제만)
+  const alive = new Set(loadReviews().map(r=>r && r.id));
+  let t2;
+  try{ t2 = JSON.parse(localStorage.getItem(REVIEW_OPEN_KEY)||'{}'); }catch(e){ return; }
+  if(!t2 || typeof t2 !== 'object' || Array.isArray(t2)) return;
+  const keep = {};
+  Object.keys(t2).forEach(k=>{ if(alive.has(k)) keep[k] = t2[k]; });
+  if(Object.keys(keep).length !== Object.keys(t2).length){
+    try{ localStorage.setItem(REVIEW_OPEN_KEY, JSON.stringify(keep)); }catch(e){}
   }
 }
 function renderReviewCard(){
@@ -674,8 +703,11 @@ function renderReviewCard(){
   const open = dueOpenReviews();
   const box = document.getElementById('readCard');
   box.style.display = open.length ? 'block' : 'none';
+  // 열 주소는 교재가 편지에 적어 보낸 것(spec.url)을 그대로 쓴다. 정원은 교재의 단원·폴더를 모른다.
   document.getElementById('readCardList').innerHTML = open.map(r=>
-    `<a class="btn btn-ghost read-link" href="${TEXTBOOK_URL}?open=e4move:${r.spec.card}">${r.spec.title} — 열어서 확인하기 →</a>`).join('');
+    /^(https?|file):/i.test(r.spec.url || '')
+      ? `<a class="btn btn-ghost read-link" href="${r.spec.url}">${r.spec.title} — 열어서 확인하기 →</a>`
+      : `<span class="btn btn-ghost read-link">${r.spec.title} — 교재에서 직접 열어 주세요</span>`).join('');
 }
 /* 식 계산기: eval을 쓰지 않고 + - × ÷ ( )만 직접 계산한다. 잘못된 식은 NaN */
 function calcExpr(s){
@@ -797,18 +829,37 @@ function submitReview(){
   }
   const late = todayStr() > r.due;
   const points = late ? REVIEW_PTS.tried : REVIEW_PTS[tier];
-  if(late && tier!=='tried') msg += ' (기한이 지나서 시도 포인트만 받아요)';  if(!data.reviewDone) data.reviewDone = {};
-  data.reviewDone[r.id] = {date: todayStr(), tier, points};
+  if(late && tier!=='tried') msg += ' (기한이 지나서 시도 포인트만 받아요)';
   data.points += points;
   data.sessions.push({date: todayStr(), type:'review', tier, points});
   saveData(data);
+  // 채점하면 일단 내일로 미룬다: 아무것도 안 고르고 닫아도 같은 날 다시 풀어 포인트를 반복해서 받지 못하고 편지도 남는다
+  setReviewDue(r.id, 1);
   document.querySelectorAll('.review-opt, .review-keys .btn').forEach(b=>b.disabled = true);
   document.getElementById('reviewSubmitBtn').style.display = 'none';
   if(input) input.disabled = true;
-  const more = dueReviews().length;
+  const more = dueSolveReviews().length;
   out.innerHTML = `<p class="review-msg ${tier==='tried'?'warn':'ok'}">${msg} <strong>+${points}P</strong></p>`
     + `<div class="review-q review-sol"><strong>풀이</strong>${r.s}</div>`
+    + `<div class="review-again"><p class="review-ask" id="reviewAgainMsg">이 문제, 다시 풀어볼까요? 안 고르면 내일 다시 나와요.</p>`
+    + '<div class="review-opts">'
+    + [1,2,3,7].map(n=>`<button class="btn btn-ghost review-again-btn" data-n="${n}" onclick="chooseReviewNext('${r.id}',${n})">${n}일 후</button>`).join('')
+    + `<button class="btn btn-ghost review-again-btn" data-n="0" onclick="chooseReviewNext('${r.id}',0)">끝내기</button>`
+    + '</div></div>'
     + (more ? '<button class="btn btn-purple" onclick="openReview()">다음 복습 문제 →</button>' : '<button class="btn btn-purple" onclick="goHome()">🏠 정원으로 돌아가기</button>');
+}
+// 푼 문제를 n일 뒤에 다시 풀거나(반복), 끝내기(0)로 편지를 삭제한다
+function chooseReviewNext(id, n){
+  const msg = document.getElementById('reviewAgainMsg');
+  if(n === 0){
+    deleteReviews([id]);
+    msg.textContent = '끝냈어요. 이 문제는 우편함에서 삭제했어요.';
+    document.querySelectorAll('.review-again-btn').forEach(b=>b.disabled = true);
+  }else{
+    setReviewDue(id, n);
+    msg.textContent = `${n}일 뒤(${addDaysStr(n)})에 다시 나와요.`;
+  }
+  document.querySelectorAll('.review-again-btn').forEach(b=>b.classList.toggle('selected', +b.dataset.n === n));
 }
 
 /* ───────── 화면 전환 ───────── */
@@ -826,6 +877,7 @@ function goHome(){
 function renderHome(){
   ensureTodayMinutesReset();
   claimStudyPoints();
+  purgeLegacyReviewDone();
   claimOpenedCards();
   renderStudyNotice();
   renderReviewCard();
