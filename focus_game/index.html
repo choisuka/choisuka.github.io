@@ -1209,15 +1209,29 @@ function stopTimer(){
   const elapsedMin = Math.floor((timerTotalSeconds - timerRemaining) / 60);
   finishTimerSession(false, elapsedMin);
 }
+function planKeepBonus(minutesDone){
+  const b = activeTimerBlock;
+  if(!b) return null;
+  const planned = blockDurationMinutes(b);
+  if(planned <= 0 || minutesDone < planned * PLAN_PTS.keepRatio) return null;
+  const paid = planPaid(), key = `k|${todayStr()}|${b.start}|${b.subject}`;
+  if(paid[key]) return null;
+  paid[key] = true;
+  const isPreview = b.subject === PREVIEW_SUBJECT;
+  return { bonus: isPreview ? PLAN_PTS.keepPreview : PLAN_PTS.keep, label: isPreview ? '예습' : '공부', start: b.start, subject: b.subject, planned };
+}
 function finishTimerSession(completed, elapsedMinOverride){
   ensureTodayMinutesReset();
   const minutesDone = completed ? selectedMinutes : Math.max(0, elapsedMinOverride || 0);
   if(minutesDone > 0){
-    const earned = minutesDone * 2;
+    let earned = minutesDone * 2;
+    // 계획 배너의 "시작"으로 시작해 계획 시간의 일정 비율 이상 했으면 가산점(예습은 더 많이). 같은 세션은 하루 1번만.
+    const planKeep = planKeepBonus(minutesDone);
+    if(planKeep){ earned += planKeep.bonus; appendNotice(`📌 ${planKeep.label} 계획을 지켰어요 · +${planKeep.bonus}P`); }
     data.todayMinutes += minutesDone;
     bumpStreak();
     data.points += earned;
-    data.sessions.push({date: todayStr(), type:'timer', minutes: minutesDone, points: earned});
+    data.sessions.push(Object.assign({date: todayStr(), type:'timer', minutes: minutesDone, points: earned}, planKeep ? {planStart: planKeep.start, planSubject: planKeep.subject, plannedMin: planKeep.planned} : {}));
     saveData(data);
     showTimerResult(completed, minutesDone, earned);
   }else{
@@ -1804,16 +1818,38 @@ function planFormPrev(){
     renderPlanDayCard();
   }
 }
+/* 계획·예습 가산점(사용자 요청 2026-10-26). 점수는 부차적이라 숫자는 여기서만 조정한다. 다시 저장해서 반복 지급받지 못하게 키를 기록한다. */
+const PLAN_PTS = { weekly:10, preview:5, previewCapPerWeek:4, keep:5, keepPreview:10, keepRatio:0.8 };
+const PREVIEW_SUBJECT = '📘 예습';
+function weekStartStr(){ const d = new Date(); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return dateStr(d); }
+function planPaid(){ if(!data.planPaid || typeof data.planPaid !== 'object' || Array.isArray(data.planPaid)) data.planPaid = {}; return data.planPaid; }
+function payPlanSaveBonus(isFirstTime){
+  const paid = planPaid(), wk = weekStartStr();
+  let earned = 0;
+  const msgs = [];
+  if(!isFirstTime && !paid['w|' + wk]){ earned += PLAN_PTS.weekly; msgs.push('이번 주 계획'); }
+  paid['w|' + wk] = true;
+  let n = 0;
+  const capKey = 'pc|' + wk;
+  DAY_KEYS.forEach(k=>(plan.days[k] || []).forEach(b=>{
+    if(b.subject !== PREVIEW_SUBJECT) return;
+    const key = `p|${wk}|${k}|${b.start}`;
+    if(paid[key] || (paid[capKey] || 0) + n >= PLAN_PTS.previewCapPerWeek) return;
+    paid[key] = true; n++;
+  }));
+  if(n) paid[capKey] = (paid[capKey] || 0) + n;
+  if(n){ earned += n * PLAN_PTS.preview; msgs.push(`예습 ${n}번 계획`); }
+  if(earned){ data.points += earned; appendNotice(`📝 ${msgs.join('·')} · +${earned}P`); }
+}
 function finishPlanForm(){
   plan.days = planDraft;
   const isFirstTime = !plan.updatedAt;
   plan.updatedAt = todayStr();
   plan.weeksCompleted = (plan.weeksCompleted || 0) + 1;
   savePlan(plan);
-  if(isFirstTime){
-    data.points += 20;
-    saveData(data);
-  }
+  if(isFirstTime) data.points += 20;
+  payPlanSaveBonus(isFirstTime);
+  saveData(data);
   renderPlanCelebrate();
   showScreen('screen-plan-celebrate');
 }
