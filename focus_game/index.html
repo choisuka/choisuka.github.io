@@ -841,9 +841,10 @@ function renderReviewCard(){
   const box = document.getElementById('readCard');
   box.style.display = open.length ? 'block' : 'none';
   // 열 주소는 교재가 편지에 적어 보낸 것(spec.url)을 그대로 쓴다. 정원은 교재의 단원·폴더를 모른다.
+  const back = encodeURIComponent(location.href.split('#')[0].split('?')[0]);   // 읽고 나서 정원으로 돌아올 주소
   document.getElementById('readCardList').innerHTML = open.map(r=>
     /^(https?|file):/i.test(r.spec.url || '')
-      ? `<a class="btn btn-ghost read-link" href="${r.spec.url}">${r.spec.title} — 열어서 확인하기 →</a>`
+      ? `<a class="btn btn-ghost read-link" href="${r.spec.url}${r.spec.url.indexOf('?') >= 0 ? '&' : '?'}from=${back}">${r.spec.title} — 열어서 확인하기 →</a>`
       : `<span class="btn btn-ghost read-link">${r.spec.title} — 교재에서 직접 열어 주세요</span>`).join('');
 }
 /* 식 계산기: eval을 쓰지 않고 + - × ÷ ( )만 직접 계산한다. 잘못된 식은 NaN */
