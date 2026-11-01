@@ -910,14 +910,16 @@ function openReview(id){
   const list = dueSolveReviews();
   if(!list.length){ goHome(); return; }
   reviewCur = (typeof id === 'string' && list.find(r=>r.id === id)) || list[0];
-  reviewChoice = null;
+  reviewChoice = null; selfRetry = 0;
   const spec = reviewCur.spec;
   if(spec.kind === 'photo'){ openPhotoReview(reviewCur, list.length); return; }
   let input = '';
   if(spec.kind==='view'){
     input = '<p class="review-ask">머릿속으로 풀어 본 다음, 풀이를 확인해 보세요.</p>';
   }else if(spec.kind==='self'){
-    input = `<p class="review-ask">${spec.ask || '먼저 내 답을 써 보세요. 제출하면 풀이를 볼 수 있어요.'}</p><textarea id="reviewText" class="review-input" rows="4" maxlength="500" placeholder="내 답을 써 보세요 (풀이 과정도 좋아요)"></textarea>`;
+    input = `<p class="review-ask">${spec.ask || '먼저 내 답을 써 보세요. 제출하면 풀이를 볼 수 있어요.'}</p><textarea id="reviewText" class="review-input" rows="4" maxlength="500" placeholder="내 답을 써 보세요 (풀이 과정도 좋아요)"></textarea>`
+      + '<p class="review-ask">이 문제에서 배운 핵심을 내 말로 정리해 보세요. (선택) 다음에 이 문제를 다시 공부할 때 풀이와 함께 보여 줘요.</p>'
+      + '<textarea id="reviewNote" class="review-input" rows="2" maxlength="300" placeholder="예) 가장 큰 정사각형으로 자르면 최대공약수를 구한다"></textarea>';
   }else if(spec.kind==='choice'){
     input = '<div class="review-opts">' + spec.options.map((o,i)=>`<button class="btn btn-ghost review-opt" onclick="pickReviewOption(${i})">${o}</button>`).join('') + '</div>';
     if(spec.reason) input += `<p class="review-ask">${spec.reasonAsk}</p><textarea id="reviewText" class="review-input" rows="3" maxlength="200" placeholder="여기에 써 보세요 (10글자 이상)"></textarea>`;
@@ -948,9 +950,11 @@ function submitReview(){
   let tier, msg;
   if(spec.kind==='self'){
     if(!text){ out.innerHTML = '<p class="review-msg warn">먼저 내 답을 써 주세요. 쓴 뒤에 풀이를 볼 수 있어요.</p>'; return; }
+    const noteEl = document.getElementById('reviewNote'), note = noteEl ? noteEl.value.trim() : '';
+    selfAttemptSave(r, text, note);
     const ai = aiGrade(r, text);
     if(ai){ finishReview(r, ai.tier, ai.msg, r.s); return; }
-    revealSelfSolution(r, text);
+    revealSelfSolution(r, text, note);
     return;
   }
   if(spec.kind==='view'){
@@ -972,40 +976,77 @@ function submitReview(){
 }
 // AI 채점 자리: 서비스를 신청한 학생에게만 {tier, msg}를 돌려주도록 나중에 채운다. 지금은 항상 null이라 학생이 스스로 채점한다.
 function aiGrade(r, text){ return null; }
-// 글 답안(self) 복습: 답을 낸 뒤에만 풀이를 보여 주고, 학생이 풀이와 비교해 스스로 채점한다
-function revealSelfSolution(r, text){
+// 글 답안(self) 복습: 답을 낸 뒤에만 풀이를 보여 주고, 학생이 풀이와 비교해 스스로 채점한다.
+// 틀렸다고 채점하면 고쳐서 다시 제출할 수 있고, 다시 제출해 맞히면 가산점을 준다.
+// 낸 답과 내가 정리한 핵심은 제출하는 순간 편지(mine)에 저장해, 다음에 이 문제를 다시 공부할 때 풀이와 함께 보여 준다.
+const REVIEW_RETRY_BONUS = 5;
+let selfRetry = 0;
+function selfAttemptSave(r, answer, note){
+  updateReviews(l=>l.map(x=> x && x.id === r.id
+    ? Object.assign({}, x, {mine: (Array.isArray(x.mine) ? x.mine : []).concat([{date: todayStr(), answer, note}]).slice(-5)})
+    : x));
+}
+function selfBlock(title, html){ return `<div class="ph-step-title">${title}</div><div class="review-q" style="white-space:pre-wrap">${html}</div>`; }
+function revealSelfSolution(r, text, note){
   const out = document.getElementById('reviewResult');
   const sb = document.getElementById('reviewSubmitBtn'); if(sb) sb.style.display = 'none';
-  const inp = document.getElementById('reviewText'); if(inp) inp.disabled = true;
-  out.innerHTML = `<div class="ph-step-title">내 답</div><div class="review-q" style="white-space:pre-wrap">${escapeHtml(text)}</div>`
+  ['reviewText', 'reviewNote'].forEach(i=>{ const el = document.getElementById(i); if(el) el.disabled = true; });
+  const saved = loadReviews().find(x=> x && x.id === r.id), mine = saved && Array.isArray(saved.mine) ? saved.mine : [];
+  const prev = mine.slice(0, -1).filter(m=> m && m.note);
+  out.innerHTML = selfBlock(selfRetry ? `고쳐서 다시 낸 답 (${selfRetry}번째)` : '내 답', escapeHtml(text))
     + (r.s ? `<div class="review-q review-sol"><strong>풀이</strong>${r.s}</div>` : '')
+    + (prev.length ? '<div class="ph-step-title">지난번에 내가 정리한 핵심</div>' + prev.map(m=>`<div class="review-q" style="white-space:pre-wrap"><span class="wh-meta">${escapeHtml(m.date || '')}</span>\n${escapeHtml(m.note)}</div>`).join('') : '')
+    + (note ? selfBlock('이번에 내가 정리한 핵심', escapeHtml(note)) : '')
     + '<p class="review-ask">내 답과 풀이를 비교해서 스스로 채점해 보세요.</p>'
     + '<div class="review-opts">'
     + `<button class="btn btn-ghost ph-grade-btn" onclick="gradeSelfCard('${r.id}','full')">맞았어요 +20</button>`
     + `<button class="btn btn-ghost ph-grade-btn" onclick="gradeSelfCard('${r.id}','part')">비슷해요 +10</button>`
-    + `<button class="btn btn-ghost ph-grade-btn" onclick="gradeSelfCard('${r.id}','tried')">틀렸어요 +3</button></div>`;
+    + `<button class="btn btn-ghost ph-grade-btn" onclick="gradeSelfCard('${r.id}','tried')">틀렸어요</button></div>`;
 }
 function gradeSelfCard(id, tier){
   const r = loadReviews().find(x=> x && x.id === id);
   if(!r) return;
-  const msg = tier === 'full' ? '맞혔어요! 🌟' : tier === 'part' ? '거의 맞았어요. 풀이와 다른 부분을 다시 봐요.' : '괜찮아요. 풀이를 다시 보고 기억해 봐요.';
-  finishReview(r, tier, msg, r.s);
+  document.querySelectorAll('.ph-grade-btn').forEach(b=>b.disabled = true);
+  if(tier === 'tried'){
+    document.getElementById('reviewResult').insertAdjacentHTML('beforeend',
+      `<p class="review-ask">괜찮아요. 풀이를 보고 고쳐서 다시 제출해 볼까요? 고쳐서 맞히면 가산점 +${REVIEW_RETRY_BONUS}P를 받아요.</p>`
+      + '<div class="review-opts">'
+      + `<button class="btn btn-purple" style="flex:1" onclick="selfRetryStart('${id}')">✍️ 고쳐서 다시 제출</button>`
+      + `<button class="btn btn-ghost" style="flex:1" onclick="selfGiveUp('${id}')">그만하기 +3</button></div>`);
+    return;
+  }
+  const msg = tier === 'full' ? '맞혔어요! 🌟' : '거의 맞았어요. 풀이와 다른 부분을 다시 봐요.';
+  finishReview(r, tier, msg + (selfRetry ? ' 다시 도전해서 맞혔어요!' : ''), r.s, selfRetry ? REVIEW_RETRY_BONUS : 0);
+}
+function selfRetryStart(id){
+  selfRetry++;
+  const r = loadReviews().find(x=> x && x.id === id); if(!r) return;
+  ['reviewText', 'reviewNote'].forEach(i=>{ const el = document.getElementById(i); if(el) el.disabled = false; });
+  const sb = document.getElementById('reviewSubmitBtn'); if(sb){ sb.style.display = ''; sb.textContent = '✍️ 고쳐서 다시 제출'; }
+  document.getElementById('reviewResult').innerHTML = '<p class="review-ask">아래 풀이를 보고 내 답을 고쳐서 다시 제출해 보세요.</p>'
+    + (r.s ? `<div class="review-q review-sol"><strong>풀이</strong>${r.s}</div>` : '');
+  const t = document.getElementById('reviewText'); if(t) t.focus();
+}
+function selfGiveUp(id){
+  const r = loadReviews().find(x=> x && x.id === id);
+  if(r) finishReview(r, 'tried', '괜찮아요. 풀이를 다시 보고 기억해 봐요.', r.s);
 }
 // 채점 마무리(교재 복습·사진 카드 공통): 포인트, 반복 가산, 내일로 미루기, 결과 화면
-function finishReview(r, tier, msg, solHtml){
+function finishReview(r, tier, msg, solHtml, retryBonus){
   const out = document.getElementById('reviewResult');
   const today = todayStr();
   const already = r.lastGraded === today;          // 같은 카드는 하루에 한 번만 포인트
   const late = today > r.due;
   const round = (r.rounds || 0) + (already ? 0 : 1);
-  let points = 0, bonus = 0;
+  let points = 0, bonus = 0, retry = 0;
   if(already){
     msg += ' (이 카드는 오늘 이미 포인트를 받았어요)';
   }else{
     points = late ? REVIEW_PTS.tried : REVIEW_PTS[tier];
     if(late && tier !== 'tried') msg += ' (기한이 지나서 시도 포인트만 받아요)';
     if(!late && tier !== 'tried') bonus = round === 2 ? 5 : round === 3 ? 10 : round >= 4 ? 15 : 0;   // 한 달 안에 반복할수록 가산
-    points += bonus;
+    if(!late && tier !== 'tried' && retryBonus) retry = retryBonus;   // 틀린 뒤 고쳐서 맞힌 가산점
+    points += bonus + retry;
     data.points += points;
     data.sessions.push({date: today, type:'review', tier, points});
     if(round === 1) bumpMonthStat('newReviewed');
@@ -1017,7 +1058,7 @@ function finishReview(r, tier, msg, solHtml){
   const sb = document.getElementById('reviewSubmitBtn'); if(sb) sb.style.display = 'none';
   const inp = document.getElementById('reviewText'); if(inp) inp.disabled = true;
   const more = dueSolveReviews().length;
-  out.innerHTML = `<p class="review-msg ${tier==='tried'?'warn':'ok'}">${msg} ${ptBadge(points)}${bonus ? ` <span style="font-size:.8em">(반복 보너스 +${bonus})</span>` : ''}</p>`
+  out.innerHTML = `<p class="review-msg ${tier==='tried'?'warn':'ok'}">${msg} ${ptBadge(points)}${bonus ? ` <span style="font-size:.8em">(반복 보너스 +${bonus})</span>` : ''}${retry ? ` <span style="font-size:.8em">(재도전 가산점 +${retry})</span>` : ''}</p>`
     + (solHtml ? `<div class="review-q review-sol"><strong>풀이</strong>${solHtml}</div>` : '')
     + `<div class="review-again"><p class="review-ask" id="reviewAgainMsg">이 문제, 다시 풀어볼까요? 안 고르면 내일 다시 나와요.</p>`
     + '<div class="review-opts">'
