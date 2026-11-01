@@ -137,6 +137,10 @@ header p{margin-top:8px;font-size:.9rem;color:rgba(255,255,255,.55);line-height:
 .review-opts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .review-opt{flex:1;min-width:90px}
 .review-opt.selected{border-color:#a855f7;background:rgba(168,85,247,.25)}
+.review-nav{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:12px}
+.review-nav .rv-chip{flex:0 0 auto;width:auto;min-width:40px;margin:0;padding:6px 10px;font-size:.8rem}
+.rv-chip.cur{border-color:#a855f7;background:rgba(168,85,247,.35);color:#fff}
+.rv-chip.done{opacity:.45}
 .review-ask{font-size:.85rem;color:rgba(255,255,255,.7);margin:8px 0}
 .review-input{width:100%;box-sizing:border-box;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:10px;color:#fff;padding:10px;font-size:1rem;font-family:inherit;margin-bottom:10px}
 .review-keys{display:flex;gap:6px;margin-bottom:12px}
@@ -582,6 +586,7 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
     <div class="card">
       <div class="result-title jua">📌 복습 문제</div>
       <p id="reviewProgress" style="text-align:center;font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:12px"></p>
+      <div id="reviewNav" class="review-nav"></div>
       <div id="reviewBody"></div>
     </div>
   </section>
@@ -913,11 +918,31 @@ function reasonOk(text, patterns){
   return patterns.every(p=>new RegExp(p).test(norm));
 }
 let reviewCur = null, reviewChoice = null;
+// 복습 번호: 한 판(홈에서 들어와 다시 홈으로 나갈 때까지) 동안 오늘 복습 목록의 번호를 고정한다. 푼 문제는 ✓로 남고 번호는 바뀌지 않는다.
+let reviewSession = null;
+function ensureReviewSession(list, id){
+  const today = todayStr();
+  if(!reviewSession || reviewSession.day !== today || (id && !reviewSession.ids.includes(id))) reviewSession = {day: today, ids: list.map(r=>r.id)};
+}
+function reviewPreview(r){
+  const t = String(r.q || '').replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  return t ? t.slice(0, 40) : (r.spec && r.spec.title) || '';
+}
+function renderReviewNav(){
+  const box = document.getElementById('reviewNav'); if(!box) return;
+  if(!reviewSession || reviewSession.ids.length < 2){ box.innerHTML = ''; return; }
+  const all = loadReviews(), due = new Set(dueSolveReviews().map(r=>r.id));
+  box.innerHTML = reviewSession.ids.map((rid, i)=>{
+    const done = !due.has(rid), cur = reviewCur && reviewCur.id === rid, r = all.find(x=> x && x.id === rid);
+    return `<button class="btn btn-ghost rv-chip${cur ? ' cur' : ''}${done ? ' done' : ''}" ${done ? 'disabled' : ''} title="${escapeHtml(r ? reviewPreview(r) : '')}" onclick="openReview('${rid}')">${i + 1}${done ? '✓' : ''}</button>`;
+  }).join('');
+}
 function openReview(id){
   const list = dueSolveReviews();
   if(!list.length){ goHome(); return; }
   reviewCur = (typeof id === 'string' && list.find(r=>r.id === id)) || list[0];
   reviewChoice = null; selfRetry = 0;
+  ensureReviewSession(list, reviewCur.id); renderReviewNav();
   const spec = reviewCur.spec;
   if(spec.kind === 'photo'){ openPhotoReview(reviewCur, list.length); return; }
   let input = '';
@@ -1154,6 +1179,7 @@ function finishReview(r, tier, msg, solHtml, retryBonus){
     + '</div></div>'
     + (more ? '<button class="btn btn-purple" onclick="openReview()">다음 복습 문제 →</button>' : '<button class="btn btn-purple" onclick="goHome()">🏠 정원으로 돌아가기</button>');
   ptAnimate(out);
+  renderReviewNav();
 }
 // 푼 문제를 n일 뒤에 다시 풀거나(반복), 끝내기(0)로 완료: 편지(사진 카드는 사진도) 삭제 + 완료 보너스
 function chooseReviewNext(id, n){
@@ -1177,6 +1203,7 @@ function showScreen(id){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function goHome(){
+  reviewSession = null;
   revokeLive();
   stopCamera();
   stopThinkTimer();
