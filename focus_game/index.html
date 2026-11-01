@@ -916,6 +916,8 @@ function openReview(id){
   let input = '';
   if(spec.kind==='view'){
     input = '<p class="review-ask">머릿속으로 풀어 본 다음, 풀이를 확인해 보세요.</p>';
+  }else if(spec.kind==='self'){
+    input = `<p class="review-ask">${spec.ask || '먼저 내 답을 써 보세요. 제출하면 풀이를 볼 수 있어요.'}</p><textarea id="reviewText" class="review-input" rows="4" maxlength="500" placeholder="내 답을 써 보세요 (풀이 과정도 좋아요)"></textarea>`;
   }else if(spec.kind==='choice'){
     input = '<div class="review-opts">' + spec.options.map((o,i)=>`<button class="btn btn-ghost review-opt" onclick="pickReviewOption(${i})">${o}</button>`).join('') + '</div>';
     if(spec.reason) input += `<p class="review-ask">${spec.reasonAsk}</p><textarea id="reviewText" class="review-input" rows="3" maxlength="200" placeholder="여기에 써 보세요 (10글자 이상)"></textarea>`;
@@ -925,7 +927,7 @@ function openReview(id){
   }
   document.getElementById('reviewBody').innerHTML =
     `<div class="review-q">${reviewCur.q}</div>${input}<div id="reviewResult"></div>`
-    + `<button class="btn btn-purple" id="reviewSubmitBtn" onclick="submitReview()">${spec.kind==='view' ? '💡 풀이 확인하기' : '✅ 제출하기'}</button>`;
+    + `<button class="btn btn-purple" id="reviewSubmitBtn" onclick="submitReview()">${spec.kind==='view' ? '💡 풀이 확인하기' : spec.kind==='self' ? '✍️ 제출하고 풀이 보기' : '✅ 제출하기'}</button>`;
   document.getElementById('reviewProgress').textContent = `남은 복습 ${list.length}개`;
   showScreen('screen-review');
 }
@@ -944,6 +946,13 @@ function submitReview(){
   const text = input ? input.value.trim() : '';
   const out = document.getElementById('reviewResult');
   let tier, msg;
+  if(spec.kind==='self'){
+    if(!text){ out.innerHTML = '<p class="review-msg warn">먼저 내 답을 써 주세요. 쓴 뒤에 풀이를 볼 수 있어요.</p>'; return; }
+    const ai = aiGrade(r, text);
+    if(ai){ finishReview(r, ai.tier, ai.msg, r.s); return; }
+    revealSelfSolution(r, text);
+    return;
+  }
   if(spec.kind==='view'){
     tier = 'viewed'; msg = '풀이를 확인했어요! 내 생각과 비교해 보세요.';
   }else if(spec.kind==='choice'){
@@ -959,6 +968,27 @@ function submitReview(){
     else if(j==='part'){ tier = 'part'; msg = '답은 맞았어요! 문제의 수를 써서 식으로 나타내면 만점이에요.'; }
     else{ tier = 'tried'; msg = '아쉬워요. 풀이를 보고 다시 생각해 봐요.'; }
   }
+  finishReview(r, tier, msg, r.s);
+}
+// AI 채점 자리: 서비스를 신청한 학생에게만 {tier, msg}를 돌려주도록 나중에 채운다. 지금은 항상 null이라 학생이 스스로 채점한다.
+function aiGrade(r, text){ return null; }
+// 글 답안(self) 복습: 답을 낸 뒤에만 풀이를 보여 주고, 학생이 풀이와 비교해 스스로 채점한다
+function revealSelfSolution(r, text){
+  const out = document.getElementById('reviewResult');
+  const sb = document.getElementById('reviewSubmitBtn'); if(sb) sb.style.display = 'none';
+  const inp = document.getElementById('reviewText'); if(inp) inp.disabled = true;
+  out.innerHTML = `<div class="ph-step-title">내 답</div><div class="review-q" style="white-space:pre-wrap">${escapeHtml(text)}</div>`
+    + (r.s ? `<div class="review-q review-sol"><strong>풀이</strong>${r.s}</div>` : '')
+    + '<p class="review-ask">내 답과 풀이를 비교해서 스스로 채점해 보세요.</p>'
+    + '<div class="review-opts">'
+    + `<button class="btn btn-ghost ph-grade-btn" onclick="gradeSelfCard('${r.id}','full')">맞았어요 +20</button>`
+    + `<button class="btn btn-ghost ph-grade-btn" onclick="gradeSelfCard('${r.id}','part')">비슷해요 +10</button>`
+    + `<button class="btn btn-ghost ph-grade-btn" onclick="gradeSelfCard('${r.id}','tried')">틀렸어요 +3</button></div>`;
+}
+function gradeSelfCard(id, tier){
+  const r = loadReviews().find(x=> x && x.id === id);
+  if(!r) return;
+  const msg = tier === 'full' ? '맞혔어요! 🌟' : tier === 'part' ? '거의 맞았어요. 풀이와 다른 부분을 다시 봐요.' : '괜찮아요. 풀이를 다시 보고 기억해 봐요.';
   finishReview(r, tier, msg, r.s);
 }
 // 채점 마무리(교재 복습·사진 카드 공통): 포인트, 반복 가산, 내일로 미루기, 결과 화면
