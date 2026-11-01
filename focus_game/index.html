@@ -986,17 +986,58 @@ function selfAttemptSave(r, answer, note){
     ? Object.assign({}, x, {mine: (Array.isArray(x.mine) ? x.mine : []).concat([{date: todayStr(), answer, note}]).slice(-5)})
     : x));
 }
+const SELF_BTN = 'flex:none;padding:6px 10px;font-size:.78rem';
+function selfMineHtml(id){
+  const r = loadReviews().find(x=> x && x.id === id), m = r && Array.isArray(r.mine) ? r.mine : [];
+  const rows = m.map((e, i)=>({e, i})).filter(o=> o.e && (o.e.answer || o.e.note)).reverse();
+  if(!rows.length) return '<p class="wh-meta">저장된 기록이 없어요.</p>';
+  return rows.map(({e, i})=> `<div class="review-q"><span class="wh-meta">${escapeHtml(e.date || '')}${i === m.length - 1 ? ' · 이번' : ''}</span>`
+    + (e.answer ? '<div class="ph-step-title">내 풀이</div>'
+      + `<div style="white-space:pre-wrap">${escapeHtml(e.answer)}</div>`
+      + `<div class="review-opts"><button class="btn btn-ghost" style="${SELF_BTN}" onclick="selfMineDel('${id}',${i},'answer')">🗑 풀이 삭제</button></div>` : '')
+    + (e.note ? '<div class="ph-step-title">내가 정리한 핵심</div>'
+      + `<div id="selfNote-${i}" style="white-space:pre-wrap">${escapeHtml(e.note)}</div>`
+      + `<div class="review-opts" id="selfNoteBtns-${i}"><button class="btn btn-ghost" style="${SELF_BTN}" onclick="selfNoteEdit('${id}',${i})">✏️ 핵심 수정</button>`
+      + `<button class="btn btn-ghost" style="${SELF_BTN}" onclick="selfMineDel('${id}',${i},'note')">🗑 핵심 삭제</button></div>` : '')
+    + '</div>').join('');
+}
+function selfMineRefresh(id){ const box = document.getElementById('selfMine'); if(box) box.innerHTML = selfMineHtml(id); }
+// 풀이/핵심을 지운다. 둘 다 비면 그 기록은 통째로 없앤다
+function selfMineDel(id, i, field){
+  if(!confirm(field === 'answer' ? '내 풀이를 삭제할까요?' : '내가 정리한 핵심을 삭제할까요?')) return;
+  updateReviews(l=>l.map(x=>{
+    if(!x || x.id !== id || !Array.isArray(x.mine) || !x.mine[i]) return x;
+    const next = x.mine.map((e, k)=> k === i ? Object.assign({}, e, {[field]: ''}) : e).filter(e=> e.answer || e.note);
+    return Object.assign({}, x, {mine: next});
+  }));
+  selfMineRefresh(id);
+}
+function selfNoteEdit(id, i){
+  const r = loadReviews().find(x=> x && x.id === id), e = r && Array.isArray(r.mine) ? r.mine[i] : null;
+  const box = document.getElementById('selfNote-' + i), btns = document.getElementById('selfNoteBtns-' + i);
+  if(!e || !box || !btns) return;
+  box.innerHTML = '<textarea class="review-input" rows="3" maxlength="300" id="selfNoteTa-' + i + '"></textarea>';
+  document.getElementById('selfNoteTa-' + i).value = e.note || '';
+  btns.innerHTML = `<button class="btn btn-purple" style="${SELF_BTN}" onclick="selfNoteSave('${id}',${i})">저장</button>`
+    + `<button class="btn btn-ghost" style="${SELF_BTN}" onclick="selfMineRefresh('${id}')">취소</button>`;
+}
+function selfNoteSave(id, i){
+  const ta = document.getElementById('selfNoteTa-' + i); if(!ta) return;
+  const note = ta.value.trim();
+  updateReviews(l=>l.map(x=>{
+    if(!x || x.id !== id || !Array.isArray(x.mine) || !x.mine[i]) return x;
+    return Object.assign({}, x, {mine: x.mine.map((e, k)=> k === i ? Object.assign({}, e, {note}) : e).filter(e=> e.answer || e.note)});
+  }));
+  selfMineRefresh(id);
+}
 function selfBlock(title, html){ return `<div class="ph-step-title">${title}</div><div class="review-q" style="white-space:pre-wrap">${html}</div>`; }
 function revealSelfSolution(r, text, note){
   const out = document.getElementById('reviewResult');
   const sb = document.getElementById('reviewSubmitBtn'); if(sb) sb.style.display = 'none';
   ['reviewText', 'reviewNote'].forEach(i=>{ const el = document.getElementById(i); if(el) el.disabled = true; });
-  const saved = loadReviews().find(x=> x && x.id === r.id), mine = saved && Array.isArray(saved.mine) ? saved.mine : [];
-  const prev = mine.slice(0, -1).filter(m=> m && m.note);
   out.innerHTML = selfBlock(selfRetry ? `고쳐서 다시 낸 답 (${selfRetry}번째)` : '내 답', escapeHtml(text))
     + (r.s ? `<div class="review-q review-sol"><strong>풀이</strong>${r.s}</div>` : '')
-    + (prev.length ? '<div class="ph-step-title">지난번에 내가 정리한 핵심</div>' + prev.map(m=>`<div class="review-q" style="white-space:pre-wrap"><span class="wh-meta">${escapeHtml(m.date || '')}</span>\n${escapeHtml(m.note)}</div>`).join('') : '')
-    + (note ? selfBlock('이번에 내가 정리한 핵심', escapeHtml(note)) : '')
+    + `<div class="ph-step-title">내가 쓴 풀이·핵심 기록</div><div id="selfMine">${selfMineHtml(r.id)}</div>`
     + '<p class="review-ask">내 답과 풀이를 비교해서 스스로 채점해 보세요.</p>'
     + '<div class="review-opts">'
     + `<button class="btn btn-ghost ph-grade-btn" onclick="gradeSelfCard('${r.id}','full')">맞았어요 +20</button>`
