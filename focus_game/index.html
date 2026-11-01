@@ -613,6 +613,12 @@ footer{text-align:center;margin-top:30px;font-size:.75rem;color:rgba(255,255,255
         <p class="review-ask">매일 오전 8시·오후 5시, 토·일 오후 1시에 "정원 열어 복습하기" 알람이 울려요. 구글 캘린더에서 설정 → 가져오기·내보내기 → 가져오기로 이 파일을 <b>한 번만</b> 가져오세요. 가져온 뒤 알림이 일정 시각에 울리는지 한 번 확인해 주세요.</p>
         <button class="btn btn-green" onclick="downloadAlarmICS()">⏰ 알람 파일(.ics) 받기</button>
       </div>
+      <div class="ph-step">
+        <div class="ph-step-title">🤖 AI 채점 <span id="aiGradeBadge" class="wh-meta">(준비 중)</span></div>
+        <p class="review-ask" id="aiGradeInfo"></p>
+        <label style="display:flex;align-items:center;gap:8px;font-size:.9rem;margin-bottom:6px"><input type="checkbox" id="aiGradeToggle" onchange="setAiGrade(this.checked)"> AI 채점 사용</label>
+        <p class="review-ask" style="font-size:.76rem">켜면 내가 쓴 답과 문제가 외부 AI 서비스로 전송돼요. 보호자와 함께 확인하고 켜 주세요. 끄면 풀이를 보고 스스로 채점해요.</p>
+      </div>
       <button class="btn btn-purple" onclick="goHome()">🏠 정원으로 돌아가기</button>
     </div>
   </section>
@@ -953,6 +959,15 @@ function submitReview(){
     const noteEl = document.getElementById('reviewNote'), note = noteEl ? noteEl.value.trim() : '';
     selfAttemptSave(r, text, note);
     const ai = aiGrade(r, text);
+    if(ai && typeof ai.then === 'function'){
+      const sb = document.getElementById('reviewSubmitBtn'); if(sb) sb.disabled = true;
+      out.innerHTML = '<p class="review-msg">🤖 AI가 채점하고 있어요…</p>';
+      ai.then(res=>{
+        if(sb) sb.disabled = false;
+        if(res) finishReview(r, res.tier, res.msg, r.s); else { out.innerHTML = ''; revealSelfSolution(r, text, note); }
+      });
+      return;
+    }
     if(ai){ finishReview(r, ai.tier, ai.msg, r.s); return; }
     revealSelfSolution(r, text, note);
     return;
@@ -974,8 +989,38 @@ function submitReview(){
   }
   finishReview(r, tier, msg, r.s);
 }
-// AI 채점 자리: 서비스를 신청한 학생에게만 {tier, msg}를 돌려주도록 나중에 채운다. 지금은 항상 null이라 학생이 스스로 채점한다.
-function aiGrade(r, text){ return null; }
+// AI 채점: 지금은 연결된 AI 서비스가 없다. 나중에 서비스를 붙일 때는 window.toroAiGrader(입력) 함수 하나만 정의하면 된다.
+//   입력  {question: 문제 HTML, solution: 풀이 HTML, key: 편지의 spec.key(정답 핵심, 없으면 ''), answer: 학생이 낸 답}
+//   반환  Promise<{tier:'full'|'part'|'tried', msg?}>   (실패·시간 초과·이상한 값이면 학생이 스스로 채점한다)
+// 학생의 답이 외부로 나가므로 키는 코드에 넣지 말고, 설정에서 켠 학생에게만 쓴다.
+let AI_GRADE_TIMEOUT_MS = 15000;
+function aiGradeAvailable(){ return typeof window.toroAiGrader === 'function'; }
+function aiGradeOn(){ return aiGradeAvailable() && !!(data.aiGrade && data.aiGrade.enabled); }
+function aiGrade(r, text){
+  if(!aiGradeOn()) return null;
+  const spec = r.spec || {};
+  const call = Promise.resolve().then(()=> window.toroAiGrader({question: r.q || '', solution: r.s || '', key: spec.key || '', answer: text}));
+  const timeout = new Promise(res=> setTimeout(()=> res(null), AI_GRADE_TIMEOUT_MS));
+  return Promise.race([call, timeout]).then(res=>
+    res && ['full', 'part', 'tried'].includes(res.tier) ? {tier: res.tier, msg: res.msg || 'AI가 채점했어요.'} : null
+  ).catch(()=> null);
+}
+function setAiGrade(on){
+  if(on && !aiGradeAvailable()) on = false;
+  data.aiGrade = {enabled: !!on};
+  saveData(data);
+  renderAiSetting();
+}
+function renderAiSetting(){
+  const t = document.getElementById('aiGradeToggle'); if(!t) return;
+  const avail = aiGradeAvailable();
+  t.disabled = !avail;
+  t.checked = aiGradeOn();
+  document.getElementById('aiGradeBadge').textContent = avail ? '' : '(준비 중)';
+  document.getElementById('aiGradeInfo').textContent = avail
+    ? '글 답안을 낼 때 AI가 먼저 채점해 줘요. AI가 채점하지 못하면 스스로 채점해요.'
+    : '글 답안을 스스로 채점하는 대신 AI가 채점해 주는 기능이에요. 아직 연결된 AI 서비스가 없어서 켤 수 없어요.';
+}
 // 글 답안(self) 복습: 답을 낸 뒤에만 풀이를 보여 주고, 학생이 풀이와 비교해 스스로 채점한다.
 // 틀렸다고 채점하면 고쳐서 다시 제출할 수 있고, 다시 제출해 맞히면 가산점을 준다.
 // 낸 답과 내가 정리한 핵심은 제출하는 순간 편지(mine)에 저장해, 다음에 이 문제를 다시 공부할 때 풀이와 함께 보여 준다.
@@ -2588,7 +2633,7 @@ function cancelPhotoAdd(){
    복습 예정일(우편함), 주간 계획, 한 일(포인트 기록)을 한 화면에서 본다. 서버 없이 이 기기의 기록만 쓴다. */
 let calView = 'month', calDate = new Date();
 const CAL_DOW_LABEL = '일월화수목금토';
-function openCalendar(){ calDate = new Date(); calView = 'month'; showScreen('screen-calendar'); renderCalendar(); }
+function openCalendar(){ calDate = new Date(); calView = 'month'; showScreen('screen-calendar'); renderCalendar(); renderAiSetting(); }
 function setCalView(v){ calView = v; renderCalendar(); }
 function shiftCal(n){
   if(calView === 'month') calDate = new Date(calDate.getFullYear(), calDate.getMonth() + n, 1);
