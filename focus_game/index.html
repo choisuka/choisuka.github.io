@@ -924,7 +924,7 @@ function openReview(id){
     input = '<p class="review-ask">머릿속으로 풀어 본 다음, 풀이를 확인해 보세요.</p>';
   }else if(spec.kind==='self'){
     input = `<p class="review-ask">${spec.ask || '먼저 내 답을 써 보세요. 제출하면 풀이를 볼 수 있어요.'}</p><textarea id="reviewText" class="review-input" rows="4" maxlength="500" placeholder="내 답을 써 보세요 (풀이 과정도 좋아요)"></textarea>`
-      + '<p class="review-ask">이 문제에서 배운 핵심을 내 말로 정리해 보세요. (선택) 다음에 이 문제를 다시 공부할 때 풀이와 함께 보여 줘요.</p>'
+      + '<p class="review-ask"><b>✏️ 핵심 내용 써 보기</b> (선택)<br><span style="font-size:.76rem">다음에 이 문제를 다시 공부할 때 풀이와 함께 보여 줘요.</span></p>'
       + '<textarea id="reviewNote" class="review-input" rows="2" maxlength="300" placeholder="예) 가장 큰 정사각형으로 자르면 최대공약수를 구한다"></textarea>';
   }else if(spec.kind==='choice'){
     input = '<div class="review-opts">' + spec.options.map((o,i)=>`<button class="btn btn-ghost review-opt" onclick="pickReviewOption(${i})">${o}</button>`).join('') + '</div>';
